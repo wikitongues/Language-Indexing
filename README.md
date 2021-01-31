@@ -1,5 +1,5 @@
 # Wikitongues Language Indexing
-This is the web crawling tool that powers language indexing at Wikitongues. 
+This is the web crawling tool that powers language indexing at Wikitongues.
 The tool works by visiting a number of online platforms and gathering links related to every language in the world.
 Wikitongues will provide these links as a resource to anyone who wants to learn, study, or revitalize their language.
 
@@ -29,7 +29,7 @@ This project utilizes [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.
 Using a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/) for development is recommended.
 
 ## Use a virtual environment:
-Run this in the root directory to setup a virtual environment. 
+Run this in the root directory to setup a virtual environment.
 You'll only need to do this once.
 This will create an env folder in the root directory which will contain the project dependencies as well as the python executable itself.
 ```
@@ -55,8 +55,14 @@ You'll be able to run the tool with the `language-indexing` command.
 ```
 pip install .
 ```
+## Run style guide check
+Install [flake8](https://flake8.pycqa.org/en/latest/) if it is not already on your system.
+Run from the root directory:
+```
+flake8
+```
 
 # Contribute
-We're looking for help developing this tool. 
+We're looking for help developing this tool.
 We invite contributors of any skill level.
 Please contact [Scott](mailto:scott@wikitongues.org) if you are interested!
