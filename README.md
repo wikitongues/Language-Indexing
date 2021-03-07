@@ -62,6 +62,12 @@ Run from the root directory:
 flake8
 ```
 
+## Run unit tests
+```
+cd test
+pytest
+```
+
 # Contribute
 We're looking for help developing this tool.
 We invite contributors of any skill level.
