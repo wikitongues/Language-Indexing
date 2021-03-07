@@ -64,8 +64,7 @@ flake8
 
 ## Run unit tests
 ```
-cd test
-pytest
+python -m unittest
 ```
 
 # Contribute
