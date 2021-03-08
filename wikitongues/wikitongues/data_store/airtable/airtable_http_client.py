@@ -1,6 +1,12 @@
+from abc import ABC, abstractmethod
 import requests
 
-class AirtableHttpClient:
+class IAirtableHttpClient(ABC):
+    @abstractmethod
+    def list_records(self, page_size=None, offset=None, max_records=100):
+        pass
+
+class AirtableHttpClient(IAirtableHttpClient):
 
     _base_url = 'https://api.airtable.com/v0'
 

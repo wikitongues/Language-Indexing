@@ -1,6 +1,17 @@
 from wikitongues.wikitongues.language import Language
 
-class AirtableLanguageExtractor:
+from abc import ABC, abstractmethod
+
+class IAirtableLanguageExtractor(ABC):
+    @abstractmethod
+    def extract_languages_from_json(self, json_obj):
+        pass
+
+    @abstractmethod
+    def extract_language_from_json(self, json_obj):
+        pass
+
+class AirtableLanguageExtractor(IAirtableLanguageExtractor):
 
     RECORDS = 'records'
     FIELDS = 'fields'

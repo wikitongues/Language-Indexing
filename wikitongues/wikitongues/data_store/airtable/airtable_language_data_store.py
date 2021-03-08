@@ -1,4 +1,4 @@
-from wikitongues.data_store.language_data_store import LanguageDataStore
+from wikitongues.wikitongues.data_store.language_data_store import LanguageDataStore
 
 class AirtableLanguageDataStore(LanguageDataStore):
 
@@ -14,4 +14,4 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
     def list_languages(self):
         response = self._client.list_records()
-        return self._extractor.extract_language_from_json(response.text)
+        return self._extractor.extract_languages_from_json(response.json_obj)
