@@ -18,7 +18,7 @@ class CollectionSpider(scrapy.Spider):
         yield scrapy.Request(self.url, self.parse_index)
 
     def parse_index(self, response):
-        links = response.css(f'{self.selector} a').getall()
+        # links = response.css(f'{self.selector} a').getall()
         pass
 
     def parse_collection_item(self, response, language):

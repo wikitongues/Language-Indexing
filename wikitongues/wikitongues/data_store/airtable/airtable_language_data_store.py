@@ -1,4 +1,5 @@
-from wikitongues.wikitongues.data_store.language_data_store import LanguageDataStore
+from ..language_data_store import LanguageDataStore
+
 
 class AirtableLanguageDataStore(LanguageDataStore):
 

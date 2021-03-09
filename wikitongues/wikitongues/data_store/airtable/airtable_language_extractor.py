@@ -1,6 +1,7 @@
-from wikitongues.wikitongues.language import Language
+from ...language import Language
 
 from abc import ABC, abstractmethod
+
 
 class IAirtableLanguageExtractor(ABC):
     @abstractmethod
@@ -11,6 +12,7 @@ class IAirtableLanguageExtractor(ABC):
     def extract_language_from_json(self, json_obj):
         pass
 
+
 class AirtableLanguageExtractor(IAirtableLanguageExtractor):
 
     RECORDS = 'records'
@@ -20,7 +22,8 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
     WIKIPEDIA_URL = 'wikipedia_url'
 
     def extract_languages_from_json(self, json_obj):
-        return list(map(self.extract_language_from_json, json_obj[self.RECORDS]))
+        return list(
+            map(self.extract_language_from_json, json_obj[self.RECORDS]))
 
     def extract_language_from_json(self, json_obj):
         fields = json_obj[self.FIELDS]

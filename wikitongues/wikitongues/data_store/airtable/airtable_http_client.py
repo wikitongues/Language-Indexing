@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 import requests
 
+
 class IAirtableHttpClient(ABC):
     @abstractmethod
     def list_records(self, page_size=None, offset=None, max_records=100):
         pass
+
 
 class AirtableHttpClient(IAirtableHttpClient):
 
@@ -27,10 +29,10 @@ class AirtableHttpClient(IAirtableHttpClient):
             f'maxRecords={max_records}'
         ]
 
-        if page_size != None:
+        if page_size is not None:
             params.append(f'pageSize={page_size}')
 
-        if offset != None:
+        if offset is not None:
             params.append(f'offset={offset}')
 
         url = f'{self._route}?{"&".join(params)}'

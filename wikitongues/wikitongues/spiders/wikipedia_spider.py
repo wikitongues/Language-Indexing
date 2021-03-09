@@ -2,6 +2,7 @@ import scrapy
 
 from items import WikitonguesItem
 
+
 # Finds all the external links in the Wikipedia pages for the given languages
 class WikipediaSpider(scrapy.Spider):
     # Used to identify the spider within the program
@@ -47,4 +48,3 @@ class WikipediaSpider(scrapy.Spider):
             language_id=language.id,
             spider_name=self.name
         )
-›

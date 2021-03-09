@@ -7,6 +7,8 @@ import scrapy
 
 # WikitonguesItem is the output of the program.
 # A WikitonguesItem is a web page to be indexed and stored.
+
+
 class WikitonguesItem(scrapy.Item):
     # The title of the page, from the <title> tag
     title = scrapy.Field()
