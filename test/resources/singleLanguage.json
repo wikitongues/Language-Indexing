@@ -1,0 +1,52 @@
+{
+    "records": [
+        {
+            "id": "recf7mJIvQJFkwlJR",
+            "fields": {
+                "Identifier": "aaa",
+                "Genealogy Keywords": "Niger-Congo, Atlantic-Congo, Volta-Congo, Benue-Congo, Edoid, North-Central, Ghotuo-Uneme-Yekhee",
+                "Ethnologue Language URL": "http://ethnologue.com/language/aaa",
+                "✖️ Language Resources": "OLAC resources in and about Ghotuo",
+                "Standardized Name": "Ghotuo",
+                "ISO URL": "http://www.sil.org/iso639-3/documentation.asp?id=aaa",
+                "Language Resources URL": "http://www.language-archives.org/language/aaa",
+                "Demographics": "9,000 (1994).",
+                "✖️ Language Names": "Ghotuo",
+                "Nations of Origin": [
+                    "recIDi2k4LZErM6FF"
+                ],
+                "Territories": [
+                    "recFueMx4ttbYQmum"
+                ],
+                "Language Status Raw": "6a - Vigorous",
+                "Glottocode": [
+                    "recpz4Md1gBo3ljWU"
+                ],
+                "✖️ Language Descriptions": [
+                    "recYY18GXQC7LKJsG"
+                ],
+                "Wikipedia Intro": "Ghotuo (also Otwa, Otuo) is an Edoid language spoken in Edo State, mostly in the Owan and Akoko-Edo areas of Edo state, Nigeria.\\n",
+                "Subjects Reference ID: Wikipedia URL": "https://en.wikipedia.org/wiki/Ghotuo_language",
+                "Genealogy": [
+                    "recoebk05hlAsZbVP"
+                ],
+                "Social Context Notes": " ",
+                "Language Names": "Ghotuo",
+                "Continent of Origin": [
+                    "recVEZgf20WxuOop9"
+                ],
+                "# of videos": 0,
+                "standard_name": "Ghotuo",
+                "language_description": "Ghotuo (also Otwa, Otuo) is an Edoid language spoken in Edo State, mostly in the Owan and Akoko-Edo areas of Edo state, Nigeria.\\n",
+                "post_type": "languages",
+                "post_status": "publish",
+                "post_title": "aaa",
+                "Identifier Source": "ISO 639-3",
+                "wikipedia_url": "https://en.wikipedia.org/wiki/Ghotuo_language",
+                "nations_of_origin": "Nigeria",
+                "linguistic_genealogy": "Niger-Congo"
+            },
+            "createdTime": "2014-12-19T22:45:23.000Z"
+        }
+    ]
+}

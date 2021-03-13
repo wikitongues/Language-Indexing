@@ -6,24 +6,34 @@ from wikitongues.wikitongues.language import Language
 
 import unittest
 
-EXPECTED_JSON = {}
+EXPECTED_JSON = '{"records": [{"a": "a"}]}'
+EXPECTED_NULL_JSON = '{"records": []}'
 
 EXPECTED_LANGUAGE = Language(
     'aaa',
     'Ghotuo',
     'https://en.wikipedia.org/wiki/Ghotuo_language')
 
+EXPECTED_ID = 'aaa'
+NULL_ID = 'zzz'
+
 
 class MockAirtableHttpClient(IAirtableHttpClient):
     def list_records(self):
         return MockResponse()
 
-    def get_record(self):
-        pass
+    def get_record(self, id):
+        if id == NULL_ID:
+            return MockResponse(EXPECTED_NULL_JSON)
+
+        return MockResponse()
 
 
 class MockAirtableLanguageExtractor(IAirtableLanguageExtractor):
-    def extract_languages_from_json(self, *args):
+    def extract_languages_from_json(self, json_obj, *args):
+        if len(json_obj['records']) == 0:
+            return []
+
         return [EXPECTED_LANGUAGE]
 
     def extract_language_from_json(self, *args):
@@ -31,7 +41,8 @@ class MockAirtableLanguageExtractor(IAirtableLanguageExtractor):
 
 
 class MockResponse:
-    json_obj = EXPECTED_JSON
+    def __init__(self, text=EXPECTED_JSON):
+        self.text = text
 
 
 class TestAirtableLanguageDataStore(unittest.TestCase):
@@ -45,3 +56,13 @@ class TestAirtableLanguageDataStore(unittest.TestCase):
         result = self.data_store.list_languages()
 
         self.assertIn(EXPECTED_LANGUAGE, result)
+
+    def test_get_language(self):
+        result = self.data_store.get_language(EXPECTED_ID)
+
+        self.assertEqual(EXPECTED_LANGUAGE, result)
+
+    def test_get_language__null_id(self):
+        result = self.data_store.get_language(NULL_ID)
+
+        self.assertIsNone(result)

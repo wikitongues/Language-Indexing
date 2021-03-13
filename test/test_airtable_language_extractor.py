@@ -34,6 +34,14 @@ class TestAirtableLanguageExtractor(unittest.TestCase):
             result[2].wikipedia_url,
             'https://en.wikipedia.org/wiki/Ari_language_(New_Guinea)')
 
+    def test_extract_empty_list(self):
+        with open('test/resources/emptyRecords.json') as f:
+            json_obj = json.load(f)
+
+        result = self.extractor.extract_languages_from_json(json_obj)
+
+        self.assertEqual(len(result), 0)
+
 
 if __name__ == '__main__':
     unittest.main()
