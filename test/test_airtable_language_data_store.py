@@ -28,6 +28,9 @@ class MockAirtableHttpClient(IAirtableHttpClient):
 
         return MockResponse()
 
+    def create_record(self, fields):
+        pass
+
 
 class MockAirtableLanguageExtractor(IAirtableLanguageExtractor):
     def extract_languages_from_json(self, json_obj, *args):

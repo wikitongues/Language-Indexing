@@ -12,6 +12,10 @@ class IAirtableHttpClient(ABC):
     def get_record(self, id):
         pass
 
+    @abstractmethod
+    def create_record(self, fields):
+        pass
+
 
 class AirtableHttpClient(IAirtableHttpClient):
 
@@ -51,3 +55,19 @@ class AirtableHttpClient(IAirtableHttpClient):
         url = f'{self._route}?filterByFormula={formula}'
 
         return requests.get(url, headers=self._headers)
+
+    def create_record(self, fields):
+        json_obj = {
+            'records': [
+                {
+                    'fields': fields
+                }
+            ]
+        }
+
+        headers = {
+            **self._headers,
+            'Content-Type': 'application/json'
+        }
+
+        return requests.post(self._route, json=json_obj, headers=headers)

@@ -61,6 +61,9 @@ Run from the root directory:
 ```
 flake8
 ```
+If you use Visual Studio Code, you can install these extensions to assist with following the style guide:
+* cornflakes-linter: highlight flake8 style guide problems
+* EditorConfig: Automatically fix whitespace problems
 
 ## Run unit tests
 ```

@@ -4,6 +4,7 @@ from wikitongues.wikitongues.data_store.airtable.airtable_table_info import Airt
 
 import responses
 import unittest
+import json
 
 BASE_ID = 'base_id'
 API_KEY = 'api_key'
@@ -29,11 +30,13 @@ class TestAirtableHttpClient(unittest.TestCase):
             f'maxRecords={max_records}&pageSize={page_size}&offset={offset}'
         )
 
-        # headers = {
-        #     'Authorization': f'Bearer {API_KEY}'
-        # }
+        def callback(request):
+            if request.headers['Authorization'] != f'Bearer {API_KEY}':
+                return (401, {}, None)
 
-        responses.add(responses.GET, url, body=text)
+            return (200, {}, text)
+
+        responses.add_callback(responses.GET, url, callback=callback)
 
         result = self.client.list_records(
             page_size=page_size, offset=offset, max_records=max_records)
@@ -49,8 +52,47 @@ class TestAirtableHttpClient(unittest.TestCase):
             f'filterByFormula=%7B{ID_COLUMN}%7D%20%3D%20%27{id}%27'
         )
 
-        responses.add(responses.GET, url, body=text)
+        def callback(request):
+            if request.headers['Authorization'] != f'Bearer {API_KEY}':
+                return (401, {}, None)
+
+            return (200, {}, text)
+
+        responses.add_callback(responses.GET, url, callback=callback)
 
         result = self.client.get_record(id)
+
+        self.assertEqual(result.text, text)
+
+    @responses.activate
+    def test_create_record(self):
+        text = 'expected text'
+        url = f'https://api.airtable.com/v0/{BASE_ID}/{TABLE}'
+        fields = {
+            'a': 'a',
+            'b': 'b',
+            'c': 'c'
+        }
+
+        def callback(request):
+            if request.headers['Authorization'] != f'Bearer {API_KEY}':
+                return (401, {}, None)
+
+            json_obj = json.loads(request.body)
+
+            if type(json_obj['records']) != list:
+                return (400, {}, None)
+
+            if len(json_obj['records']) != 1:
+                return (400, {}, None)
+
+            if type(json_obj['records'][0]['fields']) != dict:
+                return (400, {}, None)
+
+            return (200, {}, text)
+
+        responses.add_callback(responses.POST, url, callback=callback)
+
+        result = self.client.create_record(fields)
 
         self.assertEqual(result.text, text)
