@@ -2,6 +2,8 @@ from wikitongues.wikitongues.data_store.airtable.airtable_language_data_store im
 from wikitongues.wikitongues.data_store.airtable.airtable_http_client import IAirtableHttpClient  # noqa: E501
 from wikitongues.wikitongues.data_store.airtable.airtable_language_extractor import IAirtableLanguageExtractor  # noqa: E501
 
+from wikitongues.wikitongues.data_store.error_response import ErrorResponse
+
 from wikitongues.wikitongues.language import Language
 
 import unittest
@@ -34,18 +36,23 @@ class MockAirtableHttpClient(IAirtableHttpClient):
 
 class MockAirtableLanguageExtractor(IAirtableLanguageExtractor):
     def extract_languages_from_json(self, json_obj, *args):
-        if len(json_obj['records']) == 0:
-            return []
+        result = ErrorResponse()
 
-        return [EXPECTED_LANGUAGE]
+        if len(json_obj['records']) == 0:
+            result.data = []
+        else:
+            result.data = [EXPECTED_LANGUAGE]
+
+        return result
 
     def extract_language_from_json(self, *args):
         pass
 
 
 class MockResponse:
-    def __init__(self, text=EXPECTED_JSON):
+    def __init__(self, text=EXPECTED_JSON, status_code=200):
         self.text = text
+        self.status_code = status_code
 
 
 class TestAirtableLanguageDataStore(unittest.TestCase):

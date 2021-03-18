@@ -14,24 +14,28 @@ class TestAirtableLanguageExtractor(unittest.TestCase):
 
         result = self.extractor.extract_languages_from_json(json_obj)
 
-        self.assertEqual(len(result), 3)
+        self.assertFalse(result.has_error())
 
-        self.assertEqual(result[0].id, 'aaa')
-        self.assertEqual(result[0].standard_name, 'Ghotuo')
+        data = result.data
+
+        self.assertEqual(len(data), 3)
+
+        self.assertEqual(data[0].id, 'aaa')
+        self.assertEqual(data[0].standard_name, 'Ghotuo')
         self.assertEqual(
-            result[0].wikipedia_url,
+            data[0].wikipedia_url,
             'https://en.wikipedia.org/wiki/Ghotuo_language')
 
-        self.assertEqual(result[1].id, 'aab')
-        self.assertEqual(result[1].standard_name, 'Alumu-Tesu')
+        self.assertEqual(data[1].id, 'aab')
+        self.assertEqual(data[1].standard_name, 'Alumu-Tesu')
         self.assertEqual(
-            result[1].wikipedia_url,
+            data[1].wikipedia_url,
             'https://en.wikipedia.org/wiki/Alumu_language')
 
-        self.assertEqual(result[2].id, 'aac')
-        self.assertEqual(result[2].standard_name, 'Ari')
+        self.assertEqual(data[2].id, 'aac')
+        self.assertEqual(data[2].standard_name, 'Ari')
         self.assertEqual(
-            result[2].wikipedia_url,
+            data[2].wikipedia_url,
             'https://en.wikipedia.org/wiki/Ari_language_(New_Guinea)')
 
     def test_extract_empty_list(self):
@@ -40,7 +44,9 @@ class TestAirtableLanguageExtractor(unittest.TestCase):
 
         result = self.extractor.extract_languages_from_json(json_obj)
 
-        self.assertEqual(len(result), 0)
+        self.assertFalse(result.has_error())
+
+        self.assertEqual(len(result.data), 0)
 
 
 if __name__ == '__main__':

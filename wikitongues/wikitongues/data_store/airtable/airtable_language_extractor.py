@@ -1,3 +1,5 @@
+from ..error_response import ErrorResponse
+
 from ...language import Language
 
 from abc import ABC, abstractmethod
@@ -22,13 +24,40 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
     WIKIPEDIA_URL = 'wikipedia_url'
 
     def extract_languages_from_json(self, json_obj):
-        return list(
-            map(self.extract_language_from_json, json_obj[self.RECORDS]))
+        result = ErrorResponse()
+
+        records = json_obj[self.RECORDS]
+
+        if records is None:
+            result.add_message(
+                'Airtable API response missing property \'records\'')
+            return result
+
+        languages = []
+        for record in records:
+            result1 = self.extract_language_from_json(record)
+
+            if result1.has_error():
+                return result1
+
+            languages.append(result1.data)
+
+        result.data = languages
+        return result
 
     def extract_language_from_json(self, json_obj):
+        result = ErrorResponse()
+
         fields = json_obj[self.FIELDS]
 
-        return Language(
+        if fields is None:
+            result.add_message(
+                'Airtable language record object missing property \'fields\'')
+            return result
+
+        result.data = Language(
             fields[self.IDENTIFIER],
             fields[self.STANDARD_NAME],
             fields[self.WIKIPEDIA_URL])
+
+        return result
