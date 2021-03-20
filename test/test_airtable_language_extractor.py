@@ -48,6 +48,57 @@ class TestAirtableLanguageExtractor(unittest.TestCase):
 
         self.assertEqual(len(result.data), 0)
 
+    def test_extract_bad_json(self):
+        json_obj = {}
+
+        result = self.extractor.extract_languages_from_json(json_obj)
+
+        self.assertTrue(result.has_error())
+        self.assertEqual(
+            result.messages[0],
+            'Airtable API response missing list property \'records\'')
+
+    def test_extract_bad_records(self):
+        json_obj = {
+            'records': ''
+        }
+        result = self.extractor.extract_languages_from_json(json_obj)
+
+        self.assertTrue(result.has_error())
+        self.assertEqual(
+            result.messages[0],
+            'Airtable API response missing list property \'records\'')
+
+    def test_extract_bad_record(self):
+        json_obj = {
+            'records': [
+                {}
+            ]
+        }
+        result = self.extractor.extract_languages_from_json(json_obj)
+
+        self.assertTrue(result.has_error())
+        self.assertEqual(
+            result.messages[0],
+            'Airtable language record object missing object property '
+            '\'fields\'')
+
+    def test_extract_bad_fields(self):
+        json_obj = {
+            'records': [
+                {
+                    'fields': ''
+                }
+            ]
+        }
+        result = self.extractor.extract_languages_from_json(json_obj)
+
+        self.assertTrue(result.has_error())
+        self.assertEqual(
+            result.messages[0],
+            'Airtable language record object missing object property '
+            '\'fields\'')
+
 
 if __name__ == '__main__':
     unittest.main()

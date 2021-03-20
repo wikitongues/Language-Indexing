@@ -26,11 +26,11 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
     def extract_languages_from_json(self, json_obj):
         result = ErrorResponse()
 
-        records = json_obj[self.RECORDS]
+        records = json_obj.get(self.RECORDS)
 
-        if records is None:
+        if type(records) != list:
             result.add_message(
-                'Airtable API response missing property \'records\'')
+                'Airtable API response missing list property \'records\'')
             return result
 
         languages = []
@@ -48,16 +48,17 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
     def extract_language_from_json(self, json_obj):
         result = ErrorResponse()
 
-        fields = json_obj[self.FIELDS]
+        fields = json_obj.get(self.FIELDS)
 
-        if fields is None:
+        if type(fields) != dict:
             result.add_message(
-                'Airtable language record object missing property \'fields\'')
+                'Airtable language record object missing object property '
+                '\'fields\'')
             return result
 
         result.data = Language(
-            fields[self.IDENTIFIER],
-            fields[self.STANDARD_NAME],
-            fields[self.WIKIPEDIA_URL])
+            fields.get(self.IDENTIFIER),
+            fields.get(self.STANDARD_NAME),
+            fields.get(self.WIKIPEDIA_URL))
 
         return result
