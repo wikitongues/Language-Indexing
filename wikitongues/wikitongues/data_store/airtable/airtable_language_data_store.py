@@ -35,7 +35,19 @@ class AirtableLanguageDataStore(LanguageDataStore):
         return result
 
     def get_languages(self, iso_codes):
-        pass
+        languages = []
+
+        for iso_code in iso_codes:
+            result = self.get_language(iso_code)
+
+            if result.has_error():
+                return result
+
+            languages.append(result.data)
+
+        result = ErrorResponse()
+        result.data = languages
+        return result
 
     def list_languages(self):
         result = ErrorResponse()
