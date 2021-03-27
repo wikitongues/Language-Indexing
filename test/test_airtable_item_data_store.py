@@ -2,6 +2,7 @@ from wikitongues.wikitongues.data_store.airtable.airtable_item_data_store import
 from wikitongues.wikitongues.data_store.airtable.airtable_http_client import IAirtableHttpClient  # noqa: E501
 from wikitongues.wikitongues.data_store.airtable.airtable_item_id_provider import AirtableItemIdProvider  # noqa: E501
 from wikitongues.wikitongues.data_store.airtable.airtable_item_formatter import IAirtableItemFormatter  # noqa: E501
+from wikitongues.wikitongues.data_store.airtable.airtable_item_extractor import IAirtableItemExtractor  # noqa: E501
 
 from wikitongues.wikitongues.data_store.error_response import ErrorResponse
 
@@ -49,7 +50,7 @@ class MockAirtableHttpClient(IAirtableHttpClient):
         return MockResponse(status_code=500)
 
 
-class MockAirtableItemExtractor:
+class MockAirtableItemExtractor(IAirtableItemExtractor):
     def extract_items_from_json(self, json_obj, *args):
         result = ErrorResponse()
 
@@ -59,6 +60,9 @@ class MockAirtableItemExtractor:
             result.data = [EXPECTED_ITEM]
 
         return result
+
+    def extract_item_from_json(self, json_obj):
+        pass
 
 
 class MockAirtableItemFormatter(IAirtableItemFormatter):
