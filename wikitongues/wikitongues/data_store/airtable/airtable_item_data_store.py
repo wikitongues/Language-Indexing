@@ -5,18 +5,26 @@ import json
 
 class AirtableItemDataStore(ItemDataStore):
 
-    def __init__(self, http_client, item_extractor, item_formatter):
+    def __init__(
+            self, http_client, item_extractor, item_formatter, id_provider):
         self._client = http_client
         self._extractor = item_extractor
         self._formatter = item_formatter
+        self._id_provider = id_provider
 
-    def get_item(self, url):
+    def get_item(self, url, iso_code):
         result = ErrorResponse()
 
-        response = self._client.get_record(url)
+        item_id = self._id_provider.get_item_id(url, iso_code)
+        response = self._client.get_record(item_id)
 
         json_obj = json.loads(response.text)
-        items = self._extractor.extract_items_from_json(json_obj)
+        extract_result = self._extractor.extract_items_from_json(json_obj)
+
+        if extract_result.has_error():
+            return extract_result
+
+        items = extract_result.data
 
         if len(items) == 0:
             return result
@@ -38,6 +46,3 @@ class AirtableItemDataStore(ItemDataStore):
             return result
 
         return result
-
-    def update_item(self, item):
-        pass

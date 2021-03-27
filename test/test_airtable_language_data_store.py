@@ -88,6 +88,7 @@ class TestAirtableLanguageDataStore(unittest.TestCase):
         result = self.data_store.get_language(NULL_ID)
 
         self.assertIsNone(result.data)
+        self.assertFalse(result.has_error())
 
     def test_get_languages(self):
         result = self.data_store.get_languages([EXPECTED_ID, EXPECTED_ID_1])
