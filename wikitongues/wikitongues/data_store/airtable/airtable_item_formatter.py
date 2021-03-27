@@ -11,9 +11,9 @@ class AirtableItemFormatter(IAirtableItemFormatter):
 
     def get_fields_dict(self, item):
         return {
-            'Title': item.title,
-            'Url': item.url,
+            'Title': item['title'],
+            'Url': item['url'],
             'Language': [
-                item.language_id
+                item['language_id']
             ]
         }
