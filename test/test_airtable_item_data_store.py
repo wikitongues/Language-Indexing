@@ -1,6 +1,7 @@
 from wikitongues.wikitongues.data_store.airtable.airtable_item_data_store import AirtableItemDataStore  # noqa: E501
 from wikitongues.wikitongues.data_store.airtable.airtable_http_client import IAirtableHttpClient  # noqa: E501
 from wikitongues.wikitongues.data_store.airtable.airtable_item_id_provider import AirtableItemIdProvider  # noqa: E501
+from wikitongues.wikitongues.data_store.airtable.airtable_item_formatter import IAirtableItemFormatter  # noqa: E501
 
 from wikitongues.wikitongues.data_store.error_response import ErrorResponse
 
@@ -60,7 +61,7 @@ class MockAirtableItemExtractor:
         return result
 
 
-class MockAirtableItemFormatter:
+class MockAirtableItemFormatter(IAirtableItemFormatter):
     def get_fields_dict(self, item):
         if item == EXPECTED_ITEM:
             return EXPECTED_FIELDS

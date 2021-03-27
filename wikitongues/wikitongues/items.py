@@ -16,7 +16,10 @@ class WikitonguesItem(scrapy.Item):
     # The url of the page
     url = scrapy.Field()
 
-    # The identifier (ISO code) of the associated language
+    # The ISO code of the associated language
+    iso_code = scrapy.Field()
+
+    # The Airtable identifier of the associated language
     language_id = scrapy.Field()
 
     # The spider that gathered the page

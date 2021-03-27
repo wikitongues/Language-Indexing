@@ -17,6 +17,7 @@ class IAirtableLanguageExtractor(ABC):
 
 class AirtableLanguageExtractor(IAirtableLanguageExtractor):
 
+    ID_PROPERTY = 'id'
     RECORDS = 'records'
     FIELDS = 'fields'
     IDENTIFIER = 'Identifier'
@@ -56,9 +57,17 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
                 '\'fields\'')
             return result
 
+        language_id = json_obj.get(self.ID_PROPERTY)
+
+        if type(language_id) != str:
+            result.add_message(
+                'Airtable language record missing property \'id\'')
+            return result
+
         result.data = Language(
             fields.get(self.IDENTIFIER),
             fields.get(self.STANDARD_NAME),
-            fields.get(self.WIKIPEDIA_URL))
+            fields.get(self.WIKIPEDIA_URL),
+            language_id)
 
         return result

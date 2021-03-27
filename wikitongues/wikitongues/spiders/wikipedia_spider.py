@@ -45,6 +45,7 @@ class WikipediaSpider(scrapy.Spider):
         yield WikitonguesItem(
             title=response.css('title::text').get(),
             url=response.url,
-            language_id=language.id,
+            iso_code=language.id,
+            language_id=language.airtable_id,
             spider_name=self.name
         )

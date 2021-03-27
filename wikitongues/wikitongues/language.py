@@ -7,7 +7,9 @@ class Language:
     # iso_code: ISO code of the language - unique to each language
     # standard_name: "Standard" name of the language
     # wikipedia_url: URL of the language's Wikipedia page
-    def __init__(self, iso_code, standard_name, wikipedia_url):
+    # airtable_id: ID or language assigned by Airtable
+    def __init__(self, iso_code, standard_name, wikipedia_url, airtable_id):
         self.id = iso_code
         self.standard_name = standard_name
         self.wikipedia_url = wikipedia_url
+        self.airtable_id = airtable_id
