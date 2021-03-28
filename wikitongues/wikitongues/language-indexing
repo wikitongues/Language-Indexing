@@ -2,22 +2,32 @@
 
 # Entry point for the program, invoked from the console
 
-import scrapy
 from scrapy.crawler import CrawlerProcess
 
-from spiders.wikipedia_spider import WikipediaSpider
+from spiders.wikipedia_spider import WikipediaSpider, WikipediaSpiderInput  # noqa: E501
+from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory  # noqa: E501
+from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
+from data_store.airtable.airtable_table_info import AirtableTableInfo
 
-from language import Language
+# from language import Language
 
 # Configure the language objects to gather links via WikipediaSpider
-languages = [
-    Language('sah', 'Sakha', 'https://en.wikipedia.org/wiki/Yakut_language'),
-    Language('nrf', 'Jèrriais', 'https://en.wikipedia.org/wiki/J%C3%A8rriais'),
-    Language('qwe', 'Quechua', 'https://en.wikipedia.org/wiki/Quechuan_languages'),
-    Language('nys', 'Nyungar', 'https://en.wikipedia.org/wiki/Nyungar_language'),
-    Language('xho', 'Xhosa', 'https://en.wikipedia.org/wiki/Xhosa_language'),
-    Language('dak', 'Sioux', 'https://en.wikipedia.org/wiki/Sioux_language')
-]
+iso_codes = ['sah']
+wikipedia_input = WikipediaSpiderInput(iso_codes)
+
+# Info required to connect to Airtable
+# TODO read from config file
+base_id = ''
+api_key = ''
+table_name = 'Languages'
+id_column = 'Identifier'
+
+connection_info = AirtableConnectionInfo(base_id, api_key)
+table_info = AirtableTableInfo(table_name, id_column)
+
+# Get a LanguageDataStore instance
+language_data_store = AirtableLanguageDataStoreFactory.get_data_store(
+    connection_info, table_info)
 
 # Configure a CrawlerProcess
 process = CrawlerProcess(
@@ -31,7 +41,7 @@ process = CrawlerProcess(
 )
 
 # Instantiate WikipediaSpider with the given languages
-process.crawl(WikipediaSpider, languages)
+process.crawl(WikipediaSpider, wikipedia_input, language_data_store)
 
 # Start crawling!
 process.start()

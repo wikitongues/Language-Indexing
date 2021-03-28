@@ -1,6 +1,6 @@
 from ..error_response import ErrorResponse
 
-from ...language import Language
+from language import Language
 
 from abc import ABC, abstractmethod
 

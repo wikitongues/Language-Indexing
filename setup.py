@@ -7,7 +7,9 @@ setup(
     author='Wikitongues',
     packages=[
         '',
-        'spiders'
+        'spiders',
+        'data_store',
+        'data_store.airtable'
     ],
     package_dir={
         '': 'wikitongues/wikitongues'
