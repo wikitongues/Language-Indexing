@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Lint
+name: Lint and test
 
 # Controls when the action will run.
 on:
@@ -28,7 +28,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7.9
+          python-version: 3.7.10
           architecture: x64
 
       - name: Install flake8
@@ -42,3 +42,7 @@ jobs:
           # The name of the check to add annotations to.
           # Generally the same as the job that uses this action
           checkName: 'build'
+          
+      - name: unittest action
+        uses: onichandame/python-test-action@0.0.0
+
