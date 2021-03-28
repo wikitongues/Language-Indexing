@@ -26,8 +26,10 @@ connection_info = AirtableConnectionInfo(base_id, api_key)
 table_info = AirtableTableInfo(table_name, id_column)
 
 # Get a LanguageDataStore instance
+# fake=True will give us a fake data store that returns a sample set of
+#   languages and does not require Airtable credentials
 language_data_store = AirtableLanguageDataStoreFactory.get_data_store(
-    connection_info, table_info)
+    connection_info, table_info, fake=True)
 
 # Configure a CrawlerProcess
 process = CrawlerProcess(
@@ -40,7 +42,7 @@ process = CrawlerProcess(
     }
 )
 
-# Instantiate WikipediaSpider with the given languages
+# Instantiate WikipediaSpider with the input and data store
 process.crawl(WikipediaSpider, wikipedia_input, language_data_store)
 
 # Start crawling!
