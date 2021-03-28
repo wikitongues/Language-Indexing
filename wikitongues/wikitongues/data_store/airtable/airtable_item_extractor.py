@@ -14,17 +14,57 @@ SPIDER_FIELD = 'Spider'
 
 
 class IAirtableItemExtractor(ABC):
+    """
+    Airtable item extractor interface
+
+    Args:
+        ABC
+    """
+
     @abstractmethod
     def extract_items_from_json(self, json_obj):
+        """
+        Extracts a list of WikitonguesItem objects from Airtable API response \
+JSON
+
+        Args:
+            json_obj (dict): Airtable API response object
+        """
         pass
 
     @abstractmethod
     def extract_item_from_json(self, json_obj):
+        """
+        Extracts a single WikitonguesItem object from Airtable API response \
+JSON
+
+        Args:
+            json_obj (dict): Airtable API response object
+        """
         pass
 
 
 class AirtableItemExtractor(IAirtableItemExtractor):
+    """
+    Extracts WikitonguesItem objects from Airtable API response JSON
+
+    Args:
+        IAirtableItemExtractor
+    """
+
     def extract_items_from_json(self, json_obj):
+        """
+        Extracts a list of WikitonguesItem objects from Airtable API response \
+JSON
+
+        Args:
+            json_obj (dict): Airtable API response object
+
+        Returns:
+            ErrorResponse: Response object containing list of WikitonguesItem \
+objects
+        """
+
         result = ErrorResponse()
 
         records = json_obj.get(RECORDS)
@@ -47,6 +87,17 @@ class AirtableItemExtractor(IAirtableItemExtractor):
         return result
 
     def extract_item_from_json(self, json_obj):
+        """
+        Extracts a single WikitonguesItem object from Airtable API response \
+JSON
+
+        Args:
+            json_obj (dict): Airtable API response object
+
+        Returns:
+            ErrorResponse: Response object containing WikitonguesItem object
+        """
+
         result = ErrorResponse()
 
         fields = json_obj.get(FIELDS)

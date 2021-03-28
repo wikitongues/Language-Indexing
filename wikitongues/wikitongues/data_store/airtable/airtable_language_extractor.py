@@ -6,16 +6,41 @@ from abc import ABC, abstractmethod
 
 
 class IAirtableLanguageExtractor(ABC):
+    """
+    Airtable language extractor interface
+
+    Args:
+        ABC
+    """
+
     @abstractmethod
     def extract_languages_from_json(self, json_obj):
+        """
+        Extract list of Language objects from Airtable API response JSON
+
+        Args:
+            json_obj (dict): Response from Airtable API
+        """
         pass
 
     @abstractmethod
     def extract_language_from_json(self, json_obj):
+        """
+        Extract Language object from Airtable API response JSON
+
+        Args:
+            json_obj (dict): Response from Airtable API
+        """
         pass
 
 
 class AirtableLanguageExtractor(IAirtableLanguageExtractor):
+    """
+    Utility for extracting Language objects from Airtable API response JSON
+
+    Args:
+        IAirtableLanguageExtractor
+    """
 
     ID_PROPERTY = 'id'
     RECORDS = 'records'
@@ -25,6 +50,16 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
     WIKIPEDIA_URL = 'wikipedia_url'
 
     def extract_languages_from_json(self, json_obj):
+        """
+        Extract list of Language objects from Airtable API response JSON
+
+        Args:
+            json_obj (dict): Response from Airtable API
+
+        Returns:
+            ErrorResponse: Response object containing list of Language objects
+        """
+
         result = ErrorResponse()
 
         records = json_obj.get(self.RECORDS)
@@ -47,6 +82,16 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
         return result
 
     def extract_language_from_json(self, json_obj):
+        """
+        Extract Language object from Airtable API response JSON
+
+        Args:
+            json_obj (dict): Response from Airtable API
+
+        Returns:
+            ErrorResponse: Response object containing Language object
+        """
+
         result = ErrorResponse()
 
         fields = json_obj.get(self.FIELDS)

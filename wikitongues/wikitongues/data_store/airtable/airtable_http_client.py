@@ -4,24 +4,64 @@ import urllib.parse
 
 
 class IAirtableHttpClient(ABC):
+    """
+    Airtable Http Client Interface
+
+    Args:
+        ABC
+    """
+
     @abstractmethod
     def list_records(self, page_size=None, offset=None, max_records=100):
+        """
+        List records
+
+        Args:
+            page_size (int, optional): Page size. Defaults to None.
+            offset (str, optional): Offset for pagination. Defaults to None.
+            max_records (int, optional): Max records. Defaults to 100.
+        """
         pass
 
     @abstractmethod
     def get_record(self, id):
+        """
+        Get record
+
+        Args:
+            id (str): Id of record
+        """
         pass
 
     @abstractmethod
     def create_record(self, fields):
+        """
+        Create record
+
+        Args:
+            fields (dict): Dictionary of fields
+        """
         pass
 
 
 class AirtableHttpClient(IAirtableHttpClient):
+    """
+    Http client for accessing an Airtable base
+
+    Args:
+        IAirtableHttpClient
+    """
 
     _base_url = 'https://api.airtable.com/v0'
 
     def __init__(self, connection_info, table_info):
+        """
+        Construct AirtableHttpClient
+
+        Args:
+            connection_info (AirtableConnectionInfo)
+            table_info (AirtableTableInfo)
+        """
 
         self._route = '/'.join([
             self._base_url,
@@ -36,6 +76,18 @@ class AirtableHttpClient(IAirtableHttpClient):
         self._id_column = table_info.id_column
 
     def list_records(self, page_size=None, offset=None, max_records=100):
+        """
+        List records
+
+        Args:
+            page_size (int, optional): Page size. Defaults to None.
+            offset (str, optional): Offset for pagination. Defaults to None.
+            max_records (int, optional): Max records. Defaults to 100.
+
+        Returns:
+            Response: Response from Airtable API
+        """
+
         params = [
             f'maxRecords={max_records}'
         ]
@@ -51,12 +103,31 @@ class AirtableHttpClient(IAirtableHttpClient):
         return requests.get(url, headers=self._headers)
 
     def get_record(self, id):
+        """
+        Get record
+
+        Args:
+            id (str): Id of record
+
+        Returns:
+            Response: Response from Airtable API
+        """
+
         formula = urllib.parse.quote_plus(f'{{{self._id_column}}} = \'{id}\'')
         url = f'{self._route}?filterByFormula={formula}'
 
         return requests.get(url, headers=self._headers)
 
     def create_record(self, fields):
+        """Create record
+
+        Args:
+            fields (dict): Dictionary of fields
+
+        Returns:
+            Response: Response from Airtable API
+        """
+
         json_obj = {
             'records': [
                 {

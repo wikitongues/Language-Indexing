@@ -4,12 +4,36 @@ import json
 
 
 class AirtableLanguageDataStore(LanguageDataStore):
+    """
+    Performs actions on an Airtable base for language data
+
+    Args:
+        LanguageDataStore
+    """
 
     def __init__(self, http_client, language_extractor):
+        """
+        Construct AirtableLanguageDataStore
+
+        Args:
+            http_client (IAirtableHttpClient): Http client
+            language_extractor (IAirtableLanguageExtractor): Language extractor
+        """
+
         self._client = http_client
         self._extractor = language_extractor
 
     def get_language(self, iso_code):
+        """
+        Retrieves language object for the given ISO code
+
+        Args:
+            iso_code (str): ISO code
+
+        Returns:
+            ErrorResponse: Response object containing Language object
+        """
+
         result = ErrorResponse()
 
         response = self._client.get_record(iso_code)
@@ -35,6 +59,16 @@ class AirtableLanguageDataStore(LanguageDataStore):
         return result
 
     def get_languages(self, iso_codes):
+        """
+        Retrieves language objects for the given ISO codes
+
+        Args:
+            iso_codes (list): List of ISO codes
+
+        Returns:
+            ErrorResponse: Response object containing list of Language objects
+        """
+
         languages = []
 
         for iso_code in iso_codes:
@@ -50,6 +84,13 @@ class AirtableLanguageDataStore(LanguageDataStore):
         return result
 
     def list_languages(self):
+        """
+        Retrieves list of language objects
+
+        Returns:
+            ErrorResponse: Response object containing list of Language objects
+        """
+
         result = ErrorResponse()
 
         response = self._client.list_records()

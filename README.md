@@ -64,6 +64,7 @@ flake8
 If you use Visual Studio Code, you can install these extensions to assist with following the style guide:
 * cornflakes-linter: highlight flake8 style guide problems
 * EditorConfig: Automatically fix whitespace problems
+* Python Docstring Generator: Type `"""` to generate the docstring template for a class or function
 
 ## Run unit tests
 ```
