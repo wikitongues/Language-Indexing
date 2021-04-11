@@ -15,6 +15,7 @@ To run this tool, Python 3 must be installed on your system.
 ## Install locally:
 Clone the repository and run from the root directory:
 ```
+pip install -r requirements.txt
 pip install .
 ```
 

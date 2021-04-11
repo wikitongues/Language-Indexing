@@ -15,7 +15,9 @@ setup(
     package_dir={
         '': 'wikitongues/wikitongues'
     },
-    scripts=['wikitongues/wikitongues/language-indexing'],
+    entry_points={
+        'console_scripts': ['language-indexing=language_indexing']
+    },
     install_requires=[
         'Scrapy'
     ],
