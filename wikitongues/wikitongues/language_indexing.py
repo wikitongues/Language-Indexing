@@ -49,7 +49,7 @@ process = CrawlerProcess(
 
 
 def process_site(site_tuple):
-    iso_codes = [iso[1] for iso in config['language_codes']]
+    iso_codes = [iso[1] for iso in config.items('language_codes')]
 
     spiders_dir_tree = os.listdir('wikitongues/wikitongues/spiders')
 
