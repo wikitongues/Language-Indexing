@@ -7,6 +7,7 @@ setup(
     author='Wikitongues',
     packages=[
         '',
+        'config',
         'spiders',
         'data_store',
         'data_store.airtable'
@@ -17,5 +18,6 @@ setup(
     scripts=['wikitongues/wikitongues/language-indexing'],
     install_requires=[
         'Scrapy'
-    ]
+    ],
+    include_package_data=True
 )
