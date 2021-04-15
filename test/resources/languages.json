@@ -1,0 +1,155 @@
+{
+    "records": [
+        {
+            "id": "recf7mJIvQJFkwlJR",
+            "fields": {
+                "Identifier": "aaa",
+                "Genealogy Keywords": "Niger-Congo, Atlantic-Congo, Volta-Congo, Benue-Congo, Edoid, North-Central, Ghotuo-Uneme-Yekhee",
+                "Ethnologue Language URL": "http://ethnologue.com/language/aaa",
+                "✖️ Language Resources": "OLAC resources in and about Ghotuo",
+                "Standardized Name": "Ghotuo",
+                "ISO URL": "http://www.sil.org/iso639-3/documentation.asp?id=aaa",
+                "Language Resources URL": "http://www.language-archives.org/language/aaa",
+                "Demographics": "9,000 (1994).",
+                "✖️ Language Names": "Ghotuo",
+                "Nations of Origin": [
+                    "recIDi2k4LZErM6FF"
+                ],
+                "Territories": [
+                    "recFueMx4ttbYQmum"
+                ],
+                "Language Status Raw": "6a - Vigorous",
+                "Glottocode": [
+                    "recpz4Md1gBo3ljWU"
+                ],
+                "✖️ Language Descriptions": [
+                    "recYY18GXQC7LKJsG"
+                ],
+                "Wikipedia Intro": "Ghotuo (also Otwa, Otuo) is an Edoid language spoken in Edo State, mostly in the Owan and Akoko-Edo areas of Edo state, Nigeria.\n",
+                "Subjects Reference ID: Wikipedia URL": "https://en.wikipedia.org/wiki/Ghotuo_language",
+                "Genealogy": [
+                    "recoebk05hlAsZbVP"
+                ],
+                "Social Context Notes": " ",
+                "Language Names": "Ghotuo",
+                "Continent of Origin": [
+                    "recVEZgf20WxuOop9"
+                ],
+                "# of videos": 0,
+                "standard_name": "Ghotuo",
+                "language_description": "Ghotuo (also Otwa, Otuo) is an Edoid language spoken in Edo State, mostly in the Owan and Akoko-Edo areas of Edo state, Nigeria.\n",
+                "post_type": "languages",
+                "post_status": "publish",
+                "post_title": "aaa",
+                "Identifier Source": "ISO 639-3",
+                "wikipedia_url": "https://en.wikipedia.org/wiki/Ghotuo_language",
+                "nations_of_origin": "Nigeria",
+                "linguistic_genealogy": "Niger-Congo"
+            },
+            "createdTime": "2014-12-19T22:45:23.000Z"
+        },
+        {
+            "id": "recXXGr9McbSC8FMa",
+            "fields": {
+                "Identifier": "aab",
+                "Genealogy Keywords": "Niger-Congo, Atlantic-Congo, Volta-Congo, Benue-Congo, Plateau, Alumic",
+                "Ethnologue Language URL": "http://ethnologue.com/language/aab",
+                "Dialects": "Alumu (Arum), Tesu. Related to Toro ,. The 2 dialects have only intonation differences.",
+                "✖️ Language Resources": "OLAC resources in and about Alumu-Tesu",
+                "✖️ Alternate Names": "Alumu, Arum-Cesu, Arum-Chessu, Arum-Tesu",
+                "Standardized Name": "Alumu-Tesu",
+                "Language Use": "All ages.",
+                "ISO URL": "http://www.sil.org/iso639-3/documentation.asp?id=aab",
+                "Language Resources URL": "http://www.language-archives.org/language/aab",
+                "Demographics": "7,000 (Blench, Spriggs, and Connell 1999).",
+                "✖️ Language Names": "Alumu-Tesu, Alumu, Arum-Cesu, Arum-Chessu, Arum-Tesu",
+                "Nations of Origin": [
+                    "recIDi2k4LZErM6FF"
+                ],
+                "Territories": [
+                    "recV7iF0w6hmR4Et4"
+                ],
+                "Language Status Raw": "6a - Vigorous",
+                "Glottocode": [
+                    "recBlHgXDASkSnw8K"
+                ],
+                "✖️ Language Descriptions": [
+                    "recZY8S473pmhcV9E"
+                ],
+                "Wikipedia Intro": "Alumu is a Plateau language spoken by approximately 7,000 people in Nassarawa State, Nigeria. It has lost the nominal affix system characteristic of t...",
+                "Subjects Reference ID: Wikipedia URL": "https://en.wikipedia.org/wiki/Alumu_language",
+                "Genealogy": [
+                    "recoebk05hlAsZbVP"
+                ],
+                "Social Context Notes": " ",
+                "Language Names": "Alumu-Tesu, Alumu, Arum-Cesu, Arum-Chessu, Arum-Tesu",
+                "Continent of Origin": [
+                    "recVEZgf20WxuOop9"
+                ],
+                "# of videos": 0,
+                "alternate_names": "Alumu, Arum-Cesu, Arum-Chessu, Arum-Tesu",
+                "standard_name": "Alumu-Tesu",
+                "language_description": "Alumu is a Plateau language spoken by approximately 7,000 people in Nassarawa State, Nigeria. It has lost the nominal affix system characteristic of t...",
+                "post_type": "languages",
+                "post_status": "publish",
+                "post_title": "aab",
+                "Identifier Source": "ISO 639-3",
+                "wikipedia_url": "https://en.wikipedia.org/wiki/Alumu_language",
+                "nations_of_origin": "Nigeria",
+                "linguistic_genealogy": "Niger-Congo"
+            },
+            "createdTime": "2014-12-19T22:45:23.000Z"
+        },
+        {
+            "id": "recMReCASeuRMIuwz",
+            "fields": {
+                "Identifier": "aac",
+                "Genealogy Keywords": "Trans-New Guinea, Gogodala-Suki, Gogodala",
+                "Ethnologue Language URL": "http://ethnologue.com/language/aac",
+                "Dialects": "Serea.",
+                "✖️ Language Resources": "OLAC resources in and about Ari\\",
+                "Standardized Name": "Ari",
+                "Language Use": "Also use Gogodala [ggw]. Used as L2 by Wagi [fad].",
+                "ISO URL": "http://www.sil.org/iso639-3/documentation.asp?id=aac",
+                "Language Resources URL": "http://www.language-archives.org/language/aac",
+                "Demographics": "50 (Wurm 2000).",
+                "Writing System": [
+                    "recNZZ8z95zO2bMVp"
+                ],
+                "✖️ Language Names": "Ari",
+                "Nations of Origin": [
+                    "recNvAwtasGgBkbQE"
+                ],
+                "Language Status Raw": "6b - Threatened",
+                "Glottocode": [
+                    "rec94G3B0UU9I87YY"
+                ],
+                "✖️ Language Descriptions": [
+                    "recAy7CcLe8dj5Ji0"
+                ],
+                "Wikipedia Intro": "The Ari language is a Papuan language of the Trans–New Guinea family. As of the 2000 census there were only 50 Ari speakers, living in the two village...",
+                "Subjects Reference ID: Wikipedia URL": "https://en.wikipedia.org/wiki/Ari_language_(New_Guinea)",
+                "Genealogy": [
+                    "recn9fdrp4wj7OL8z"
+                ],
+                "Social Context Notes": " ",
+                "Language Names": "Ari",
+                "Continent of Origin": [
+                    "recd8qBduy6JltC22"
+                ],
+                "# of videos": 0,
+                "standard_name": "Ari",
+                "language_description": "The Ari language is a Papuan language of the Trans–New Guinea family. As of the 2000 census there were only 50 Ari speakers, living in the two village...",
+                "post_type": "languages",
+                "post_status": "publish",
+                "post_title": "aac",
+                "Identifier Source": "ISO 639-3",
+                "wikipedia_url": "https://en.wikipedia.org/wiki/Ari_language_(New_Guinea)",
+                "nations_of_origin": "Papua New Guinea",
+                "linguistic_genealogy": "Trans-New Guinea"
+            },
+            "createdTime": "2014-12-19T22:45:23.000Z"
+        }
+    ],
+    "offset": "recMReCASeuRMIuwz"
+}

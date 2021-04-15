@@ -15,6 +15,7 @@ To run this tool, Python 3 must be installed on your system.
 ## Install locally:
 Clone the repository and run from the root directory:
 ```
+pip install -r requirements.txt
 pip install .
 ```
 
@@ -60,6 +61,15 @@ Install [flake8](https://flake8.pycqa.org/en/latest/) if it is not already on yo
 Run from the root directory:
 ```
 flake8
+```
+If you use Visual Studio Code, you can install these extensions to assist with following the style guide:
+* cornflakes-linter: highlight flake8 style guide problems
+* EditorConfig: Automatically fix whitespace problems
+* Python Docstring Generator: Type `"""` to generate the docstring template for a class or function
+
+## Run unit tests
+```
+python -m unittest
 ```
 
 # Contribute
