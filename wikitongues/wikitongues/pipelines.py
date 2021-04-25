@@ -67,6 +67,9 @@ the same url, associated with the same language
             raise DropItem(
                 f'Resource already indexed for language {iso_code}: {url}')
 
-        self.item_data_store.create_item(item)
+        create_result = self.item_data_store.create_item(item)
+
+        if create_result.has_error():
+            self.logger.error('\n'.join(create_result.messages))
 
         return item
