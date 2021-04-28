@@ -1,24 +1,20 @@
 #!/usr/bin/env python
 
 # Entry point for the program, invoked from the console
+import sys
 
 from scrapy.crawler import CrawlerProcess
-import configparser
 import os
 import importlib
 
-try:
-    import importlib.resources as pkg_resources
-except ImportError:
-    # Try backported to PY<37 `importlib_resources`.
-    import importlib_resources as pkg_resources  # noqa: F401
-
+from config import load_configs
 from spiders.wikipedia_spider import WikipediaSpiderInput  # noqa: E501
 from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory  # noqa: E501
 from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
 from data_store.airtable.airtable_table_info import AirtableTableInfo
 
 import config as config_pkg
+import this as wikitongues_pkg
 
 # Info required to connect to Airtable
 # TODO read from config file
@@ -65,12 +61,11 @@ def process_site(site_tuple):
             process.start()
 
 
-config_text = pkg_resources.read_text(config_pkg, 'indexing.cfg')
-config = configparser.ConfigParser()
-config.read_string(config_text)
+config = load_configs()
 sites = config.items('sites')
+
 start_all_crawls = input('Do you wish to crawl all spiders? (Y/N) ')
-#start_all_crawls = 'y'
+# start_all_crawls = 'y'
 if start_all_crawls.lower() == 'n':
     site_to_crawl = input('Which site would you like to crawl? ')
     for site in sites:
