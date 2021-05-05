@@ -7,14 +7,11 @@ from scrapy.crawler import CrawlerProcess
 import os
 import importlib
 
-from config import load_configs
+from config.load_configs import load_configs
 from spiders.wikipedia_spider import WikipediaSpiderInput  # noqa: E501
 from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory  # noqa: E501
 from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
 from data_store.airtable.airtable_table_info import AirtableTableInfo
-
-import config as config_pkg
-import this as wikitongues_pkg
 
 # Info required to connect to Airtable
 # TODO read from config file
@@ -65,7 +62,7 @@ config = load_configs()
 sites = config.items('sites')
 
 start_all_crawls = input('Do you wish to crawl all spiders? (Y/N) ')
-# start_all_crawls = 'y'
+
 if start_all_crawls.lower() == 'n':
     site_to_crawl = input('Which site would you like to crawl? ')
     for site in sites:
