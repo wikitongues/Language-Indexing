@@ -27,8 +27,8 @@ def load_configs():
         user_config_file.close()
         pass
     except FileNotFoundError:
-        print("Error: User config file not found at path " +
-              env + local_config_paths[2][1])
+        print("Error: User config file not found at path "
+              + env + local_config_paths[2][1])
         sys.exit(1)
         pass
 
