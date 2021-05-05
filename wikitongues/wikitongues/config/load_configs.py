@@ -3,7 +3,9 @@ from sys import platform
 import configparser
 import os
 
+
 def load_configs():
+
     print("loading config file")
 
     default_config = configparser.ConfigParser()
@@ -19,15 +21,14 @@ def load_configs():
         env = os.getenv('HOME')
         env += local_config_paths[1][1]
 
-
-
     try:
         user_config_file = open(env + local_config_paths[2][1])
         user_config.read_file(user_config_file)
         user_config_file.close()
         pass
     except FileNotFoundError:
-        print("Error: User config file not found at path " + env + local_config_paths[2][1])
+        print("Error: User config file not found at path " +
+              env + local_config_paths[2][1])
         sys.exit(1)
         pass
 
