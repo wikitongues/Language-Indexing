@@ -73,6 +73,7 @@ if start_all_crawls.lower() == 'n':
             process_site(site_to_crawl)
             break
     print('Invalid input: could not find a site that matched your input')
+    sys.exit(1)
 
 elif start_all_crawls.lower() == 'y':
     for site in sites:
@@ -81,3 +82,4 @@ elif start_all_crawls.lower() == 'y':
 
 else:
     print('invalid input')
+    sys.exit(1)
