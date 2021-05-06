@@ -22,7 +22,7 @@ def load_configs():
         env += local_config_paths[1][1]
     else:
         raise Exception("This program is intended only for Mac,"
-                      + "Linux, or Windows machines.")
+                                            + "Linux, or Windows machines.")
 
     try:
         user_config_file = open(env + local_config_paths[2][1])
