@@ -10,12 +10,12 @@ def load_configs():
 
     default_config = configparser.ConfigParser()
     current_dir = os.path.dirname(__file__)
-    default_config.read_file(open(os.path.join(current_dir,"indexing.cfg")))
+    default_config.read_file(open(os.path.join(current_dir, "indexing.cfg")))
     local_config_paths = default_config.items("local_config_path")
 
     user_config = configparser.ConfigParser()
 
-    if platform == "windows":
+    if platform == "windows" or platform == "win32":
         env = os.getenv("APPDATA")
         env += local_config_paths[0][1]
     elif platform == "linux" or platform == "linux2" or platform == "darwin":
