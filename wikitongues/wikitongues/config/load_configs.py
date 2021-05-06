@@ -9,11 +9,11 @@ def load_configs():
     print("loading config file")
 
     default_config = configparser.ConfigParser()
-    default_config.read_file(open('config/indexing.cfg'))
+    default_config.read_file(open('indexing.cfg'))
     local_config_paths = default_config.items('local_config_path')
 
     user_config = configparser.ConfigParser()
-    
+
     if platform == "Windows":
         env = os.getenv('APPDATA')
         env += local_config_paths[0][1]
@@ -21,7 +21,8 @@ def load_configs():
         env = os.getenv('HOME')
         env += local_config_paths[1][1]
     else:
-        raise Exception('This program is intended only for Mac, Linux, or Windows machines.')
+        raise Exception("This program is intended only for Mac," 
+             + "Linux, or Windows machines.")
 
     try:
         user_config_file = open(env + local_config_paths[2][1])
