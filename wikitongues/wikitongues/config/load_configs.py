@@ -9,16 +9,17 @@ def load_configs():
     print("loading config file")
 
     default_config = configparser.ConfigParser()
-    default_config.read_file(open('indexing.cfg'))
-    local_config_paths = default_config.items('local_config_path')
+    current_dir = os.path.dirname(__file__)
+    default_config.read_file(open(os.path.join(current_dir,"indexing.cfg")))
+    local_config_paths = default_config.items("local_config_path")
 
     user_config = configparser.ConfigParser()
 
-    if platform == "Windows":
-        env = os.getenv('APPDATA')
+    if platform == "windows":
+        env = os.getenv("APPDATA")
         env += local_config_paths[0][1]
-    elif platform == "Linux" or platform == "linux2" or platform == "Darwin":
-        env = os.getenv('HOME')
+    elif platform == "linux" or platform == "linux2" or platform == "darwin":
+        env = os.getenv("HOME")
         env += local_config_paths[1][1]
     else:
         raise Exception("This program is intended only for Mac,"
@@ -36,7 +37,7 @@ def load_configs():
         sys.exit(1)
         pass
 
-    if len(user_config.items('sites')) > 0:
+    if len(user_config.items("sites")) > 0:
         # override sites configuration
         print("Using user configuration")
         return user_config
