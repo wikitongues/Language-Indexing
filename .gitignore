@@ -1,7 +1,4 @@
 env
 __pycache__
 *.jl
-.vscode/
-.idea/
-*/wikitongues-language-indexingo.cfg
 venv/

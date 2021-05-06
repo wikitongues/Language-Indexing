@@ -6,7 +6,6 @@ import sys
 from scrapy.crawler import CrawlerProcess
 import os
 import importlib
-
 from config.load_configs import load_configs
 from spiders.wikipedia_spider import WikipediaSpiderInput  # noqa: E501
 from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory  # noqa: E501

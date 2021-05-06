@@ -13,13 +13,15 @@ def load_configs():
     local_config_paths = default_config.items('local_config_path')
 
     user_config = configparser.ConfigParser()
-
-    if platform == "win32":
+    
+    if platform == "Windows":
         env = os.getenv('APPDATA')
         env += local_config_paths[0][1]
-    elif platform == "linux" or platform == "linux2":
+    elif platform == "Linux" or platform == "linux2" or platform == "Darwin":
         env = os.getenv('HOME')
         env += local_config_paths[1][1]
+    else:
+        raise Exception('This program is intended only for Mac, Linux, or Windows machines.')
 
     try:
         user_config_file = open(env + local_config_paths[2][1])
