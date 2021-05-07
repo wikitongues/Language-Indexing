@@ -11,29 +11,27 @@ def load_configs():
     default_config = configparser.ConfigParser()
     current_dir = os.path.dirname(__file__)
     default_config.read_file(open(os.path.join(current_dir, "indexing.cfg")))
-    local_config_paths = default_config.items("local_config_path")
+    local_config_file = default_config.items("local_config_file")
 
     user_config = configparser.ConfigParser()
 
     if platform == "windows" or platform == "win32":
         env = os.getenv("APPDATA")
-        env += local_config_paths[0][1]
     elif platform == "linux" or platform == "linux2" or platform == "darwin":
         env = os.getenv("HOME")
-        env += local_config_paths[1][1]
     else:
         raise Exception("This program is intended only for Mac,"
                         + "Linux, or Windows machines.")
 
     try:
-        user_config_file = open(env + local_config_paths[2][1])
+        user_config_file = open(env + local_config_file[0][1])
         user_config.read_file(user_config_file)
         user_config_file.close()
         pass
     except FileNotFoundError:
         print("Error: User config file not found at path "
               + env
-              + local_config_paths[2][1])
+              + local_config_file[0][1])
         sys.exit(1)
         pass
 
