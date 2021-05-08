@@ -9,6 +9,7 @@ import importlib
 from config.load_configs import load_configs
 from spiders.wikipedia_spider import WikipediaSpiderInput  # noqa: E501
 from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory  # noqa: E501
+from data_store.airtable.airtable_item_data_store_factory import AirtableItemDataStoreFactory  # noqa: E501
 from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
 from data_store.airtable.airtable_table_info import AirtableTableInfo
 
@@ -28,6 +29,12 @@ table_info = AirtableTableInfo(table_name, id_column)
 language_data_store = AirtableLanguageDataStoreFactory.get_data_store(
     connection_info, table_info, fake=True)
 
+# Get an ItemDataStore instance
+# fake=True will give us a fake data store that does not require Airtable
+#   credentials
+item_data_store = AirtableItemDataStoreFactory.get_data_store(
+    connection_info, table_info, fake=True)
+
 # Configure a CrawlerProcess
 process = CrawlerProcess(
     settings={
@@ -35,6 +42,10 @@ process = CrawlerProcess(
             "items.jl": {
                 "format": "jl"
             }
+        },
+        'ITEM_DATA_STORE': item_data_store,
+        'ITEM_PIPELINES': {
+            'pipelines.WikitonguesPipeline': 300
         }
     }
 )

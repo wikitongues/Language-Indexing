@@ -79,6 +79,7 @@ instance
             result.add_message(
                 'Airtable API request to create item returned status code '
                 f'{response.status_code}')
+            result.add_message(response.text)
             return result
 
         return result

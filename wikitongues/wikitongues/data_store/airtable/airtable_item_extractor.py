@@ -1,6 +1,6 @@
 from ..error_response import ErrorResponse
 
-from ...items import WikitonguesItem
+from items import WikitonguesItem
 
 from abc import ABC, abstractmethod
 
