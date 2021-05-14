@@ -23,15 +23,15 @@ def load_configs():
         raise Exception("This program is intended only for Mac,"
                         + "Linux, or Windows machines.")
 
+    user_config_path = os.sep.join([env, local_config_file[0][1]])
+
     try:
-        user_config_file = open(env + local_config_file[0][1])
+        user_config_file = open(user_config_path)
         user_config.read_file(user_config_file)
         user_config_file.close()
         pass
     except FileNotFoundError:
-        print("Error: User config file not found at path "
-              + env
-              + local_config_file[0][1])
+        print("Error: User config file not found at path " + user_config_path)
         sys.exit(1)
         pass
 

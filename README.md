@@ -12,23 +12,6 @@ Learn more about the project [here](https://wikitongues.org/projects/language-in
 ## Prerequisites:
 To run this tool, Python 3 must be installed on your system.
 
-## Install locally:
-Clone the repository and run from the root directory:
-```
-pip install -r requirements.txt
-pip install .
-```
-
-# Run
-```
-language-indexing
-```
-
-# Develop
-This project utilizes [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html), a web crawling framework.
-
-Using a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/) for development is recommended.
-
 ## Use a virtual environment:
 Run this in the root directory to setup a virtual environment.
 You'll only need to do this once.
@@ -50,12 +33,37 @@ source env/bin/activate
 env\Scripts\activate.bat
 ```
 ## Install in virtual environment
-Run this after creating the virtual environment and after changing the code.
+Run this after creating the virtual environment and any time you change the code.
 This installs the project and its dependencies into the active environment.
 You'll be able to run the tool with the `language-indexing` command.
 ```
 pip install .
 ```
+## Copy config file to home directory:
+The program reads certain settings from a configuration file. The program
+looks for this file in your home directory on Mac or Linux, or your appdata
+directory on Windows. To copy a properly formatted config file to the correct
+place run this command:
+### Mac/Unix/Linux:
+```
+cp wikitongues/wikitongues/config/indexing.cfg ~/wikitongues-language-indexing.cfg
+```
+
+### Windows:
+```
+copy wikitongues\wikitongues\config\indexing.cfg %appdata%\wikitongues-language-indexing.cfg
+```
+
+# Run
+Make sure your virtual environment is active in your current shell (see
+above), and run the tool with this simple command:
+```
+language-indexing
+```
+
+# Develop
+This project utilizes [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html), a web crawling framework.
+
 ## Run style guide check
 Install [flake8](https://flake8.pycqa.org/en/latest/) if it is not already on your system.
 Run from the root directory:
