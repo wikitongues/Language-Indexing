@@ -19,9 +19,11 @@ base_id = ''
 api_key = ''
 table_name = 'Languages'
 id_column = 'Identifier'
+page_size = 100
+max_records = None
 
 connection_info = AirtableConnectionInfo(base_id, api_key)
-table_info = AirtableTableInfo(table_name, id_column)
+table_info = AirtableTableInfo(table_name, id_column, page_size, max_records)
 
 # Get a LanguageDataStore instance
 # fake=True will give us a fake data store that returns a sample set of
