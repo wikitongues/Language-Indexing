@@ -87,7 +87,7 @@ class AirtableHttpClient(IAirtableHttpClient):
         Returns:
             Response: Response from Airtable API
         """
-        
+
         params = [
             f'maxRecords={max_records}'
         ]
