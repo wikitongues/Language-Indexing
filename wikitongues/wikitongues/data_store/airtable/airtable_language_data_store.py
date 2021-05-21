@@ -93,7 +93,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
         result = ErrorResponse()
 
-        response = self._client.list_records(page_size, max_records)
+        response = self._client.list_records(page_size=page_size, max_records=max_records)
 
         if response.status_code != 200:
             result.add_message(
