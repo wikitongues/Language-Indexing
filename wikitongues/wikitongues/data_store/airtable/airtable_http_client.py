@@ -12,14 +12,14 @@ class IAirtableHttpClient(ABC):
     """
 
     @abstractmethod
-    def list_records(self, page_size=None, offset=None, max_records=100):
+    def list_records(self, page_size=100, offset=None, max_records=None):
         """
         List records
 
         Args:
-            page_size (int, optional): Page size. Defaults to None.
+            page_size (int, optional): Page size. Defaults to 100.
             offset (str, optional): Offset for pagination. Defaults to None.
-            max_records (int, optional): Max records. Defaults to 100.
+            max_records (int, optional): Max records. Defaults to None.
         """
         pass
 
@@ -87,7 +87,7 @@ class AirtableHttpClient(IAirtableHttpClient):
         Returns:
             Response: Response from Airtable API
         """
-
+        
         params = [
             f'maxRecords={max_records}'
         ]

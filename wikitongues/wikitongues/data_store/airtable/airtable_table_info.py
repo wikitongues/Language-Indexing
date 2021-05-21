@@ -10,8 +10,8 @@ class AirtableTableInfo:
         Args:
             name (str): Table name
             id_column (str): Name of identifier column
-            page_size (int): Number of records returned in each request
-            max_records (int): Max records to retrieve
+            page_size (int, optional): Number of records returned in each request
+            max_records (int, optional): Max records to retrieve
         """
 
         self.name = name
