@@ -83,7 +83,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
         result.data = languages
         return result
 
-    def list_languages(self):
+    def list_languages(self, page_size, max_records):
         """
         Retrieves list of language objects
 
@@ -93,7 +93,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
         result = ErrorResponse()
 
-        response = self._client.list_records()
+        response = self._client.list_records(page_size, max_records)
 
         if response.status_code != 200:
             result.add_message(
