@@ -23,7 +23,7 @@ def load_configs():
         raise Exception("This program is intended only for Mac,"
                         + "Linux, or Windows machines.")
 
-    user_config_path = os.sep.join([env, local_config_file[0][1]])
+    user_config_path = os.sep.join([env, local_config_file['local config file']])
 
     try:
         user_config_file = open(user_config_path)
