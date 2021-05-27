@@ -1,6 +1,7 @@
 from ..language_data_store import LanguageDataStore
 from ..error_response import ErrorResponse
 import json
+import os.path
 
 
 class AirtableLanguageDataStore(LanguageDataStore):
@@ -92,6 +93,10 @@ class AirtableLanguageDataStore(LanguageDataStore):
         """
 
         result = ErrorResponse()
+
+        if kwargs.get('offset') is not None:
+            file = open(os.path.expanduser('~/.language-indexing-offset'), 'w')
+            file.write(kwargs.get('offset'))
 
         response = self._client.list_records(
             page_size, kwargs.get('offset'), max_records)
