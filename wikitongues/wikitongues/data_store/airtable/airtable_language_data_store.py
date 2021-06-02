@@ -2,7 +2,6 @@ from ..language_data_store import LanguageDataStore
 from ..error_response import ErrorResponse
 from wikitongues.wikitongues.data_store.airtable.offset_utility import OffsetUtility  # noqa: E501
 import json
-import os.path
 
 
 class AirtableLanguageDataStore(LanguageDataStore):
