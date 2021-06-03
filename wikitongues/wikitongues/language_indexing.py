@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 # Entry point for the program, invoked from the console
-import re
 import sys
 
 from scrapy.crawler import CrawlerProcess
@@ -17,42 +16,27 @@ from data_store.airtable.airtable_table_info import AirtableTableInfo
 # Info required to connect to Airtable
 config = load_configs()
 # TODO read from config file
-config_connection_info = config.items('airtable_connection_info')
-config_table_info = config.items('airtable_table_info')
-config_languages_table_items = config.items('airtable_languages_table')
-config_item_table_items = config.items('airtable_items_table')
-base_id = ''
-api_key = ''
-connection_info = ''
-languages_table_items = ''
-items_table_items = ''
-
-if config_connection_info.getboolean('fake'):
-    connection_info = AirtableConnectionInfo('base_id, api_key')
-else:
-    connection_info = AirtableConnectionInfo(config_connection_info['base_id'], config_connection_info['api_key'])
-    # table_info = AirtableTableInfo(config_connection_info['name'], config_connection_info['id_column'])
+config_languages_table = config['airtable_languages_table']
+config_item_table = config['airtable_items_table']
 
 # Get a LanguageDataStore instance
 # fake=True will give us a fake data store that returns a sample set of
 #   languages and does not require Airtable credentials
-m = re.search('[{}<>]', config_languages_table_items['base_id'])
-languages_table_info = AirtableTableInfo(
-    config_table_info['name'], config_table_info['id_column'])
-items_table_info = AirtableTableInfo(
-    config_table_info['name'], config_table_info['id_column'])
-languages_data_store = AirtableLanguageDataStoreFactory.get_data_store(
-    connection_info,
-    languages_table_info,
-    config_languages_table_items.getboolean('fake'))
-item_data_store = AirtableItemDataStoreFactory.get_data_store(
-    connection_info,
-    items_table_info,
-    config_item_table_items.getboolean('fake'))
+# TODO check base_id and api_key are valid before creating the objects.
 
-# if len(config_languages_table_items['base_id']) > 0 and len(m) is 0:
-#    language_data_store = AirtableLanguageDataStoreFactory.get_data_store(
-#    connection_info, table_info, fake=True)
+languages_data_store = AirtableLanguageDataStoreFactory.get_data_store(
+    AirtableConnectionInfo(
+        config_languages_table['base_id'], config_languages_table['api_key']),
+    AirtableTableInfo(
+        config_languages_table['table_name'], config_languages_table['id_column']),
+    config_languages_table.getboolean('fake'))
+item_data_store = AirtableItemDataStoreFactory.get_data_store(
+    AirtableConnectionInfo(
+        config_item_table['base_id'], config_item_table['api_key']),
+    AirtableTableInfo(
+        config_item_table['table_name'], config_item_table['id_column']),
+    config_item_table.getboolean('fake'))
+
 
 # Get an ItemDataStore instance
 # fake=True will give us a fake data store that does not require Airtable
