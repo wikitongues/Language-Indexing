@@ -13,9 +13,9 @@ from data_store.airtable.airtable_item_data_store_factory import AirtableItemDat
 from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
 from data_store.airtable.airtable_table_info import AirtableTableInfo
 
-# Info required to connect to Airtable
+# load config for running the spiders
 config = load_configs()
-# TODO read from config file
+# Info required to connect to Airtable
 config_languages_table = config['airtable_languages_table']
 config_item_table = config['airtable_items_table']
 
