@@ -13,7 +13,7 @@ class OffsetUtility:
         self.offset = None
 
     @staticmethod
-    def read_offset(self):
+    def read_offset():
         """
         Reads offset value from file
 
@@ -22,11 +22,11 @@ class OffsetUtility:
         """
         if os.path.exists(os.path.expanduser('~/.language-indexing-offset')):
             file = open(os.path.expanduser('~/.language-indexing-offset'), 'r')
-            self.offset = file.read()
-        return self.offset
+            offset = file.read()
+        return offset
 
     @staticmethod
-    def write_offset(self, offset):
+    def write_offset(offset):
         """
         Writes offset value to file.
         """
