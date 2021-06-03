@@ -3,8 +3,13 @@ from sys import platform
 import configparser
 import os
 
+from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
+from data_store.airtable.airtable_item_data_store_factory import AirtableItemDataStoreFactory
+from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory
+from data_store.airtable.airtable_table_info import AirtableTableInfo
 
-def load_configs():
+
+def load_main_config():
 
     print("loading config file")
 
@@ -43,3 +48,26 @@ def load_configs():
         # nothing overridden. return the default config settings
         print("Using default configuration")
         return default_config
+
+def load_airtable_datastores(config):
+    config_languages_table = config['airtable_languages_table']
+    config_item_table = config['airtable_items_table']
+
+    # Get a LanguageDataStore instance
+    # fake=True will give us a fake data store that returns a sample set of
+    #   languages and does not require Airtable credentials
+    # TODO check base_id and api_key are valid before creating the objects.
+
+    languages_datastore = AirtableLanguageDataStoreFactory.get_data_store(
+        AirtableConnectionInfo(
+            config_languages_table['base_id'], config_languages_table['api_key']),
+        AirtableTableInfo(
+            config_languages_table['table_name'], config_languages_table['id_column']),
+        config_languages_table.getboolean('fake'))
+    item_datastore = AirtableItemDataStoreFactory.get_data_store(
+        AirtableConnectionInfo(
+            config_item_table['base_id'], config_item_table['api_key']),
+        AirtableTableInfo(
+            config_item_table['table_name'], config_item_table['id_column']),
+        config_item_table.getboolean('fake'))
+    return {"language_datastore": languages_datastore, "item_datastore": item_datastore}
