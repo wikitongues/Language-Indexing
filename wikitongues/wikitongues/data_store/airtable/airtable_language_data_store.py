@@ -1,6 +1,6 @@
 from ..language_data_store import LanguageDataStore
 from ..error_response import ErrorResponse
-from wikitongues.wikitongues.data_store.airtable.offset_utility import OffsetUtility  # noqa: E501
+from .offset_utility import OffsetUtility
 import json
 
 
@@ -97,8 +97,6 @@ class AirtableLanguageDataStore(LanguageDataStore):
         response = self._client.list_records(
             page_size, kwargs.get('offset'), max_records)
 
-        OffsetUtility.write_offset(response['offset'])
-
         if response.status_code != 200:
             result.add_message(
                 'Airtable API request to list languages returned status '
@@ -107,5 +105,6 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
         json_obj = json.loads(response.text)
         extract_result = self._extractor.extract_languages_from_json(json_obj)
+        OffsetUtility.write_offset(json_obj.get('offset'))
 
         return extract_result
