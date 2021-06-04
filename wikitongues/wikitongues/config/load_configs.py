@@ -7,7 +7,7 @@ from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
 from data_store.airtable.airtable_item_data_store_factory import AirtableItemDataStoreFactory
 from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory
 from data_store.airtable.airtable_table_info import AirtableTableInfo
-
+from wikitongues.wikitongues.data_store.airtable.offset_utility import OffsetUtility
 
 def load_main_config():
 
@@ -62,7 +62,9 @@ def load_item_airtable_datastores(config):
         AirtableConnectionInfo(
             config_item_table['base_id'], config_item_table['api_key']),
         AirtableTableInfo(
-            config_item_table['table_name'], config_item_table['id_column']),
+            config_item_table['table_name'], config_item_table['id_column'],
+            config_item_table['page_size'], OffsetUtility.read_offset(),
+            config_item_table['max_records']),
         config_item_table.getboolean('fake'))
     return item_datastore
 
@@ -75,6 +77,8 @@ def load_languages_airtable_datastores(config):
         AirtableConnectionInfo(
             config_languages_table['base_id'], config_languages_table['api_key']),
         AirtableTableInfo(
-            config_languages_table['table_name'], config_languages_table['id_column']),
+            config_languages_table['table_name'], config_languages_table['id_column'],
+            config_languages_table['page_size'], OffsetUtility.read_offset(),
+            config_languages_table['max_records']),
         config_languages_table.getboolean('fake'))
     return languages_datastore
