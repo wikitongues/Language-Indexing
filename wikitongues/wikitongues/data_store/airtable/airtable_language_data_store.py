@@ -1,5 +1,6 @@
 from ..language_data_store import LanguageDataStore
 from ..error_response import ErrorResponse
+from .offset_utility import OffsetUtility
 import json
 
 
@@ -83,7 +84,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
         result.data = languages
         return result
 
-    def list_languages(self):
+    def list_languages(self, page_size=100, max_records=None, **kwargs):
         """
         Retrieves list of language objects
 
@@ -93,7 +94,8 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
         result = ErrorResponse()
 
-        response = self._client.list_records()
+        response = self._client.list_records(
+            page_size, kwargs.get('offset'), max_records)
 
         if response.status_code != 200:
             result.add_message(
@@ -103,5 +105,6 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
         json_obj = json.loads(response.text)
         extract_result = self._extractor.extract_languages_from_json(json_obj)
+        OffsetUtility.write_offset(json_obj.get('offset'))
 
         return extract_result
