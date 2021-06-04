@@ -12,6 +12,7 @@ from data_store.airtable.airtable_language_data_store_factory import AirtableLan
 from data_store.airtable.airtable_item_data_store_factory import AirtableItemDataStoreFactory  # noqa: E501
 from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
 from data_store.airtable.airtable_table_info import AirtableTableInfo
+from wikitongues.wikitongues.data_store.airtable.offset_utility import OffsetUtility  # noqa: E501
 
 # Info required to connect to Airtable
 # TODO read from config file
@@ -20,10 +21,12 @@ api_key = ''
 table_name = 'Languages'
 id_column = 'Identifier'
 page_size = 100
+offset = OffsetUtility.read_offset()
 max_records = None
 
 connection_info = AirtableConnectionInfo(base_id, api_key)
-table_info = AirtableTableInfo(table_name, id_column, page_size, max_records)
+table_info = AirtableTableInfo(table_name, id_column, page_size,
+                               offset, max_records)
 
 # Get a LanguageDataStore instance
 # fake=True will give us a fake data store that returns a sample set of

@@ -29,7 +29,7 @@ NULL_ID = 'zzz'
 
 
 class MockAirtableHttpClient(IAirtableHttpClient):
-    def list_records(self, page_size, max_records):
+    def list_records(self, page_size, offset, max_records):
         return MockResponse()
 
     def get_record(self, id):
