@@ -49,25 +49,32 @@ def load_main_config():
         print("Using default configuration")
         return default_config
 
-def load_airtable_datastores(config):
-    config_languages_table = config['airtable_languages_table']
+def load_item_airtable_datastores(config):
     config_item_table = config['airtable_items_table']
 
-    # Get a LanguageDataStore instance
-    # fake=True will give us a fake data store that returns a sample set of
-    #   languages and does not require Airtable credentials
+
     # TODO check base_id and api_key are valid before creating the objects.
 
-    languages_datastore = AirtableLanguageDataStoreFactory.get_data_store(
-        AirtableConnectionInfo(
-            config_languages_table['base_id'], config_languages_table['api_key']),
-        AirtableTableInfo(
-            config_languages_table['table_name'], config_languages_table['id_column']),
-        config_languages_table.getboolean('fake'))
+    # Get a ItemDataStore instance
+    # fake=True will give us a fake data store that returns a sample set of
+    #   languages and does not require Airtable credentials
     item_datastore = AirtableItemDataStoreFactory.get_data_store(
         AirtableConnectionInfo(
             config_item_table['base_id'], config_item_table['api_key']),
         AirtableTableInfo(
             config_item_table['table_name'], config_item_table['id_column']),
         config_item_table.getboolean('fake'))
-    return {"language_datastore": languages_datastore, "item_datastore": item_datastore}
+    return item_datastore
+
+def load_languages_airtable_datastores(config):
+    config_languages_table = config['airtable_languages_table']
+    # Get a LanguageDataStore instance
+    # fake=True will give us a fake data store that returns a sample set of
+    #   languages and does not require Airtable credentials
+    languages_datastore = AirtableLanguageDataStoreFactory.get_data_store(
+        AirtableConnectionInfo(
+            config_languages_table['base_id'], config_languages_table['api_key']),
+        AirtableTableInfo(
+            config_languages_table['table_name'], config_languages_table['id_column']),
+        config_languages_table.getboolean('fake'))
+    return languages_datastore
