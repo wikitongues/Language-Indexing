@@ -2,6 +2,7 @@ import os
 
 FILENAME = '~/.language-indexing-offset'
 
+
 class OffsetUtility:
     """
     OffsetUtility class for reading and writing offset value.
