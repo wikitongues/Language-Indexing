@@ -12,7 +12,7 @@ from data_store.airtable.airtable_language_data_store_factory import AirtableLan
 from data_store.airtable.airtable_item_data_store_factory import AirtableItemDataStoreFactory  # noqa: E501
 from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
 from data_store.airtable.airtable_table_info import AirtableTableInfo
-from wikitongues.wikitongues.data_store.airtable.offset_utility import OffsetUtility  # noqa: E501
+from data_store.airtable.offset_utility import OffsetUtility
 
 # Info required to connect to Airtable
 # TODO read from config file
