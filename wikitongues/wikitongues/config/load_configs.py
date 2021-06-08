@@ -16,7 +16,6 @@ from wikitongues.wikitongues.data_store.airtable.offset_utility \
 
 def load_main_config():
 
-
     print("loading config file")
 
     default_config = configparser.ConfigParser()
@@ -55,8 +54,8 @@ def load_main_config():
         print("Using default configuration")
         return default_config
 
-def load_item_airtable_datastores(config):
 
+def load_item_airtable_datastores(config):
 
     config_item_table = config['airtable_items_table']
 
@@ -75,8 +74,8 @@ def load_item_airtable_datastores(config):
         config_item_table.getboolean('fake'))
     return item_datastore
 
-def load_languages_airtable_datastores(config):
 
+def load_languages_airtable_datastores(config):
 
     config_languages_table = config['airtable_languages_table']
     # Get a LanguageDataStore instance
