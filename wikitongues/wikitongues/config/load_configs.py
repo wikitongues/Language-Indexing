@@ -3,11 +3,15 @@ from sys import platform
 import configparser
 import os
 
-from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
-from data_store.airtable.airtable_item_data_store_factory import AirtableItemDataStoreFactory
-from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory
+from data_store.airtable.airtable_connection_info \
+    import AirtableConnectionInfo
+from data_store.airtable.airtable_item_data_store_factory \
+    import AirtableItemDataStoreFactory
+from data_store.airtable.airtable_language_data_store_factory \
+    import AirtableLanguageDataStoreFactory
 from data_store.airtable.airtable_table_info import AirtableTableInfo
-from wikitongues.wikitongues.data_store.airtable.offset_utility import OffsetUtility
+from wikitongues.wikitongues.data_store.airtable.offset_utility \
+    import OffsetUtility
 
 def load_main_config():
 
@@ -75,10 +79,13 @@ def load_languages_airtable_datastores(config):
     #   languages and does not require Airtable credentials
     languages_datastore = AirtableLanguageDataStoreFactory.get_data_store(
         AirtableConnectionInfo(
-            config_languages_table['base_id'], config_languages_table['api_key']),
+            config_languages_table['base_id'],
+            config_languages_table['api_key']),
         AirtableTableInfo(
-            config_languages_table['table_name'], config_languages_table['id_column'],
-            config_languages_table['page_size'], OffsetUtility.read_offset(),
+            config_languages_table['table_name'],
+            config_languages_table['id_column'],
+            config_languages_table['page_size'],
+            OffsetUtility.read_offset(),
             config_languages_table['max_records']),
         config_languages_table.getboolean('fake'))
     return languages_datastore
