@@ -10,7 +10,6 @@ from config.load_configs import load_main_config, \
     load_item_airtable_datastores, load_languages_airtable_datastores
 from spiders.wikipedia_spider import WikipediaSpiderInput  # noqa: E501
 
-
 # load config for running the spiders
 config = load_main_config()
 # Info required to connect to Airtable

@@ -16,6 +16,7 @@ class OffsetUtility:
         Returns:
             offset (str): offset value
         """
+        offset = None
         if os.path.exists(os.path.expanduser(FILENAME)):
             file = open(os.path.expanduser(FILENAME, 'r'))
             offset = file.read()
