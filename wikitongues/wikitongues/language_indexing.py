@@ -6,39 +6,15 @@ import sys
 from scrapy.crawler import CrawlerProcess
 import os
 import importlib
-from config.load_configs import load_configs
+from config.load_configs import load_main_config, \
+    load_item_airtable_datastores, load_languages_airtable_datastores
 from spiders.wikipedia_spider import WikipediaSpiderInput  # noqa: E501
-from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory  # noqa: E501
-from data_store.airtable.airtable_item_data_store_factory import AirtableItemDataStoreFactory  # noqa: E501
-from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
-from data_store.airtable.airtable_table_info import AirtableTableInfo
-from data_store.airtable.offset_utility import OffsetUtility
 
+# load config for running the spiders
+config = load_main_config()
 # Info required to connect to Airtable
-# TODO read from config file
-base_id = ''
-api_key = ''
-table_name = 'Languages'
-id_column = 'Identifier'
-page_size = 100
-offset = OffsetUtility.read_offset()
-max_records = None
-
-connection_info = AirtableConnectionInfo(base_id, api_key)
-table_info = AirtableTableInfo(table_name, id_column, page_size,
-                               offset, max_records)
-
-# Get a LanguageDataStore instance
-# fake=True will give us a fake data store that returns a sample set of
-#   languages and does not require Airtable credentials
-language_data_store = AirtableLanguageDataStoreFactory.get_data_store(
-    connection_info, table_info, fake=True)
-
-# Get an ItemDataStore instance
-# fake=True will give us a fake data store that does not require Airtable
-#   credentials
-item_data_store = AirtableItemDataStoreFactory.get_data_store(
-    connection_info, table_info, fake=True)
+item_datastore = load_item_airtable_datastores(config)
+languages_datastore = load_languages_airtable_datastores(config)
 
 # Configure a CrawlerProcess
 process = CrawlerProcess(
@@ -48,7 +24,7 @@ process = CrawlerProcess(
                 "format": "jl"
             }
         },
-        'ITEM_DATA_STORE': item_data_store,
+        'ITEM_DATA_STORE': item_datastore,
         'ITEM_PIPELINES': {
             'pipelines.WikitonguesPipeline': 300
         }
@@ -69,11 +45,10 @@ def process_site(site_tuple):
 
             spider_input = WikipediaSpiderInput(iso_codes)
 
-            process.crawl(spider_class, spider_input, language_data_store)
+            process.crawl(spider_class, spider_input, languages_datastore)
             process.start()
 
 
-config = load_configs()
 sites = config.items('sites')
 
 start_all_crawls = input('Do you wish to crawl all spiders? (Y/N) ')
