@@ -8,7 +8,7 @@ import os
 import importlib
 from config.load_configs import load_main_config, \
     load_item_airtable_datastores, load_languages_airtable_datastores
-from spiders.wikipedia_spider import WikipediaSpiderInput  # noqa: E501
+from spiders.wikipedia_spider import WikipediaSpiderInput
 
 # load config for running the spiders
 config = load_main_config()

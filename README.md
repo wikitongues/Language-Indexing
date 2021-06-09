@@ -54,6 +54,49 @@ cp wikitongues/wikitongues/config/indexing.cfg ~/wikitongues-language-indexing.c
 copy wikitongues\wikitongues\config\indexing.cfg %appdata%\wikitongues-language-indexing.cfg
 ```
 
+# Configure
+
+Configure the program by editing your user config file:
+* Mac/Unix/Linux: **~/wikitongues-language-indexing.cfg**
+* Windows: **%appdata%\wikitongues-language-indexing.cfg**
+
+## Configure Airtable settings
+
+The program uses Airtable as a data repository. Airtable is a hybrid
+spreadsheet/database cloud service that Wikitongues uses.
+
+Language data is fetched from a Languages table, and web resources are
+uploaded to an Items table. Access to these tables is configured in the
+`[airtable_languages_table]` and `[airtable_items_table]` sections
+respectively. Common configuration properties can be set in the `[DEFAULT]`
+section. Values in the table-specific sections will override values in
+`[DEFAULT]`.
+
+Configure these properties:
+
+`api_key`: Airtable API key (see below)
+
+`base_id`: ID of the Airtable base (see below). If you set up an Items table on
+your own account for testing, it will have a different base ID than the
+Languages table.
+
+`fake`: Set to true if you do not wish to access Airtable during development.
+If a fake Languages table is used, a small sample set of languages will be
+provided.
+
+`page_size`: The number of languages to target in a single run. (Only
+applicable to the Languages table.) An offset value is stored so that languages
+will not be repeated in subsequent runs.
+
+### Find your Airtable API Key and Base ID
+
+* Follow [these instructions](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) to get your API key
+  * Copy and paste the API key to a file or note on your computer
+* You'll also need the Base ID, which is a string of characters representing the name of the Airtable Base
+  * Log on to the [Airtable API web page](https://airtable.com/api) and click on the link for the Wikitongues archival base
+  * Once the page is fully loaded there will be a line in the Introduction section saying "The ID of this base is", followed by green text starting with `app`
+  * Copy and paste the Base ID to a file or note on your computer
+
 # Run
 Make sure your virtual environment is active in your current shell (see
 above), and run the tool with this simple command:
