@@ -10,20 +10,19 @@ from data_store.airtable.airtable_item_data_store_factory \
 from data_store.airtable.airtable_language_data_store_factory \
     import AirtableLanguageDataStoreFactory
 from data_store.airtable.airtable_table_info import AirtableTableInfo
-from wikitongues.wikitongues.data_store.airtable.offset_utility \
-    import OffsetUtility
+from data_store.airtable.offset_utility import OffsetUtility
 
 
 def load_main_config():
 
     print("loading config file")
 
-    default_config = configparser.ConfigParser()
+    default_config = configparser.ConfigParser(allow_no_value=True)
     current_dir = os.path.dirname(__file__)
     default_config.read_file(open(os.path.join(current_dir, "indexing.cfg")))
     local_config_file = default_config["local_config_file"]
 
-    user_config = configparser.ConfigParser()
+    user_config = configparser.ConfigParser(allow_no_value=True)
 
     if platform == "windows" or platform == "win32":
         env = os.getenv("APPDATA")
