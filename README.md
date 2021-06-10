@@ -76,9 +76,7 @@ Configure these properties:
 
 `api_key`: Airtable API key (see below)
 
-`base_id`: ID of the Airtable base (see below). If you set up an Items table on
-your own account for testing, it will have a different base ID than the
-Languages table.
+`base_id`: ID of the Airtable base (see below)
 
 `fake`: Set to true if you do not wish to access Airtable during development.
 If a fake Languages table is used, a small sample set of languages will be
@@ -87,6 +85,11 @@ provided.
 `page_size`: The number of languages to target in a single run. (Only
 applicable to the Languages table.) An offset value is stored so that languages
 will not be repeated in subsequent runs.
+
+`table_name`: Table name. Be sure to configure this property for the Items
+table if you are using a different table for testing.
+
+`id_column`: Name of the column used as an identifier.
 
 ### Find your Airtable API Key and Base ID
 
