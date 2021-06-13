@@ -86,8 +86,7 @@ provided.
 applicable to the Languages table.) An offset value is stored so that languages
 will not be repeated in subsequent runs.
 
-`table_name`: Table name. Be sure to configure this property for the Items
-table if you are using a different table for testing.
+`table_name`: Table name.
 
 `id_column`: Name of the column used as an identifier.
 
@@ -96,7 +95,7 @@ table if you are using a different table for testing.
 * Follow [these instructions](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) to get your API key
   * Copy and paste the API key to a file or note on your computer
 * You'll also need the Base ID, which is a string of characters representing the name of the Airtable Base
-  * Log on to the [Airtable API web page](https://airtable.com/api) and click on the link for the Wikitongues archival base
+  * Log on to the [Airtable API web page](https://airtable.com/api) and click on the link for your Language Indexing base
   * Once the page is fully loaded there will be a line in the Introduction section saying "The ID of this base is", followed by green text starting with `app`
   * Copy and paste the Base ID to a file or note on your computer
 
@@ -106,6 +105,7 @@ above), and run the tool with this simple command:
 ```
 language-indexing
 ```
+Data for the gathered items will be written to a file called items.jl.
 
 # Develop
 This project utilizes [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html), a web crawling framework.
