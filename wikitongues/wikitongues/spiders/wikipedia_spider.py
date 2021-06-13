@@ -5,9 +5,11 @@ from items import WikitonguesItem
 
 class WikipediaSpiderInput:
     iso_codes = []
+    exclude_iso_codes = []
 
-    def __init__(self, iso_codes):
+    def __init__(self, iso_codes, exclude_iso_codes):
         self.iso_codes = iso_codes
+        self.exclude_iso_codes = exclude_iso_codes
 
 
 # Finds all the external links in the Wikipedia pages for the given languages
