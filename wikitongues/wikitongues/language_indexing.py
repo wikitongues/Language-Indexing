@@ -37,7 +37,8 @@ def process_site(site_tuple):
         iso for iso in list(config._sections['language_codes'].values())
     ]
 
-    spiders_dir_tree = os.listdir('wikitongues/wikitongues/spiders')
+    current_dir = os.path.dirname(__file__)
+    spiders_dir_tree = os.listdir(os.path.join(current_dir, 'spiders'))
 
     for t in spiders_dir_tree:
         if t.__contains__(site_tuple[0]):
@@ -59,7 +60,7 @@ if start_all_crawls.lower() == 'n':
     site_to_crawl = input('Which site would you like to crawl? ')
     for site in sites:
         if site_to_crawl == site[0]:
-            process_site(site_to_crawl)
+            process_site(site)
             break
     print('Invalid input: could not find a site that matched your input')
     sys.exit(1)
