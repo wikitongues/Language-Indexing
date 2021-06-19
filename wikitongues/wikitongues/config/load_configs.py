@@ -92,3 +92,17 @@ def load_languages_airtable_datastores(config):
             config_languages_table['max_records']),
         config_languages_table.getboolean('fake'))
     return languages_datastore
+
+
+def read_include_languages(config):
+
+    if len(config.items("include_languages")) > 0:
+        return config['include_languages']
+    return None
+
+
+def read_exclude_languages(config):
+
+    if len(config.items("exclude_languages")) > 0:
+        return config['exclude_languages']
+    return None
