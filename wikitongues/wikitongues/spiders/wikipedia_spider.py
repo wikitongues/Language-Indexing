@@ -28,7 +28,7 @@ class WikipediaSpider(scrapy.Spider):
 
     # Load Language objects to target in this crawl
     def load_languages(self):
-        if self._spider_input.include_languages() is not None:
+        if self._spider_input.iso_codes is not None:
             result = self._language_data_store.get_languages(
                 self._spider_input.iso_codes)
         else:
