@@ -7,7 +7,8 @@ from scrapy.crawler import CrawlerProcess
 import os
 import importlib
 from config.load_configs import load_main_config, \
-    load_item_airtable_datastores, load_languages_airtable_datastores
+    load_item_airtable_datastores, load_languages_airtable_datastores, \
+    read_exclude_languages, read_include_languages
 from spiders.wikipedia_spider import WikipediaSpiderInput
 
 # load config for running the spiders
@@ -33,9 +34,6 @@ process = CrawlerProcess(
 
 
 def process_site(site_tuple):
-    iso_codes = [
-        iso for iso in list(config._sections['language_codes'].values())
-    ]
 
     current_dir = os.path.dirname(__file__)
     spiders_dir_tree = os.listdir(os.path.join(current_dir, 'spiders'))
@@ -46,7 +44,8 @@ def process_site(site_tuple):
                 importlib.import_module(
                     'spiders.' + t[:-3]), config['spiders'][site_tuple[0]])
 
-            spider_input = WikipediaSpiderInput(iso_codes)
+            spider_input = WikipediaSpiderInput(read_include_languages(config),
+                                                read_exclude_languages(config))
 
             process.crawl(spider_class, spider_input, languages_datastore)
             process.start()

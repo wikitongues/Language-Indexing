@@ -98,7 +98,11 @@ def read_include_languages(config):
 
     if len(config.items("include_languages")) > 0:
         return config['include_languages']
-    return None
+
+    iso_codes = [
+        iso for iso in list(config._sections['language_codes'].values())
+    ]
+    return iso_codes
 
 
 def read_exclude_languages(config):
