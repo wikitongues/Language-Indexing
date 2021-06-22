@@ -97,16 +97,12 @@ def load_languages_airtable_datastores(config):
 def read_include_languages(config):
 
     if len(config.items("include_languages")) > 0:
-        return config['include_languages']
-
-    iso_codes = [
-        iso for iso in list(config._sections['language_codes'].values())
-    ]
-    return iso_codes
+        return config['include_languages'].split(",")
+    return None
 
 
 def read_exclude_languages(config):
 
     if len(config.items("exclude_languages")) > 0:
-        return config['exclude_languages']
+        return config['exclude_languages'].split(",")
     return None
