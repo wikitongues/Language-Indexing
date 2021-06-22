@@ -32,7 +32,9 @@ class WikipediaSpider(scrapy.Spider):
             result = self._language_data_store.get_languages(
                 self._spider_input.iso_codes)
         else:
-            result = self._language_data_store.list_languages()
+            result = filter(lambda x: x not in
+                            self._spider_input.exclude_iso_codes,
+                            self._language_data_store.list_languages())
 
         if result.has_error():
             return []
