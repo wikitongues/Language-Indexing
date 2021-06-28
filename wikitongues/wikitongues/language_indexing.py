@@ -48,9 +48,12 @@ def process_site(site_tuple):
 
             spider_input = WikipediaSpiderInput(read_include_languages(config),
                                                 read_exclude_languages(config),
-                                                config_languages_table['page_size'],
-                                                config_languages_table['offset'],
-                                                config_languages_table['max_records']
+                                                config_languages_table
+                                                ['page_size'],
+                                                config_languages_table
+                                                ['offset'],
+                                                config_languages_table
+                                                ['max_records']
                                                 )
 
             process.crawl(spider_class, spider_input, languages_datastore)
