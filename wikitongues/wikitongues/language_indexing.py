@@ -16,6 +16,8 @@ config = load_main_config()
 # Info required to connect to Airtable
 item_datastore = load_item_airtable_datastores(config)
 languages_datastore = load_languages_airtable_datastores(config)
+# load languages table
+config_languages_table = config['airtable_languages_table']
 
 # Configure a CrawlerProcess
 process = CrawlerProcess(
@@ -45,7 +47,14 @@ def process_site(site_tuple):
                     'spiders.' + t[:-3]), config['spiders'][site_tuple[0]])
 
             spider_input = WikipediaSpiderInput(read_include_languages(config),
-                                                read_exclude_languages(config))
+                                                read_exclude_languages(config),
+                                                config_languages_table
+                                                ['page_size'],
+                                                config_languages_table
+                                                ['offset'],
+                                                config_languages_table
+                                                ['max_records']
+                                                )
 
             process.crawl(spider_class, spider_input, languages_datastore)
             process.start()
