@@ -5,9 +5,15 @@ from items import WikitonguesItem
 
 class WikipediaSpiderInput:
     iso_codes = []
+    exclude_iso_codes = []
 
-    def __init__(self, iso_codes):
+    def __init__(self, iso_codes, exclude_iso_codes, page_size,
+                 offset, max_records):
         self.iso_codes = iso_codes
+        self.exclude_iso_codes = exclude_iso_codes
+        self.page_size = page_size
+        self.offset = offset
+        self.max_records = max_records
 
 
 # Finds all the external links in the Wikipedia pages for the given languages
@@ -26,8 +32,16 @@ class WikipediaSpider(scrapy.Spider):
 
     # Load Language objects to target in this crawl
     def load_languages(self):
-        result = self._language_data_store.get_languages(
-            self._spider_input.iso_codes)
+        if self._spider_input.iso_codes is not None:
+            result = self._language_data_store.get_languages(
+                self._spider_input.iso_codes)
+        else:
+            result = filter(lambda x: x not in
+                            self._spider_input.exclude_iso_codes,
+                            self._language_data_store.list_languages(
+                                self._spider_input.page_size,
+                                self._spider_input.max_records,
+                                self._spider_input.offset))
 
         if result.has_error():
             return []

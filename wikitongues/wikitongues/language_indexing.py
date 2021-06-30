@@ -7,7 +7,8 @@ from scrapy.crawler import CrawlerProcess
 import os
 import importlib
 from config.load_configs import load_main_config, \
-    load_item_airtable_datastores, load_languages_airtable_datastores
+    load_item_airtable_datastores, load_languages_airtable_datastores, \
+    read_exclude_languages, read_include_languages
 from spiders.wikipedia_spider import WikipediaSpiderInput
 
 class LanguageIndexingConfiguration:
@@ -71,6 +72,8 @@ load_config(config)
 # Info required to connect to Airtable
 item_datastore = load_item_airtable_datastores(config)
 languages_datastore = load_languages_airtable_datastores(config)
+# load languages table
+config_languages_table = config['airtable_languages_table']
 
 # Configure a CrawlerProcess
 process = CrawlerProcess(
@@ -89,9 +92,6 @@ process = CrawlerProcess(
 
 
 def process_site(site_tuple):
-    iso_codes = [
-        iso for iso in list(config._sections['language_codes'].values())
-    ]
 
     current_dir = os.path.dirname(__file__)
     spiders_dir_tree = os.listdir(os.path.join(current_dir, 'spiders'))
@@ -102,7 +102,15 @@ def process_site(site_tuple):
                 importlib.import_module(
                     'spiders.' + t[:-3]), config['spiders'][site_tuple[0]])
 
-            spider_input = WikipediaSpiderInput(iso_codes)
+            spider_input = WikipediaSpiderInput(read_include_languages(config),
+                                                read_exclude_languages(config),
+                                                config_languages_table
+                                                ['page_size'],
+                                                config_languages_table
+                                                ['offset'],
+                                                config_languages_table
+                                                ['max_records']
+                                                )
 
             process.crawl(spider_class, spider_input, languages_datastore)
             process.start()
