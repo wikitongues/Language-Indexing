@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-
 # Entry point for the program, invoked from the console
 import sys
 
 from scrapy.crawler import CrawlerProcess
 import os
 import importlib
-from config.load_configs import load_main_config, \
+from config.load_configs import \
     load_item_airtable_datastores, load_languages_airtable_datastores, \
     read_exclude_languages, read_include_languages
 from spiders.wikipedia_spider import WikipediaSpiderInput
@@ -14,21 +13,17 @@ from spiders.wikipedia_spider import WikipediaSpiderInput
 from language_indexing_config import LanguageIndexingConfiguration, load_config
 
 
-
 # Instantiate configuration object
 config = LanguageIndexingConfiguration()
 user_config = LanguageIndexingConfiguration()
 
-
-
-
+load_config(config)
 
 # Info required to connect to Airtable
 item_datastore = load_item_airtable_datastores(config)
 languages_datastore = load_languages_airtable_datastores(config)
 # load languages table
 config_languages_table = config['airtable_languages_table']
-
 # Configure a CrawlerProcess
 process = CrawlerProcess(
     settings={
