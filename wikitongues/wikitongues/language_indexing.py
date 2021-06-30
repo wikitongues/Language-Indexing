@@ -15,7 +15,6 @@ from language_indexing_config import LanguageIndexingConfiguration, load_config
 
 # Instantiate configuration object
 config = LanguageIndexingConfiguration()
-user_config = LanguageIndexingConfiguration()
 
 load_config(config)
 
