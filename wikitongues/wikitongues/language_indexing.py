@@ -79,7 +79,7 @@ if start_all_crawls.lower() == 'n':
 elif start_all_crawls.lower() == 'y':
     for site in sites.__dict__:
         process_site(site)
-        print(site[1])
+        print(sites[site])
 
 else:
     print('invalid input')
