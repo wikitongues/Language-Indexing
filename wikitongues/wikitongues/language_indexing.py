@@ -10,6 +10,7 @@ from config.load_configs import load_main_config, \
     load_item_airtable_datastores, load_languages_airtable_datastores, \
     read_exclude_languages, read_include_languages
 from spiders.wikipedia_spider import WikipediaSpiderInput
+from data_store.airtable.offset_utility import OffsetUtility
 
 # load config for running the spiders
 config = load_main_config()
@@ -50,8 +51,7 @@ def process_site(site_tuple):
                                                 read_exclude_languages(config),
                                                 config_languages_table
                                                 ['page_size'],
-                                                config_languages_table
-                                                ['offset'],
+                                                OffsetUtility.read_offset(),
                                                 config_languages_table
                                                 ['max_records']
                                                 )
