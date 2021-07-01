@@ -11,7 +11,7 @@ from config.load_configs import \
 from spiders.wikipedia_spider import WikipediaSpiderInput
 
 from language_indexing_config import LanguageIndexingConfiguration, load_config
-
+from data_store.airtable.offset_utility import OffsetUtility
 
 # Instantiate configuration object
 config = LanguageIndexingConfiguration()
@@ -39,23 +39,22 @@ process = CrawlerProcess(
 )
 
 
-def process_site(site_tuple):
+def process_site(site):
 
     current_dir = os.path.dirname(__file__)
     spiders_dir_tree = os.listdir(os.path.join(current_dir, 'spiders'))
 
     for t in spiders_dir_tree:
-        if t.__contains__(site_tuple[0]):
+        if t.__contains__(site):
             spider_class = getattr(
                 importlib.import_module(
-                    'spiders.' + t[:-3]), config['spiders'][site_tuple[0]])
+                    'spiders.' + t[:-3]), config['spiders'][site])
 
             spider_input = WikipediaSpiderInput(read_include_languages(config),
                                                 read_exclude_languages(config),
                                                 config_languages_table
                                                 ['page_size'],
-                                                config_languages_table
-                                                ['offset'],
+                                                OffsetUtility.read_offset(),
                                                 config_languages_table
                                                 ['max_records']
                                                 )
@@ -64,7 +63,7 @@ def process_site(site_tuple):
             process.start()
 
 
-sites = config.items('sites')
+sites = config['sites']
 
 start_all_crawls = input('Do you wish to crawl all spiders? (Y/N) ')
 
@@ -78,7 +77,7 @@ if start_all_crawls.lower() == 'n':
     sys.exit(1)
 
 elif start_all_crawls.lower() == 'y':
-    for site in sites:
+    for site in sites.__dict__:
         process_site(site)
         print(site[1])
 
