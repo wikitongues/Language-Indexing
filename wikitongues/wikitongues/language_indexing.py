@@ -9,6 +9,7 @@ from config.load_configs import \
     load_item_airtable_datastores, load_languages_airtable_datastores, \
     read_exclude_languages, read_include_languages
 from spiders.wikipedia_spider import WikipediaSpiderInput
+from data_store.airtable.offset_utility import OffsetUtility
 
 from language_indexing_config import LanguageIndexingConfiguration, load_config
 from data_store.airtable.offset_utility import OffsetUtility
