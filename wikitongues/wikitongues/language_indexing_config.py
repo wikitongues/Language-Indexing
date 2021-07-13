@@ -1,4 +1,6 @@
 import os
+from sys import platform
+
 
 class LanguageIndexingConfiguration:
     def __getitem__(self, key):
@@ -16,14 +18,22 @@ def load_config(config, default_config_file_name=None):
 
     #Default case: when nothing is passed, program reads the default config
     if default_config_file_name is None:
-        load_config(config, "config/indexing.cfg")
+        config_file = open(os.path.join(os.path.dirname(__file__),
+                                        "config/indexing.cfg"), "r")
     else:
-        #When a user file in the same directory is passed, read that file
-        default_config = open(os.path.join(os.path.dirname(__file__),
-                                           default_config_file_name), "r")
-        if default_config is None:
-            print("file not found")
-        readline(config, default_config)
+        config_file = user_config_file()
+    readline(config, config_file)
+
+
+def user_config_file():
+    if platform == "windows" or platform == "win32":
+        env = os.getenv("APPDATA")
+    elif platform == "linux" or platform == "linux2" or platform == "darwin":
+        env = os.getenv("HOME")
+    else:
+        raise Exception("This program is intended only for Mac,"
+                        + "Linux, or Windows machines.")
+    return open(os.sep.join([env, 'wikitongues-language-indexing.cfg']))
 
 
 def readline(config, default_config):
@@ -55,6 +65,10 @@ def readline(config, default_config):
 
 
 def setDefault(config):
-    for x in config['DEFAULT'].__dict__:
-        setattr(config['airtable_items_table'], x, config['DEFAULT'][x])
-        setattr(config['airtable_languages_table'], x, config['DEFAULT'][x])
+    for value in config['DEFAULT'].__dict__:
+        setattr(config['airtable_items_table'],
+                value,
+                config['DEFAULT'][value])
+        setattr(config['airtable_languages_table'],
+                value,
+                config['DEFAULT'][value])

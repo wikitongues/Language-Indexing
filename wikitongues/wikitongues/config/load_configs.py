@@ -95,12 +95,14 @@ def load_languages_airtable_datastores(config):
 
 
 def read_include_languages(config):
-    if hasattr(config, 'include_languages') and len(config["include_languages"].__dict__) > 0:
+    if hasattr(config, 'include_languages') and \
+            len(config["include_languages"].__dict__) > 0:
         return config['include_languages']['include_languages'].split(",")
     return None
 
 
 def read_exclude_languages(config):
-    if hasattr(config, 'exclude_languages') and len(config["exclude_languages"].__dict__) > 0:
+    if hasattr(config, 'exclude_languages') and \
+            len(config["exclude_languages"].__dict__) > 0:
         return config['exclude_languages']['exclude_languages'].split(",")
     return None

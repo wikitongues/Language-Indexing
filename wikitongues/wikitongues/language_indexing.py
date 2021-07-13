@@ -17,6 +17,9 @@ from data_store.airtable.offset_utility import OffsetUtility
 config = LanguageIndexingConfiguration()
 
 load_config(config)
+# The load_config function will try to read user file
+# as long as there is two arguments passed
+load_config(config, 'user_config')
 
 # Info required to connect to Airtable
 item_datastore = load_item_airtable_datastores(config)
