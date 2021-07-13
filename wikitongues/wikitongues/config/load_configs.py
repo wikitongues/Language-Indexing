@@ -70,7 +70,7 @@ def load_item_airtable_datastores(config):
             config_item_table['table_name'], config_item_table['id_column'],
             config_item_table['page_size'], OffsetUtility.read_offset(),
             config_item_table['max_records']),
-        config_item_table['fake'])
+        eval(config_item_table['fake']))
     return item_datastore
 
 
