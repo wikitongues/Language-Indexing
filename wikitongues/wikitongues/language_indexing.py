@@ -12,7 +12,6 @@ from spiders.wikipedia_spider import WikipediaSpiderInput
 from data_store.airtable.offset_utility import OffsetUtility
 
 from language_indexing_config import LanguageIndexingConfiguration, load_config
-from data_store.airtable.offset_utility import OffsetUtility
 
 # Instantiate configuration object
 config = LanguageIndexingConfiguration()
