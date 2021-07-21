@@ -7,9 +7,9 @@ from abc import ABC, abstractmethod
 RECORDS = 'records'
 FIELDS = 'fields'
 TITLE_FIELD = 'Title'
-URL_FIELD = 'Url'
-ISO_FIELD = 'ISO Code'
-LANGUAGE_FIELD = 'Language'
+URL_FIELD = 'Coverage [Web]'
+ISO_FIELD = 'Subject [ISO Code]'
+LANGUAGE_FIELD = 'Subject [Language]'
 SPIDER_FIELD = 'Spider'
 
 
