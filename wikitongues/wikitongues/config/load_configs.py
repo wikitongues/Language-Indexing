@@ -70,7 +70,7 @@ def load_item_airtable_datastores(config):
             config_item_table['table_name'], config_item_table['id_column'],
             config_item_table['page_size'], OffsetUtility.read_offset(),
             config_item_table['max_records']),
-        eval(config_item_table['fake']))
+        eval(config_item_table['fake'].capitalize()))
     return item_datastore
 
 
@@ -90,7 +90,7 @@ def load_languages_airtable_datastores(config):
             config_languages_table['page_size'],
             OffsetUtility.read_offset(),
             config_languages_table['max_records']),
-        eval(config_languages_table['fake']))
+        eval(config_languages_table['fake'].capitalize()))
     return languages_datastore
 
 
