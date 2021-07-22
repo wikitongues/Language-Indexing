@@ -70,7 +70,7 @@ def load_item_airtable_datastores(config):
             config_item_table['table_name'], config_item_table['id_column'],
             config_item_table['page_size'], OffsetUtility.read_offset(),
             config_item_table['max_records']),
-        config_item_table.getboolean('fake'))
+        eval(config_item_table['fake'].capitalize()))
     return item_datastore
 
 
@@ -90,19 +90,19 @@ def load_languages_airtable_datastores(config):
             config_languages_table['page_size'],
             OffsetUtility.read_offset(),
             config_languages_table['max_records']),
-        config_languages_table.getboolean('fake'))
+        eval(config_languages_table['fake'].capitalize()))
     return languages_datastore
 
 
 def read_include_languages(config):
-
-    if len(config.items("include_languages")) > 0:
+    if hasattr(config, 'include_languages') and \
+            len(config["include_languages"].__dict__) > 0:
         return config['include_languages']['include_languages'].split(",")
     return None
 
 
 def read_exclude_languages(config):
-
-    if len(config.items("exclude_languages")) > 0:
+    if hasattr(config, 'exclude_languages') and \
+            len(config["exclude_languages"].__dict__) > 0:
         return config['exclude_languages']['exclude_languages'].split(",")
     return None

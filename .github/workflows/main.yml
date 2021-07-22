@@ -28,7 +28,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7.10
+          python-version: 3.7.11
           architecture: x64
 
       - name: Install flake8
@@ -42,12 +42,12 @@ jobs:
           # The name of the check to add annotations to.
           # Generally the same as the job that uses this action
           checkName: 'build'
-          
+
       - name: Install dependencies
         run: |
           pip install .
           pip install -r requirements.txt
-        
+
       - name: Run unit tests
         run: python -m unittest
 

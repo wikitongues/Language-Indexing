@@ -35,18 +35,27 @@ class WikipediaSpider(scrapy.Spider):
         if self._spider_input.iso_codes is not None:
             result = self._language_data_store.get_languages(
                 self._spider_input.iso_codes)
-        else:
+
+            if result.has_error():
+                return []
+
+            return result.data
+
+        elif self._spider_input.exclude_iso_codes is not None:
             result = filter(lambda x: x not in
                             self._spider_input.exclude_iso_codes,
                             self._language_data_store.list_languages(
                                 self._spider_input.page_size,
                                 self._spider_input.max_records,
-                                self._spider_input.offset))
+                                offset=self._spider_input.offset).data)
+            return list(result)
 
-        if result.has_error():
-            return []
-
-        return result.data
+        else:
+            result = self._language_data_store.list_languages(
+                self._spider_input.page_size,
+                self._spider_input.max_records,
+                offset=self._spider_input.offset)
+            return result.data
 
     # Called once; starts initial HTTP requests to each requested Wikipedia
     # page
