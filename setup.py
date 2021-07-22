@@ -16,7 +16,7 @@ setup(
         '': 'wikitongues/wikitongues'
     },
     entry_points={
-        'console_scripts': ['language-indexing=language_indexing']
+        'console_scripts': ['language-indexing=language_indexing:main']
     },
     install_requires=[
         'Scrapy'
