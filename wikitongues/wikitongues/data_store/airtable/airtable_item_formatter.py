@@ -42,8 +42,8 @@ API
 
         return {
             'Title': item['title'],
-            'Coverage [Web]': item['url'],
-            'Subject [Language]': [
+            'asd': item['url'],
+            'Language': [
                 item['language_id']
             ]
         }
