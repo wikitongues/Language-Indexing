@@ -3,20 +3,17 @@ import os
 
 
 def ask_user_for_user_file_creation():
-    create = input('Create or overwrite the user config file? (Y/N) ')
-    if create.lower() == 'y':
-        ask_for_overwrite()
-
-
-def ask_for_overwrite():
     user_file = user_config_file()
-    if os.path.isfile(user_file.name) is True:
-        overwrite = input('The file already exist, do you want to '
+    if os.path.isfile(user_file) is True:
+        overwrite = input('The user file already exist, do you want to '
                           + 'overwrite the current config file? (Y/N) ')
         if overwrite.lower() == 'y':
-            create_user_file(user_file.name)
+            create_user_file(user_file)
     else:
-        create_user_file(user_file.name)
+        create = input('The user file does not exist,'
+                       + ' do you want to create the user config file? (Y/N) ')
+        if create.lower() == 'y':
+            create_user_file(user_file)
 
 
 def create_user_file(file_location):
