@@ -21,6 +21,6 @@ class TestAirtableItemFormatter(unittest.TestCase):
         result = self.formatter.get_fields_dict(EXPECTED_ITEM)
 
         self.assertEqual(EXPECTED_ITEM['title'], result['Title'])
-        self.assertEqual(EXPECTED_ITEM['url'], result['asd'])
+        self.assertEqual(EXPECTED_ITEM['url'], result['Url'])
         self.assertEqual(1, len(result['Language']))
         self.assertEqual(EXPECTED_ITEM['language_id'], result['Language'][0])
