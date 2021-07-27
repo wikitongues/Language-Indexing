@@ -42,7 +42,7 @@ API
 
         return {
             'Title': item['title'],
-            'asd': item['url'],
+            'Url': item['url'],
             'Language': [
                 item['language_id']
             ]
