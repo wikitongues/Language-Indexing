@@ -21,7 +21,7 @@ def load_config(config, default_config_file_name=None):
         config_file = open(os.path.join(os.path.dirname(__file__),
                                         "config/indexing.cfg"), "r")
     else:
-        config_file = user_config_file()
+        config_file = open(user_config_file())
     readline(config, config_file)
 
 
@@ -33,7 +33,7 @@ def user_config_file():
     else:
         raise Exception("This program is intended only for Mac,"
                         + "Linux, or Windows machines.")
-    return open(os.sep.join([env, 'wikitongues-language-indexing.cfg']))
+    return os.sep.join([env, 'wikitongues-language-indexing.cfg'])
 
 
 def readline(config, default_config):
