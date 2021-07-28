@@ -3,6 +3,8 @@ from wikitongues.wikitongues.data_store.airtable.airtable_item_formatter import 
 from wikitongues.wikitongues.items import WikitonguesItem
 
 import unittest
+from wikitongues.wikitongues.data_store.airtable.field_name \
+    import TITLE_FIELD, URL_FIELD, LANGUAGE_FIELD
 
 EXPECTED_ITEM = WikitonguesItem(
     title='Title',
@@ -20,8 +22,8 @@ class TestAirtableItemFormatter(unittest.TestCase):
     def test_get_fields_dict(self):
         result = self.formatter.get_fields_dict(EXPECTED_ITEM)
 
-        self.assertEqual(EXPECTED_ITEM['title'], result['Title'])
-        self.assertEqual(EXPECTED_ITEM['url'], result['Coverage [Web]'])
-        self.assertEqual(1, len(result['Subject [Language]']))
+        self.assertEqual(EXPECTED_ITEM['title'], result[TITLE_FIELD])
+        self.assertEqual(EXPECTED_ITEM['url'], result[URL_FIELD])
+        self.assertEqual(1, len(result[LANGUAGE_FIELD]))
         self.assertEqual(EXPECTED_ITEM['language_id'],
-                         result['Subject [Language]'][0])
+                         result[LANGUAGE_FIELD][0])

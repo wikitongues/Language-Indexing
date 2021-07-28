@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from .field_name import TITLE_FIELD, URL_FIELD, LANGUAGE_FIELD
 
 
 class IAirtableItemFormatter(ABC):
@@ -41,9 +42,9 @@ API
         """
 
         return {
-            'Title': item['title'],
-            'Coverage [Web]': item['url'],
-            'Subject [Language]': [
+            TITLE_FIELD: item['title'],
+            URL_FIELD: item['url'],
+            LANGUAGE_FIELD: [
                 item['language_id']
             ]
         }
