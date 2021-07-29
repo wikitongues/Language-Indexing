@@ -4,16 +4,8 @@ from items import WikitonguesItem
 
 from abc import ABC, abstractmethod
 
-#from .field_name import RECORDS, FIELDS, TITLE_FIELD, \
-#    URL_FIELD, ISO_FIELD, LANGUAGE_FIELD, SPIDER_FIELD
-
-RECORDS = 'records'
-FIELDS = 'fields'
-TITLE_FIELD = 'Title'
-URL_FIELD = 'Coverage [Web]'
-ISO_FIELD = 'Subject [ISO Code]'
-LANGUAGE_FIELD = 'Subject [Language]'
-SPIDER_FIELD = 'Spider'
+from .field_name import RECORDS, FIELDS, TITLE_FIELD, \
+    URL_FIELD, ISO_FIELD, LANGUAGE_FIELD, SPIDER_FIELD
 
 
 class IAirtableItemExtractor(ABC):
