@@ -55,6 +55,7 @@ class WikipediaSpider(scrapy.Spider):
                 self._spider_input.page_size,
                 self._spider_input.max_records,
                 offset=self._spider_input.offset)
+
             return result.data
 
     # Called once; starts initial HTTP requests to each requested Wikipedia
