@@ -22,5 +22,5 @@ class FakeLanguageDataStore(LanguageDataStore):
         result.data = languages
         return result
 
-    def list_languages(self):
-        pass
+    def list_languages(self, page_size=100, max_records=None, **kwargs):
+        return self.get_languages(None)
