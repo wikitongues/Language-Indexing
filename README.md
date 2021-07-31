@@ -39,20 +39,35 @@ You'll be able to run the tool with the `language-indexing` command.
 ```
 pip install .
 ```
-## Copy config file to home directory:
-The program reads certain settings from a configuration file. The program
-looks for this file in your home directory on Mac or Linux, or your appdata
-directory on Windows. To copy a properly formatted config file to the correct
-place run this command:
-### Mac/Unix/Linux:
+# Run
+Make sure your virtual environment is active in your current shell (see
+above), and run the tool with this simple command:
 ```
-cp wikitongues/wikitongues/config/indexing.cfg ~/wikitongues-language-indexing.cfg
+language-indexing
 ```
+You will be promped for some configuration details when you run the command for
+the first time.
 
-### Windows:
-```
-copy wikitongues\wikitongues\config\indexing.cfg %appdata%\wikitongues-language-indexing.cfg
-```
+## Configure Airtable settings
+
+The program uses Airtable as a data repository. Airtable is a hybrid
+spreadsheet/database cloud service that Wikitongues uses. Language data is fetched from a Languages table, and web resources are
+uploaded to an External Resources table. If during development you choose not to connect to Airtable, a small sample set of language data will be provided.
+
+### Find your Airtable API Key and Base ID
+
+* Follow [these instructions](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) to get your API key
+  * Copy and paste the API key to a file or note on your computer
+* You'll also need the Base ID, which is a string of characters representing the name of the Airtable Base
+  * Log on to the [Airtable API web page](https://airtable.com/api) and click on the link for your Language Indexing base
+  * Once the page is fully loaded there will be a line in the Introduction section saying "The ID of this base is", followed by green text starting with `app`
+  * Copy and paste the Base ID to a file or note on your computer
+
+## Start Web Crawling
+
+After configuring, you will be prompted to start the web crawling process.
+
+Data for the gathered items will be written to a file called items.jl.
 
 # Configure
 
@@ -60,13 +75,26 @@ Configure the program by editing your user config file:
 * Mac/Unix/Linux: **~/wikitongues-language-indexing.cfg**
 * Windows: **%appdata%\wikitongues-language-indexing.cfg**
 
-## Configure Airtable settings
+## Include/Exclude Language Lists
 
-The program uses Airtable as a data repository. Airtable is a hybrid
-spreadsheet/database cloud service that Wikitongues uses.
+To specify languages to target, provide the [ISO 639-3 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-3_codes), separated by commas, in the `include_languages` section.
+For example, the following configuration targets Sakha and Xhosa:
+```
+[include_languages]
+include_languages : sah,xho
+```
+
+To target all languages except the ones specified, provide the ISO 639-3 codes, separated by commas, in the `exclude_languages` section.
+For example, the following configuration excludes English and Spanish:
+```
+[exclude_languages]
+exclude_languages : eng,spa
+```
+
+## Airtable Settings
 
 Language data is fetched from a Languages table, and web resources are
-uploaded to an Items table. Access to these tables is configured in the
+uploaded to an External Resources table. Access to these tables is configured in the
 `[airtable_languages_table]` and `[airtable_items_table]` sections
 respectively. Common configuration properties can be set in the `[DEFAULT]`
 section. Values in the table-specific sections will override values in
@@ -74,9 +102,9 @@ section. Values in the table-specific sections will override values in
 
 Configure these properties:
 
-`api_key`: Airtable API key (see below)
+`api_key`: Airtable API key (see above)
 
-`base_id`: ID of the Airtable base (see below)
+`base_id`: ID of the Airtable base (see above)
 
 `fake`: Set to true if you do not wish to access Airtable during development.
 If a fake Languages table is used, a small sample set of languages will be
@@ -89,23 +117,6 @@ will not be repeated in subsequent runs.
 `table_name`: Table name.
 
 `id_column`: Name of the column used as an identifier.
-
-### Find your Airtable API Key and Base ID
-
-* Follow [these instructions](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) to get your API key
-  * Copy and paste the API key to a file or note on your computer
-* You'll also need the Base ID, which is a string of characters representing the name of the Airtable Base
-  * Log on to the [Airtable API web page](https://airtable.com/api) and click on the link for your Language Indexing base
-  * Once the page is fully loaded there will be a line in the Introduction section saying "The ID of this base is", followed by green text starting with `app`
-  * Copy and paste the Base ID to a file or note on your computer
-
-# Run
-Make sure your virtual environment is active in your current shell (see
-above), and run the tool with this simple command:
-```
-language-indexing
-```
-Data for the gathered items will be written to a file called items.jl.
 
 # Develop
 This project utilizes [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html), a web crawling framework.

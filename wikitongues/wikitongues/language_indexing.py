@@ -23,6 +23,10 @@ def main():
 
     ask_user_for_user_file_creation()
 
+    start = input('Begin the web crawling process? (Y/N) ')
+    if start.lower() == 'n':
+        sys.exit(0)
+
     load_config(configs.main_config)
     # The load_config function will try to read user file
     # as long as there is two arguments passed
@@ -76,22 +80,21 @@ def main():
 
     sites = configs.main_config['sites']
 
-    start_all_crawls = input('Do you wish to crawl all spiders? (Y/N) ')
+    # start_all_crawls = input('Do you wish to crawl all spiders? (Y/N) ')
 
-    if start_all_crawls.lower() == 'n':
-        site_to_crawl = input('Which site would you like to crawl? ')
-        for site in sites:
-            if site_to_crawl == site[0]:
-                process_site(site)
-                break
-        print('Invalid input: could not find a site that matched your input')
-        sys.exit(1)
+    # if start_all_crawls.lower() == 'n':
+    #     site_to_crawl = input('Which site would you like to crawl? ')
+    #     for site in sites:
+    #         if site_to_crawl == site[0]:
+    #             process_site(site)
+    #             break
+    #     print('Invalid input: could not find a site that matched your input')
+    #     sys.exit(1)
 
-    elif start_all_crawls.lower() == 'y':
-        for site in sites.__dict__:
-            process_site(site)
-            print(sites[site])
+    # elif start_all_crawls.lower() == 'y':
+    for site in sites.__dict__:
+        process_site(site)
 
-    else:
-        print('invalid input')
-        sys.exit(1)
+    # else:
+    #     print('invalid input')
+    #     sys.exit(1)
