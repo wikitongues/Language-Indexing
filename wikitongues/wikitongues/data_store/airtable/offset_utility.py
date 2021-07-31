@@ -18,8 +18,9 @@ class OffsetUtility:
         """
         offset = None
         if os.path.exists(os.path.expanduser(FILENAME)):
-            file = open(os.path.expanduser(FILENAME, 'r'))
+            file = open(os.path.expanduser(FILENAME), 'r')
             offset = file.read()
+            file.close()
         return offset
 
     @staticmethod
@@ -28,5 +29,6 @@ class OffsetUtility:
         Writes offset value to file.
         """
         if offset is not None:
-            file = open(os.path.expanduser(FILENAME, 'w'))
+            file = open(os.path.expanduser(FILENAME), 'w')
             file.write(offset)
+            file.close()

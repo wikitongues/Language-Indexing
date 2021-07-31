@@ -10,7 +10,7 @@ class LanguageIndexingConfiguration:
 # Save each section of the config as a object
 class Title:
     def __getitem__(self, key):
-        return getattr(self, key)
+        return getattr(self, key, None)
 
 
 # Read in default properties

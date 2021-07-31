@@ -42,7 +42,7 @@ class WikipediaSpider(scrapy.Spider):
             return result.data
 
         elif self._spider_input.exclude_iso_codes is not None:
-            result = filter(lambda x: x not in
+            result = filter(lambda language: language.id not in
                             self._spider_input.exclude_iso_codes,
                             self._language_data_store.list_languages(
                                 self._spider_input.page_size,
