@@ -54,7 +54,7 @@ The program uses Airtable as a data repository. Airtable is a hybrid
 spreadsheet/database cloud service that Wikitongues uses. Language data is fetched from a Languages table, and web resources are
 uploaded to an External Resources table. If during development you choose not to connect to Airtable, a small sample set of language data will be provided.
 
-### Find your Airtable API Key and Base ID
+### <a name="airtableAPI"></a> Find your Airtable API Key and Base ID
 
 * Follow [these instructions](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) to get your API key
   * Copy and paste the API key to a file or note on your computer
@@ -102,9 +102,9 @@ section. Values in the table-specific sections will override values in
 
 Configure these properties:
 
-`api_key`: Airtable API key (see above)
+`api_key`: Airtable API key (see [above](#airtableAPI))
 
-`base_id`: ID of the Airtable base (see above)
+`base_id`: ID of the Airtable base (see [above](#airtableAPI))
 
 `fake`: Set to true if you do not wish to access Airtable during development.
 If a fake Languages table is used, a small sample set of languages will be
