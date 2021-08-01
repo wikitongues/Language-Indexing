@@ -10,7 +10,7 @@ class LanguageIndexingConfiguration:
 # Save each section of the config as a object
 class Title:
     def __getitem__(self, key):
-        return getattr(self, key)
+        return getattr(self, key, None)
 
 
 # Read in default properties
@@ -65,10 +65,12 @@ def readline(config, default_config):
 
 
 def setDefault(config):
-    for value in config['DEFAULT'].__dict__:
-        setattr(config['airtable_items_table'],
-                value,
-                config['DEFAULT'][value])
-        setattr(config['airtable_languages_table'],
-                value,
-                config['DEFAULT'][value])
+    for key in config['DEFAULT'].__dict__:
+        if key not in config['airtable_items_table'].__dict__:
+            setattr(config['airtable_items_table'],
+                    key,
+                    config['DEFAULT'][key])
+        if key not in config['airtable_languages_table'].__dict__:
+            setattr(config['airtable_languages_table'],
+                    key,
+                    config['DEFAULT'][key])
