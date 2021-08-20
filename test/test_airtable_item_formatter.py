@@ -4,11 +4,12 @@ from wikitongues.wikitongues.items import WikitonguesItem
 
 import unittest
 from wikitongues.wikitongues.data_store.airtable.field_name \
-    import TITLE_FIELD, URL_FIELD, LANGUAGE_FIELD
+    import LINK_TEXT_FIELD, TITLE_FIELD, URL_FIELD, LANGUAGE_FIELD
 
 EXPECTED_ITEM = WikitonguesItem(
     title='Title',
     url='aaa.com',
+    link_text='aaa link',
     iso_code='aaa',
     language_id='rec12345',
     spider_name='test'
@@ -24,6 +25,7 @@ class TestAirtableItemFormatter(unittest.TestCase):
 
         self.assertEqual(EXPECTED_ITEM['title'], result[TITLE_FIELD])
         self.assertEqual(EXPECTED_ITEM['url'], result[URL_FIELD])
+        self.assertEqual(EXPECTED_ITEM['link_text'], result[LINK_TEXT_FIELD])
         self.assertEqual(1, len(result[LANGUAGE_FIELD]))
         self.assertEqual(EXPECTED_ITEM['language_id'],
                          result[LANGUAGE_FIELD][0])

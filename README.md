@@ -1,5 +1,5 @@
 # Wikitongues Language Indexing
-This is the web crawling tool that powers language indexing at Wikitongues.
+This is the web crawling tool that powers language indexing at [Wikitongues](https://wikitongues.org).
 The tool works by visiting a number of online platforms and gathering links related to every language in the world.
 Wikitongues will provide these links as a resource to anyone who wants to learn, study, or revitalize their language.
 

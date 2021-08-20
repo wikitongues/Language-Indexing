@@ -4,7 +4,7 @@ from items import WikitonguesItem
 
 from abc import ABC, abstractmethod
 
-from .field_name import RECORDS, FIELDS, TITLE_FIELD, \
+from .field_name import LINK_TEXT_FIELD, RECORDS, FIELDS, TITLE_FIELD, \
     URL_FIELD, ISO_FIELD, LANGUAGE_FIELD, SPIDER_FIELD
 
 
@@ -106,6 +106,7 @@ JSON
         result.data = WikitonguesItem(
             title=fields.get(TITLE_FIELD),
             url=fields.get(URL_FIELD),
+            link_text=fields.get(LINK_TEXT_FIELD),
             iso_code=fields.get(ISO_FIELD)[0],
             language_id=fields.get(LANGUAGE_FIELD)[0],
             spider_name=fields.get(SPIDER_FIELD)
