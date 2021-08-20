@@ -15,6 +15,9 @@ class WikitonguesItem(scrapy.Item):
     # The title of the page, from the <title> tag
     title = scrapy.Field()
 
+    # The text of the link to the page
+    link_text = scrapy.Field()
+
     # The url of the page
     url = scrapy.Field()
 

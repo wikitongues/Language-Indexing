@@ -75,21 +75,26 @@ class WikipediaSpider(scrapy.Spider):
     # Callback for HTTP response for Wikipedia pages. Locates external links
     # and makes HTTP requests
     def parse_wikipedia_page(self, response, language):
-        links = response.css('a.external.text::attr(href)').getall()
+        links = response.css('a.external.text')
+
+        def callback(link_text):
+            return lambda response: self.parse_external_link(
+                response, language, link_text)
 
         for link in links:
             yield scrapy.Request(
-                link,
-                lambda response: self.parse_external_link(response, language))
+                url=link.attrib['href'],
+                callback=callback(link.css('::text').get()))
 
     # Callback for HTTP response for external links. If the response is good,
     # the link is indexed as a WikitonguesItem.
-    def parse_external_link(self, response, language):
+    def parse_external_link(self, response, language, link_text):
         if response.status != 200:
             pass
 
         yield WikitonguesItem(
             title=response.css('title::text').get(),
+            link_text=link_text,
             url=response.url,
             iso_code=language.id,
             language_id=language.airtable_id,

@@ -4,7 +4,8 @@
           "id": "recbTnxeVlaT9mvCz",
           "fields": {
               "Title": "Wikitongues",
-              "Coverage [Web]": "wikitongues.org",
+              "Coverage [Web: Link]": "wikitongues.org",
+              "Coverage [Web: Text]": "Wikitongues",
               "Subject [Language]": [
                   "recSlsrFcqniXRYy8"
               ],
