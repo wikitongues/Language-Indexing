@@ -54,6 +54,20 @@ def main():
         }
     )
 
+    def get_spider_input(site, configs):
+        if site == 'wikipedia':
+            return WikipediaSpiderInput(
+                read_include_languages(configs.main_config),
+                read_exclude_languages(configs.main_config),
+                configs.config_languages_table['page_size'],
+                OffsetUtility.read_offset(),
+                configs.config_languages_table['max_records']
+            )
+        elif site == 'translated_site':
+            return {}
+
+        raise Exception(f'Unrecognized site {site}')
+
     def process_site(site):
 
         current_dir = os.path.dirname(__file__)
@@ -66,16 +80,12 @@ def main():
                         'spiders.' + t[:-3]),
                     configs.main_config['spiders'][site])
 
-                spider_input = WikipediaSpiderInput(
-                    read_include_languages(configs.main_config),
-                    read_exclude_languages(configs.main_config),
-                    configs.config_languages_table['page_size'],
-                    OffsetUtility.read_offset(),
-                    configs.config_languages_table['max_records']
-                )
+                spider_input = get_spider_input(site, configs)
 
-                process.crawl(spider_class, spider_input,
-                              configs.languages_datastore)
+                process.crawl(
+                    spider_class,
+                    spider_input=spider_input,
+                    language_data_store=configs.languages_datastore)
                 process.start()
 
     sites = configs.main_config['sites']
