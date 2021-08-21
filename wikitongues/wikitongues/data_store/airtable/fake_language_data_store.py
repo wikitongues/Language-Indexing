@@ -19,7 +19,10 @@ class FakeLanguageDataStore(LanguageDataStore):
             Language('dak', 'Sioux', 'https://en.wikipedia.org/wiki/Sioux_language')  # noqa: E501
         ]
 
-        result.data = languages
+        result.data = filter(
+            lambda language: language.id in iso_codes,
+            languages)
+
         return result
 
     def list_languages(self, page_size=100, max_records=None, **kwargs):

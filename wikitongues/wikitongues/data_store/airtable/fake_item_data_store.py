@@ -13,7 +13,7 @@ class FakeItemDataStore(ItemDataStore):
     def get_item(self, url, iso_code):
         result = ErrorResponse()
 
-        if iso_code == 'xho':
+        if iso_code == 'xho' and url == 'xhosa.com':
             result.data = WikitonguesItem(
                 title='Xhosa Resource',
                 url='xhosa.com',
