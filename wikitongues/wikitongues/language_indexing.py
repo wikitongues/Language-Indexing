@@ -7,10 +7,8 @@ from scrapy.crawler import CrawlerProcess
 import os
 import importlib
 from config.load_configs import \
-    load_item_airtable_datastores, load_languages_airtable_datastores, \
-    read_exclude_languages, read_include_languages
-from spiders.wikipedia_spider import WikipediaSpiderInput
-from data_store.airtable.offset_utility import OffsetUtility
+    load_item_airtable_datastores, load_languages_airtable_datastores
+from spider_input_factory import SpiderInputFactory
 from write_user_config import ask_user_for_user_file_creation
 from language_indexing_config import LanguageIndexingConfiguration, load_config
 
@@ -54,38 +52,26 @@ def main():
         }
     )
 
-    def get_spider_input(site, configs):
-        if site == 'wikipedia':
-            return WikipediaSpiderInput(
-                read_include_languages(configs.main_config),
-                read_exclude_languages(configs.main_config),
-                configs.config_languages_table['page_size'],
-                OffsetUtility.read_offset(),
-                configs.config_languages_table['max_records']
-            )
-        elif site == 'translated_site':
-            return {}
-
-        raise Exception(f'Unrecognized site {site}')
-
     def process_site(site):
 
         current_dir = os.path.dirname(__file__)
         spiders_dir_tree = os.listdir(os.path.join(current_dir, 'spiders'))
 
-        for t in spiders_dir_tree:
-            if t.__contains__(site):
+        for filename in spiders_dir_tree:
+            if filename.__contains__(site):
                 spider_class = getattr(
                     importlib.import_module(
-                        'spiders.' + t[:-3]),
+                        'spiders.' + filename[:-3]),
                     configs.main_config['spiders'][site])
 
-                spider_input = get_spider_input(site, configs)
+                spider_input = SpiderInputFactory.get_spider_input(
+                    site, configs)
 
                 process.crawl(
                     spider_class,
                     spider_input=spider_input,
                     language_data_store=configs.languages_datastore)
+
                 process.start()
 
     sites = configs.main_config['sites']

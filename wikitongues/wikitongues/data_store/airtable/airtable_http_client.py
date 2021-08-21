@@ -113,7 +113,8 @@ class AirtableHttpClient(IAirtableHttpClient):
             Response: Response from Airtable API
         """
 
-        formula = urllib.parse.quote_plus(f'{{{self._id_column}}} = \'{id}\'')
+        formula = urllib.parse.quote_plus(
+            f'FIND(\'{id}\', {{{self._id_column}}}) != 0')
         url = f'{self._route}?filterByFormula={formula}'
 
         return requests.get(url, headers=self._headers)
