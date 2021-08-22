@@ -107,8 +107,13 @@ JSON
             title=fields.get(TITLE_FIELD),
             url=fields.get(URL_FIELD),
             link_text=fields.get(LINK_TEXT_FIELD),
-            iso_code=fields.get(ISO_FIELD)[0],
-            language_id=fields.get(LANGUAGE_FIELD)[0],
+
+            iso_code=None if ISO_FIELD not in fields
+            else fields.get(ISO_FIELD)[0],
+
+            language_id=None if LANGUAGE_FIELD not in fields
+            else fields.get(LANGUAGE_FIELD)[0],
+
             spider_name=fields.get(SPIDER_FIELD)
         )
         return result
