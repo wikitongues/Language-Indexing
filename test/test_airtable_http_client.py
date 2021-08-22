@@ -48,11 +48,14 @@ class TestAirtableHttpClient(unittest.TestCase):
         text = 'expected text'
         id = 'id123'
         url = (
-            f'https://api.airtable.com/v0/{BASE_ID}/{TABLE}?'
-            f'filterByFormula=%7B{ID_COLUMN}%7D%20%3D%20%27{id}%27'
+            f'https://api.airtable.com/v0/{BASE_ID}/{TABLE}?filterByFormula='
+            f'FIND%28%27{id}%27%2C+%7B{ID_COLUMN}%7D%29+%21%3D+0'
         )
 
         def callback(request):
+            if request.url != url:
+                return (404, {}, None)
+
             if request.headers['Authorization'] != f'Bearer {API_KEY}':
                 return (401, {}, None)
 
