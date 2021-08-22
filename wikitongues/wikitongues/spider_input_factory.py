@@ -8,7 +8,9 @@ class SpiderInputFactory:
 
     @staticmethod
     def get_spider_input(site, configs):
-        if site == 'wikipedia':
+        spider_for_site = configs.main_config['spiders'][site]
+
+        if spider_for_site == 'WikipediaSpider':
             return WikipediaSpiderInput(
                 read_include_languages(configs.main_config),
                 read_exclude_languages(configs.main_config),
@@ -16,10 +18,11 @@ class SpiderInputFactory:
                 OffsetUtility.read_offset(),
                 configs.config_languages_table['max_records']
             )
-        elif site == 'translated_site':
+
+        elif spider_for_site == 'TranslatedSiteSpider':
             return TranslatedSiteSpiderInput(
-                configs.main_config['translated_site']['url'],
-                configs.main_config['translated_site']['selector']
+                configs.main_config['translated_site_urls'][site],
+                configs.main_config['translated_site_selectors'][site]
             )
 
-        raise Exception(f'Unrecognized site {site}')
+        raise Exception(f'No spider configured for site {site}')

@@ -4,8 +4,9 @@ import sys
 import types
 
 from scrapy.crawler import CrawlerProcess
-import os
 import importlib
+from inflection import underscore
+
 from config.load_configs import \
     load_item_airtable_datastores, load_languages_airtable_datastores
 from spider_input_factory import SpiderInputFactory
@@ -53,26 +54,21 @@ def main():
     )
 
     def process_site(site):
+        spider_class_name = configs.main_config['spiders'][site]
+        spider_module_name = f'spiders.{underscore(spider_class_name)}'
 
-        current_dir = os.path.dirname(__file__)
-        spiders_dir_tree = os.listdir(os.path.join(current_dir, 'spiders'))
+        spider_class = getattr(
+            importlib.import_module(spider_module_name),
+            spider_class_name)
 
-        for filename in spiders_dir_tree:
-            if filename.__contains__(site):
-                spider_class = getattr(
-                    importlib.import_module(
-                        'spiders.' + filename[:-3]),
-                    configs.main_config['spiders'][site])
+        spider_input = SpiderInputFactory.get_spider_input(site, configs)
 
-                spider_input = SpiderInputFactory.get_spider_input(
-                    site, configs)
+        process.crawl(
+            spider_class,
+            spider_input=spider_input,
+            language_data_store=configs.languages_datastore)
 
-                process.crawl(
-                    spider_class,
-                    spider_input=spider_input,
-                    language_data_store=configs.languages_datastore)
-
-                process.start()
+        process.start()
 
     sites = configs.main_config['sites']
 
