@@ -24,26 +24,28 @@ def main():
 
     configure(configs)
 
-    sites = configs.main_config[keys.SITES_SECTION]
+    sites = configs.main_config[keys.SITES_SECTION].__dict__.keys()
 
-    # start_all_crawls = input('Do you wish to crawl all spiders? (Y/N) ')
+    print('Enter site to target:')
 
-    # if start_all_crawls.lower() == 'n':
-    #     site_to_crawl = input('Which site would you like to crawl? ')
-    #     for site in sites:
-    #         if site_to_crawl == site[0]:
-    #             process_site(site)
-    #             break
-    #     print('Invalid input: could not find a site that matched your input')
-    #     sys.exit(1)
+    for site in sites:
+        print(f'* {site}')
 
-    # elif start_all_crawls.lower() == 'y':
-    for site in sites.__dict__:
+    site = None
+    while site is None:
+        site_input = input()
+        site = next(
+            (site for site in sites if site_input.lower() == site.lower()),
+            None)
+
+        if site is None:
+            print(f'Unrecognized site "{site_input}"')
+
+    try:
         LanguageIndexingRunner.process_site(site, configs)
-
-    # else:
-    #     print('invalid input')
-    #     sys.exit(1)
+    except Exception as e:
+        print(f'Error: {e}')
+        sys.exit(1)
 
 
 def configure(configs):
