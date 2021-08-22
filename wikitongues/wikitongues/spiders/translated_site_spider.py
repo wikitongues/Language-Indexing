@@ -3,20 +3,26 @@ import scrapy
 from items import WikitonguesItem
 
 
+class TranslatedSiteSpiderInput:
+    def __init__(self, url, selector):
+        self.url = url
+        self.selector = selector
+
+
 class TranslatedSiteSpider(scrapy.Spider):
     name = "translated_site"
 
-    url = 'https://www.bbc.com/ws/languages'
-
-    selector = '#english_version .units-list>li>a'
+    def __init__(self, spider_input, *args, **kwargs):
+        super(TranslatedSiteSpider, self).__init__(*args, **kwargs)
+        self._spider_input = spider_input
 
     def start_requests(self):
         yield scrapy.Request(
-            url=self.url,
+            url=self._spider_input.url,
             callback=self.parse_links)
 
     def parse_links(self, response):
-        links = response.css(self.selector)
+        links = response.css(self._spider_input.selector)
 
         def callback(link_text):
             return lambda response: self.parse_linked_page(response, link_text)
