@@ -22,7 +22,12 @@ class TranslatedSiteSpider(scrapy.Spider):
             callback=self.parse_links)
 
     def parse_links(self, response):
+        self.logger.debug(
+            f'Finding links by selector {self._spider_input.selector}')
+
         links = response.css(self._spider_input.selector)
+
+        self.logger.debug(f'Found {len(links)} links')
 
         def callback(link_text):
             return lambda response: self.parse_linked_page(response, link_text)
