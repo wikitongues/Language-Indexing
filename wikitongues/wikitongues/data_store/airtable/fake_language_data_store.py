@@ -16,7 +16,8 @@ class FakeLanguageDataStore(LanguageDataStore):
             Language('qwe', 'Quechua', 'https://en.wikipedia.org/wiki/Quechuan_languages'),  # noqa: E501
             Language('nys', 'Nyungar', 'https://en.wikipedia.org/wiki/Nyungar_language'),  # noqa: E501
             Language('xho', 'Xhosa', 'https://en.wikipedia.org/wiki/Xhosa_language'),  # noqa: E501
-            Language('dak', 'Sioux', 'https://en.wikipedia.org/wiki/Sioux_language')  # noqa: E501
+            Language('dak', 'Sioux', 'https://en.wikipedia.org/wiki/Sioux_language'),  # noqa: E501
+            Language('mwl', 'Mirandese', 'https://en.wikipedia.org/wiki/Mirandese_language')  # noqa: E501
         ]
 
         result.data = filter(
