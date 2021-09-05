@@ -62,10 +62,12 @@ uploaded to an External Resources table. If during development you choose not to
   * Log on to the [Airtable API web page](https://airtable.com/api) and click on the link for your Language Indexing base
   * Once the page is fully loaded there will be a line in the Introduction section saying "The ID of this base is", followed by green text starting with `app`
   * Copy and paste the Base ID to a file or note on your computer
+* You will be promped for the "number of languages per query", which will apply if you are running Wikipedia crawling without providing specific languages (see [below](#configureWikipedia))
 
 ## Start Web Crawling
 
-After configuring, you will be prompted to start the web crawling process.
+After configuring, you will be prompted to start the web crawling process. You will then be prompted to choose from the sites that have been configured.
+Type in a site from the list, press enter, and the process will begin.
 
 Data for the gathered items will be written to a file called items.jl.
 
@@ -75,23 +77,7 @@ Configure the program by editing your user config file:
 * Mac/Unix/Linux: **~/wikitongues-language-indexing.cfg**
 * Windows: **%appdata%\wikitongues-language-indexing.cfg**
 
-## Include/Exclude Language Lists
-
-To specify languages to target, provide the [ISO 639-3 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-3_codes), separated by commas, in the `include_languages` section.
-For example, the following configuration targets Sakha and Xhosa:
-```
-[include_languages]
-include_languages : sah,xho
-```
-
-To target all languages except the ones specified, provide the ISO 639-3 codes, separated by commas, in the `exclude_languages` section.
-For example, the following configuration excludes English and Spanish:
-```
-[exclude_languages]
-exclude_languages : eng,spa
-```
-
-## Airtable Settings
+## Configure Airtable Settings
 
 Language data is fetched from a Languages table, and web resources are
 uploaded to an External Resources table. Access to these tables is configured in the
@@ -117,6 +103,56 @@ will not be repeated in subsequent runs.
 `table_name`: Table name.
 
 `id_column`: Name of the column used as an identifier.
+
+
+## <a name="configureWikipedia"></a> Configure Wikipedia Crawling
+
+The program targets Wikipedia by visiting the article for a language and indexing each of the external links.
+
+### Include/Exclude Language Lists
+
+To specify languages to target, provide the [ISO 639-3 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-3_codes), separated by commas, in the `include_languages` section.
+For example, the following configuration targets Sakha and Xhosa:
+```ini
+[include_languages]
+include_languages : sah,xho
+```
+
+To target all languages except the ones specified (subject to the configured `page_size`), provide the ISO 639-3 codes, separated by commas, in the `exclude_languages` section.
+For example, the following configuration excludes English and Spanish:
+```ini
+[exclude_languages]
+exclude_languages : eng,spa
+```
+
+## Configure Translated Site Crawling
+
+The program can also crawl a "translated site" containing an index of multilingual links, e.g. a news site with editions in multiple languages.
+To configure a new site, follow these steps (example shown for [BBC News](https://www.bbc.com/ws/languages)):
+
+1. Add the site name to the `[sites]` section
+```ini
+[sites]
+BBC
+```
+
+2. In the `[spiders]` section, specify that the site will be crawled using the `TranslatedSiteSpider` workflow
+```ini
+[spiders]
+BBC : TranslatedSiteSpider
+```
+
+3. Provide the url containing the site's language index in the `[translated_site_urls]` section
+```ini
+[translated_site_urls]
+BBC : https://www.bbc.com/ws/languages
+```
+
+4. Provide the CSS selector common to each link in the site's language index. You can use your browser's dev tools to find the selector.
+```ini
+[translated_site_selectors]
+BBC : #english_version .units-list>li>a
+```
 
 # Develop
 This project utilizes [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html), a web crawling framework.
