@@ -59,13 +59,16 @@ the same url, associated with the same language
             scrapy.Item: The scraped item
         """
 
-        url = item['url']
-        iso_code = item['iso_code']
+        url = item.get('url')
+        iso_code = item.get('iso_code', '')
         result = self.item_data_store.get_item(url, iso_code)
 
         if result.data is not None:
-            raise DropItem(
-                f'Resource already indexed for language {iso_code}: {url}')
+            if iso_code != '':
+                raise DropItem(
+                    f'Resource already indexed for language {iso_code}: {url}')
+            else:
+                raise DropItem(f'Resource already indexed: {url}')
 
         create_result = self.item_data_store.create_item(item)
 

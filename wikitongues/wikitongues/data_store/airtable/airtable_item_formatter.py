@@ -41,11 +41,13 @@ API
             dict: Dictionary of Airtable fields
         """
 
-        return {
+        fields = {
             TITLE_FIELD: item['title'],
             URL_FIELD: item['url'],
-            LINK_TEXT_FIELD: item['link_text'],
-            LANGUAGE_FIELD: [
-                item['language_id']
-            ]
+            LINK_TEXT_FIELD: item['link_text']
         }
+
+        if 'language_id' in item:
+            fields[LANGUAGE_FIELD] = [item['language_id']]
+
+        return fields

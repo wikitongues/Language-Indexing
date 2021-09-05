@@ -15,6 +15,13 @@ EXPECTED_ITEM = WikitonguesItem(
     spider_name='test'
 )
 
+EXPECTED_ITEM_WITHOUT_LANGUAGE = WikitonguesItem(
+    title='Labaran Duniya - BBC News Hausa',
+    url='https://www.bbc.com/hausa',
+    link_text='Hausa',
+    spider_name='test'
+)
+
 
 class TestAirtableItemFormatter(unittest.TestCase):
     def setUp(self):
@@ -29,3 +36,14 @@ class TestAirtableItemFormatter(unittest.TestCase):
         self.assertEqual(1, len(result[LANGUAGE_FIELD]))
         self.assertEqual(EXPECTED_ITEM['language_id'],
                          result[LANGUAGE_FIELD][0])
+
+    def test_get_fields_without_language(self):
+        result = self.formatter.get_fields_dict(EXPECTED_ITEM_WITHOUT_LANGUAGE)
+
+        self.assertEqual(
+            EXPECTED_ITEM_WITHOUT_LANGUAGE['title'], result[TITLE_FIELD])
+        self.assertEqual(
+            EXPECTED_ITEM_WITHOUT_LANGUAGE['url'], result[URL_FIELD])
+        self.assertEqual(
+            EXPECTED_ITEM_WITHOUT_LANGUAGE['link_text'],
+            result[LINK_TEXT_FIELD])

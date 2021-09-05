@@ -22,8 +22,25 @@ class TestAirtableItemExtractor(unittest.TestCase):
 
         self.assertEqual(data[0]['title'], 'Wikitongues')
         self.assertEqual(data[0]['url'], 'wikitongues.org')
+        self.assertEqual(data[0]['link_text'], 'Wikitongues')
         self.assertEqual(data[0]['language_id'], 'recSlsrFcqniXRYy8')
         self.assertEqual(data[0]['iso_code'], 'aaa')
+
+    def test_extract_item_without_language(self):
+        with open('test/resources/singleItemWithoutLanguage.json') as f:
+            json_obj = json.load(f)
+
+        result = self.extractor.extract_items_from_json(json_obj)
+
+        self.assertFalse(result.has_error())
+
+        data = result.data
+
+        self.assertEqual(1, len(data))
+
+        self.assertEqual(data[0]['title'], 'Labaran Duniya - BBC News Hausa')
+        self.assertEqual(data[0]['url'], 'https://www.bbc.com/hausa')
+        self.assertEqual(data[0]['link_text'], 'Hausa')
 
     def test_extract_empty_list(self):
         with open('test/resources/emptyRecords.json') as f:
