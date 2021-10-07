@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from .field_name import LINK_TEXT_FIELD, TITLE_FIELD, URL_FIELD, LANGUAGE_FIELD
+from . import field_name
 
 
 class IAirtableItemFormatter(ABC):
@@ -42,12 +42,14 @@ API
         """
 
         fields = {
-            TITLE_FIELD: item['title'],
-            URL_FIELD: item['url'],
-            LINK_TEXT_FIELD: item['link_text']
+            field_name.TITLE_FIELD: item['title'],
+            field_name.URL_FIELD: item['url'],
+            field_name.LINK_TEXT_FIELD: item['link_text'],
+            field_name.RESOURCE_LANGUAGES_RAW_FIELD: ','.join(item['resource_languages_raw']),
+            field_name.RESOURCE_LANGUAGES_LOOKUP_FIELD: list(item['resource_languages'])
         }
 
         if 'language_id' in item:
-            fields[LANGUAGE_FIELD] = [item['language_id']]
+            fields[field_name.LANGUAGE_FIELD] = [item['language_id']]
 
         return fields
