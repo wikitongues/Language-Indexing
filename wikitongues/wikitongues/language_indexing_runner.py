@@ -1,5 +1,7 @@
 from spider_input_factory import SpiderInputFactory
 import config.config_keys as keys
+from lang_to_iso_converter import LangToIsoConverter
+from resource_language_service import ResourceLanguageService
 
 from scrapy.crawler import CrawlerProcess
 import importlib
@@ -32,9 +34,14 @@ class LanguageIndexingRunner:
             }
         )
 
+        language_data_store = configs.languages_datastore
+        lang_to_iso_converter = LangToIsoConverter()
+        resource_language_service = ResourceLanguageService(language_data_store, lang_to_iso_converter)
+
         process.crawl(
             spider_class,
             spider_input=spider_input,
-            language_data_store=configs.languages_datastore)
+            language_data_store=language_data_store,
+            resource_language_service=resource_language_service)
 
         process.start()

@@ -1,6 +1,7 @@
 import scrapy
 
 from items import WikitonguesItem
+from lang_attribute_parser import LangAttributeParser
 
 
 class WikipediaSpiderInput:
@@ -25,10 +26,19 @@ class WikipediaSpider(scrapy.Spider):
     # spider_input: WikipediaSpiderInput object specifying input data
     #   for this crawl
     # language_data_store: LanguageDataStore instance
-    def __init__(self, spider_input, language_data_store, *args, **kwargs):
+    def __init__(
+        self,
+        spider_input,
+        language_data_store,
+        resource_language_service,
+        *args,
+        **kwargs
+    ):
         super(WikipediaSpider, self).__init__(*args, **kwargs)
+
         self._spider_input = spider_input
         self._language_data_store = language_data_store
+        self._resource_language_service = resource_language_service
 
     # Load Language objects to target in this crawl
     def load_languages(self):
@@ -92,11 +102,17 @@ class WikipediaSpider(scrapy.Spider):
         if response.status != 200:
             pass
 
+        lang_attrs = LangAttributeParser.get_lang_values(response)
+
+        resource_language_ids = self._resource_language_service.get_resource_language_ids(lang_attrs)
+
         yield WikitonguesItem(
             title=response.css('title::text').get(),
             link_text=link_text,
             url=response.url,
             iso_code=language.id,
             language_id=language.airtable_id,
-            spider_name=self.name
+            spider_name=self.name,
+            resource_languages=resource_language_ids,
+            resource_languages_raw=lang_attrs
         )

@@ -27,5 +27,11 @@ class WikitonguesItem(scrapy.Item):
     # The Airtable identifier of the associated language
     language_id = scrapy.Field()
 
+    # Set of lang attribute values
+    resource_languages_raw = scrapy.Field()
+
+    # Airtable identifiers of languages associated with lang attribute values
+    resource_languages = scrapy.Field()
+
     # The spider that gathered the page
     spider_name = scrapy.Field()

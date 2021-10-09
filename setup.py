@@ -19,7 +19,8 @@ setup(
         'console_scripts': ['language-indexing=language_indexing:main']
     },
     install_requires=[
-        'Scrapy'
+        'Scrapy',
+        'languagecodes'
     ],
     include_package_data=True
 )
