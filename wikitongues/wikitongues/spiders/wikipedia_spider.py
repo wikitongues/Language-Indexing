@@ -1,4 +1,5 @@
 import scrapy
+from scrapy.http import HtmlResponse
 
 from items import WikitonguesItem
 from lang_attribute_parser import LangAttributeParser
@@ -102,17 +103,28 @@ class WikipediaSpider(scrapy.Spider):
         if response.status != 200:
             pass
 
-        lang_attrs = LangAttributeParser.get_lang_values(response)
+        if isinstance(response, HtmlResponse):
+            lang_attrs = LangAttributeParser.get_lang_values(response)
 
-        resource_language_ids = self._resource_language_service.get_resource_language_ids(lang_attrs)
+            resource_language_ids = self._resource_language_service.get_resource_language_ids(lang_attrs)
 
-        yield WikitonguesItem(
-            title=response.css('title::text').get(),
-            link_text=link_text,
-            url=response.url,
-            iso_code=language.id,
-            language_id=language.airtable_id,
-            spider_name=self.name,
-            resource_languages=resource_language_ids,
-            resource_languages_raw=lang_attrs
-        )
+            yield WikitonguesItem(
+                title=response.css('title::text').get(),
+                link_text=link_text,
+                url=response.url,
+                iso_code=language.id,
+                language_id=language.airtable_id,
+                spider_name=self.name,
+                resource_languages=resource_language_ids,
+                resource_languages_raw=lang_attrs
+            )
+
+        else:
+            yield WikitonguesItem(
+                title=link_text,
+                link_text=link_text,
+                url=response.url,
+                iso_code=language.id,
+                language_id=language.airtable_id,
+                spider_name=self.name
+            )
