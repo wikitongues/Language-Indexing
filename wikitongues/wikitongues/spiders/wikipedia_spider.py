@@ -3,6 +3,7 @@ from scrapy.http import HtmlResponse
 
 from items import WikitonguesItem
 from lang_attribute_parser import LangAttributeParser
+from url_sanitizer import UrlSanitizer
 
 
 class WikipediaSpiderInput:
@@ -94,7 +95,7 @@ class WikipediaSpider(scrapy.Spider):
 
         for link in links:
             yield scrapy.Request(
-                url=link.attrib['href'],
+                url=UrlSanitizer.sanitize_url(link.attrib['href']),
                 callback=callback(link.css('::text').get()))
 
     # Callback for HTTP response for external links. If the response is good,
