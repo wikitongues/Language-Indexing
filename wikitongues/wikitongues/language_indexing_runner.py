@@ -30,7 +30,8 @@ class LanguageIndexingRunner:
                 'ITEM_DATA_STORE': configs.item_datastore,
                 'ITEM_PIPELINES': {
                     'pipelines.WikitonguesPipeline': 300
-                }
+                },
+                'METAREFRESH_IGNORE_TAGS': ['script', 'noscript']
             }
         )
 
