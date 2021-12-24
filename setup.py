@@ -20,7 +20,9 @@ setup(
     },
     install_requires=[
         'Scrapy',
-        'languagecodes'
+        'languagecodes',
+        'requests',
+        'inflection'
     ],
     include_package_data=True
 )
