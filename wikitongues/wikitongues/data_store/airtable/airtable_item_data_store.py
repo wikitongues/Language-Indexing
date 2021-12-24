@@ -1,5 +1,6 @@
 from ..item_data_store import ItemDataStore
 from ..error_response import ErrorResponse
+from . import field_name
 import json
 
 
@@ -9,23 +10,18 @@ class AirtableItemDataStore(ItemDataStore):
     """
 
     def __init__(
-            self, http_client, item_extractor, item_formatter, id_provider):
+            self, http_client, item_extractor, item_formatter):
         """
         Construct AirtableItemDataStore
 
         Args:
             http_client (IAirtableHttpClient): Airtable Http Client instance
-            item_extractor (IAirtableItemExtractor): Airtable Item Extractor \
-instance
-            item_formatter (IAirtableItemFormatter):
-                Airtable Item Formater instance
-            id_provider (AirtableItemIdProvider):
-                Airtable Item Id Provider instance
+            item_extractor (IAirtableItemExtractor): Airtable Item Extractor instance
+            item_formatter (IAirtableItemFormatter): Airtable Item Formater instance
         """
         self._client = http_client
         self._extractor = item_extractor
         self._formatter = item_formatter
-        self._id_provider = id_provider
 
     def get_item(self, url, iso_code):
         """
@@ -41,8 +37,10 @@ instance
 
         result = ErrorResponse()
 
-        item_id = self._id_provider.get_item_id(url, iso_code)
-        response = self._client.get_record(item_id)
+        response = self._client.get_records_by_fields({
+            field_name.URL_FIELD: url,
+            field_name.ISO_FIELD: iso_code
+        })
 
         json_obj = json.loads(response.text)
         extract_result = self._extractor.extract_items_from_json(json_obj)

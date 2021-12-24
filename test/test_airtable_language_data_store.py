@@ -40,6 +40,9 @@ class MockAirtableHttpClient(IAirtableHttpClient):
 
         return MockResponse()
 
+    def get_records_by_fields(self, fields):
+        pass
+
     def create_record(self, fields):
         pass
 

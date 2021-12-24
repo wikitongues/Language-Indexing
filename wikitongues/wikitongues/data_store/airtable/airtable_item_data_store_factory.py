@@ -2,7 +2,6 @@ from .airtable_item_data_store import AirtableItemDataStore
 from .airtable_http_client import AirtableHttpClient
 from .airtable_item_extractor import AirtableItemExtractor
 from .airtable_item_formatter import AirtableItemFormatter
-from .airtable_item_id_provider import AirtableItemIdProvider
 from .fake_item_data_store import FakeItemDataStore
 
 
@@ -32,6 +31,4 @@ require Airtable credentials is returned. Defaults to False.
         http_client = AirtableHttpClient(connection_info, table_info)
         item_extractor = AirtableItemExtractor()
         item_formatter = AirtableItemFormatter()
-        id_provider = AirtableItemIdProvider()
-        return AirtableItemDataStore(
-            http_client, item_extractor, item_formatter, id_provider)
+        return AirtableItemDataStore(http_client, item_extractor, item_formatter)
