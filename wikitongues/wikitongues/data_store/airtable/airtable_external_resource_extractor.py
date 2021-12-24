@@ -1,6 +1,6 @@
 from ..error_response import ErrorResponse
 
-from items import WikitonguesItem
+from items import ExternalResource
 
 from abc import ABC, abstractmethod
 
@@ -8,19 +8,18 @@ from .field_name import LINK_TEXT_FIELD, RECORDS, FIELDS, TITLE_FIELD, \
     URL_FIELD, ISO_FIELD, LANGUAGE_FIELD, SPIDER_FIELD
 
 
-class IAirtableItemExtractor(ABC):
+class IAirtableExternalResourceExtractor(ABC):
     """
-    Airtable item extractor interface
+    Airtable external resource extractor interface
 
     Args:
         ABC
     """
 
     @abstractmethod
-    def extract_items_from_json(self, json_obj):
+    def extract_external_resources_from_json(self, json_obj):
         """
-        Extracts a list of WikitonguesItem objects from Airtable API response \
-JSON
+        Extracts a list of ExternalResource objects from Airtable API response JSON
 
         Args:
             json_obj (dict): Airtable API response object
@@ -28,10 +27,9 @@ JSON
         pass
 
     @abstractmethod
-    def extract_item_from_json(self, json_obj):
+    def extract_external_resource_from_json(self, json_obj):
         """
-        Extracts a single WikitonguesItem object from Airtable API response \
-JSON
+        Extracts a single ExternalResource object from Airtable API response JSON
 
         Args:
             json_obj (dict): Airtable API response object
@@ -39,25 +37,23 @@ JSON
         pass
 
 
-class AirtableItemExtractor(IAirtableItemExtractor):
+class AirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
     """
-    Extracts WikitonguesItem objects from Airtable API response JSON
+    Extracts ExternalResource objects from Airtable API response JSON
 
     Args:
-        IAirtableItemExtractor
+        IAirtableExternalResourceExtractor
     """
 
-    def extract_items_from_json(self, json_obj):
+    def extract_external_resources_from_json(self, json_obj):
         """
-        Extracts a list of WikitonguesItem objects from Airtable API response \
-JSON
+        Extracts a list of ExternalResource objects from Airtable API response JSON
 
         Args:
             json_obj (dict): Airtable API response object
 
         Returns:
-            ErrorResponse: Response object containing list of WikitonguesItem \
-objects
+            ErrorResponse: Response object containing list of ExternalResource objects
         """
 
         result = ErrorResponse()
@@ -69,28 +65,27 @@ objects
                 'Airtable API response missing list property \'records\'')
             return result
 
-        items = []
+        external_resources = []
         for record in records:
-            result1 = self.extract_item_from_json(record)
+            result1 = self.extract_external_resource_from_json(record)
 
             if result1.has_error():
                 return result1
 
-            items.append(result1.data)
+            external_resources.append(result1.data)
 
-        result.data = items
+        result.data = external_resources
         return result
 
-    def extract_item_from_json(self, json_obj):
+    def extract_external_resource_from_json(self, json_obj):
         """
-        Extracts a single WikitonguesItem object from Airtable API response \
-JSON
+        Extracts a single ExternalResource object from Airtable API response JSON
 
         Args:
             json_obj (dict): Airtable API response object
 
         Returns:
-            ErrorResponse: Response object containing WikitonguesItem object
+            ErrorResponse: Response object containing ExternalResource object
         """
 
         result = ErrorResponse()
@@ -99,11 +94,11 @@ JSON
 
         if type(fields) != dict:
             result.add_message(
-                'Airtable item record object missing object property '
+                'Airtable external resource record object missing object property '
                 '\'fields\'')
             return result
 
-        result.data = WikitonguesItem(
+        result.data = ExternalResource(
             title=fields.get(TITLE_FIELD),
             url=fields.get(URL_FIELD),
             link_text=fields.get(LINK_TEXT_FIELD),

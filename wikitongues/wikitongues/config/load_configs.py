@@ -3,12 +3,9 @@ from sys import platform
 import configparser
 import os
 
-from data_store.airtable.airtable_connection_info \
-    import AirtableConnectionInfo
-from data_store.airtable.airtable_item_data_store_factory \
-    import AirtableItemDataStoreFactory
-from data_store.airtable.airtable_language_data_store_factory \
-    import AirtableLanguageDataStoreFactory
+from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
+from data_store.airtable.airtable_external_resource_data_store_factory import AirtableExternalResourceDataStoreFactory
+from data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory
 from data_store.airtable.airtable_table_info import AirtableTableInfo
 from data_store.airtable.offset_utility import OffsetUtility
 
@@ -54,27 +51,27 @@ def load_main_config():
         return default_config
 
 
-def load_item_airtable_datastores(config):
+def load_external_resource_airtable_config(config):
 
-    config_item_table = config['airtable_items_table']
+    config_external_resource_table = config['airtable_external_resources_table']
 
     # TODO check base_id and api_key are valid before creating the objects.
 
-    # Get a ItemDataStore instance
+    # Get a ExternalResourceDataStore instance
     # fake=True will give us a fake data store that returns a sample set of
     #   languages and does not require Airtable credentials
-    item_datastore = AirtableItemDataStoreFactory.get_data_store(
+    external_resource_datastore = AirtableExternalResourceDataStoreFactory.get_data_store(
         AirtableConnectionInfo(
-            config_item_table['base_id'], config_item_table['api_key']),
+            config_external_resource_table['base_id'], config_external_resource_table['api_key']),
         AirtableTableInfo(
-            config_item_table['table_name'], config_item_table['id_column'],
-            config_item_table['page_size'], OffsetUtility.read_offset(),
-            config_item_table['max_records']),
-        eval(config_item_table['fake'].capitalize()))
-    return item_datastore
+            config_external_resource_table['table_name'], config_external_resource_table['id_column'],
+            config_external_resource_table['page_size'], OffsetUtility.read_offset(),
+            config_external_resource_table['max_records']),
+        eval(config_external_resource_table['fake'].capitalize()))
+    return external_resource_datastore
 
 
-def load_languages_airtable_datastores(config):
+def load_languages_airtable_config(config):
 
     config_languages_table = config['airtable_languages_table']
     # Get a LanguageDataStore instance

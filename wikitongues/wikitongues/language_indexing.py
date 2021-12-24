@@ -5,8 +5,7 @@ import types
 
 from language_indexing_runner import LanguageIndexingRunner
 
-from config.load_configs import \
-    load_item_airtable_datastores, load_languages_airtable_datastores
+from config.load_configs import load_external_resource_airtable_config, load_languages_airtable_config
 from write_user_config import ask_user_for_user_file_creation
 from language_indexing_config import LanguageIndexingConfiguration, load_config
 
@@ -58,9 +57,9 @@ def configure(configs):
     # Read user config
     load_config(configs.main_config, 'user_config')
 
-    configs.item_datastore = load_item_airtable_datastores(configs.main_config)
+    configs.external_resource_datastore = load_external_resource_airtable_config(configs.main_config)
 
-    configs.languages_datastore = load_languages_airtable_datastores(
+    configs.languages_datastore = load_languages_airtable_config(
         configs.main_config)
 
     configs.config_languages_table = \

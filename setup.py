@@ -19,10 +19,11 @@ setup(
         'console_scripts': ['language-indexing=language_indexing:main']
     },
     install_requires=[
-        'Scrapy',
+        'inflection',
         'languagecodes',
         'requests',
-        'inflection'
+        'responses',
+        'Scrapy'
     ],
     include_package_data=True
 )
