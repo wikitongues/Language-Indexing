@@ -1,8 +1,8 @@
-from wikitongues.wikitongues.data_store.airtable.airtable_item_data_store import AirtableItemDataStore  # noqa: E501
-from wikitongues.wikitongues.data_store.airtable.airtable_http_client import IAirtableHttpClient  # noqa: E501
-from wikitongues.wikitongues.data_store.airtable.airtable_item_id_provider import AirtableItemIdProvider  # noqa: E501
-from wikitongues.wikitongues.data_store.airtable.airtable_item_formatter import IAirtableItemFormatter  # noqa: E501
-from wikitongues.wikitongues.data_store.airtable.airtable_item_extractor import IAirtableItemExtractor  # noqa: E501
+from wikitongues.wikitongues.data_store.airtable.airtable_item_data_store import AirtableItemDataStore
+from wikitongues.wikitongues.data_store.airtable.airtable_http_client import IAirtableHttpClient
+from wikitongues.wikitongues.data_store.airtable.airtable_item_formatter import IAirtableItemFormatter
+from wikitongues.wikitongues.data_store.airtable.airtable_item_extractor import IAirtableItemExtractor
+import wikitongues.wikitongues.data_store.airtable.field_name as field_name
 
 from wikitongues.wikitongues.data_store.error_response import ErrorResponse
 
@@ -38,7 +38,10 @@ class MockAirtableHttpClient(IAirtableHttpClient):
         return MockResponse()
 
     def get_record(self, id):
-        if id == f'{EXPECTED_ISO}:{EXPECTED_URL}':
+        pass
+
+    def get_records_by_fields(self, fields):
+        if fields[field_name.ISO_FIELD] == EXPECTED_ISO and fields[field_name.URL_FIELD] == EXPECTED_URL:
             return MockResponse(EXPECTED_JSON)
 
         return MockResponse()
@@ -84,9 +87,7 @@ class TestAirtableItemDataStore(unittest.TestCase):
         http_client = MockAirtableHttpClient()
         item_extractor = MockAirtableItemExtractor()
         item_formatter = MockAirtableItemFormatter()
-        id_provider = AirtableItemIdProvider()
-        self.data_store = AirtableItemDataStore(
-            http_client, item_extractor, item_formatter, id_provider)
+        self.data_store = AirtableItemDataStore(http_client, item_extractor, item_formatter)
 
     def test_get_item(self):
         result = self.data_store.get_item(EXPECTED_URL, EXPECTED_ISO)

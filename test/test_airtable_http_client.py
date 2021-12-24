@@ -1,6 +1,7 @@
-from wikitongues.wikitongues.data_store.airtable.airtable_http_client import AirtableHttpClient  # noqa: E501
-from wikitongues.wikitongues.data_store.airtable.airtable_connection_info import AirtableConnectionInfo  # noqa: E501
-from wikitongues.wikitongues.data_store.airtable.airtable_table_info import AirtableTableInfo  # noqa: E501
+from wikitongues.wikitongues.data_store.airtable.airtable_http_client import AirtableHttpClient
+from wikitongues.wikitongues.data_store.airtable.airtable_connection_info import AirtableConnectionInfo
+from wikitongues.wikitongues.data_store.airtable.airtable_table_info import AirtableTableInfo
+import wikitongues.wikitongues.data_store.airtable.field_name as field_name
 
 import responses
 import unittest
@@ -64,6 +65,35 @@ class TestAirtableHttpClient(unittest.TestCase):
         responses.add_callback(responses.GET, url, callback=callback)
 
         result = self.client.get_record(id)
+
+        self.assertEqual(result.text, text)
+
+    @responses.activate
+    def test_get_records_by_fields(self):
+        text = 'expected text'
+        iso = 'sah'
+        resource_url = 'http://www.baayaga.narod.ru'
+        fields = {
+            field_name.ISO_FIELD: iso,
+            field_name.URL_FIELD: resource_url
+        }
+        url = (
+            f'https://api.airtable.com/v0/{BASE_ID}/{TABLE}?filterByFormula='
+            'AND%28%7BCoverage+%5BWeb%3A+Link%5D%7D%3D%27http%3A%2F%2Fwww.baayaga.narod.ru%27%2C%7BSubject+%5BISO+Code%5D%7D%3D%27sah%27%29'  # noqa: E501
+        )
+
+        def callback(request):
+            if request.url != url:
+                return (404, {}, None)
+
+            if request.headers['Authorization'] != f'Bearer {API_KEY}':
+                return (401, {}, None)
+
+            return (200, {}, text)
+
+        responses.add_callback(responses.GET, url, callback=callback)
+
+        result = self.client.get_records_by_fields(fields)
 
         self.assertEqual(result.text, text)
 

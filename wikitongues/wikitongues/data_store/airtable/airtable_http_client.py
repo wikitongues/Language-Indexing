@@ -34,6 +34,16 @@ class IAirtableHttpClient(ABC):
         pass
 
     @abstractmethod
+    def get_records_by_fields(self, fields):
+        """
+        Get any records matching the given fields
+
+        Args:
+            fields (dict): Dictionary of fields
+        """
+        pass
+
+    @abstractmethod
     def create_record(self, fields):
         """
         Create record
@@ -115,6 +125,24 @@ class AirtableHttpClient(IAirtableHttpClient):
 
         formula = urllib.parse.quote_plus(
             f'FIND(\'{id}\', {{{self._id_column}}}) != 0')
+        url = f'{self._route}?filterByFormula={formula}'
+
+        return requests.get(url, headers=self._headers)
+
+    def get_records_by_fields(self, fields):
+        """
+        Get any records matching the given fields
+
+        Args:
+            fields (dict): Dictionary of fields
+
+        Returns:
+            Response: Response from Airtable API
+        """
+        formula = 'AND('
+        formula += ','.join(['{' + key + '}=\'' + fields[key] + '\'' for key in sorted(fields)])
+        formula += ')'
+        formula = urllib.parse.quote_plus(formula)
         url = f'{self._route}?filterByFormula={formula}'
 
         return requests.get(url, headers=self._headers)
