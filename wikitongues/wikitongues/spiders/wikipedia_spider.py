@@ -94,9 +94,14 @@ class WikipediaSpider(scrapy.Spider):
                 response, language, link_text)
 
         for link in links:
-            yield scrapy.Request(
-                url=UrlSanitizer.sanitize_url(link.attrib['href']),
-                callback=callback(link.css('::text').get()))
+            url = link.attrib['href']
+            if self.should_follow_external_link(url):
+                yield scrapy.Request(
+                    url=UrlSanitizer.sanitize_url(url),
+                    callback=callback(link.css('::text').get()))
+
+    def should_follow_external_link(self, url):
+        return 'wikipedia.org' not in url
 
     # Callback for HTTP response for external links. If the response is good,
     # the link is indexed as a WikitonguesItem.
