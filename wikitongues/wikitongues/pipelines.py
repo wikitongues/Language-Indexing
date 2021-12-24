@@ -17,16 +17,16 @@ class WikitonguesPipeline:
     Pipeline for checking for duplicates and adding new resources
     """
 
-    def __init__(self, item_data_store):
+    def __init__(self, external_resource_data_store):
         """
         Construct WikitonguesPipeline
 
         Args:
-            item_data_store (ItemDataStore): Item data store instance
+            external_resource_data_store (ExternalResourceDataStore): External resource data store instance
         """
 
         self.logger = logging.getLogger('pipelines.WikitonguesPipeline')
-        self.item_data_store = item_data_store
+        self.external_resource_data_store = external_resource_data_store
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -41,11 +41,11 @@ from the crawler settings
             WikitonguesPipeline: WikitonguesPipeline instance
         """
 
-        return cls(crawler.settings.get('ITEM_DATA_STORE'))
+        return cls(crawler.settings.get('EXTERNAL_RESOURCE_DATA_STORE'))
 
     def process_item(self, item, spider):
         """
-        Called by the Scrapy framework for each item found by the spiders
+        Called by the Scrapy framework for each external resource
 
         Args:
             item (scrapy.Item): The scraped item
@@ -61,7 +61,7 @@ the same url, associated with the same language
 
         url = item.get('url')
         iso_code = item.get('iso_code', '')
-        result = self.item_data_store.get_item(url, iso_code)
+        result = self.external_resource_data_store.get_external_resource(url, iso_code)
 
         if result.data is not None:
             if iso_code != '':
@@ -70,7 +70,7 @@ the same url, associated with the same language
             else:
                 raise DropItem(f'Resource already indexed: {url}')
 
-        create_result = self.item_data_store.create_item(item)
+        create_result = self.external_resource_data_store.create_external_resource(item)
 
         if create_result.has_error():
             self.logger.error('\n'.join(create_result.messages))

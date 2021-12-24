@@ -1,6 +1,6 @@
 import scrapy
 
-from items import WikitonguesItem
+from items import ExternalResource
 from lang_attribute_parser import LangAttributeParser
 
 
@@ -47,7 +47,7 @@ class TranslatedSiteSpider(scrapy.Spider):
 
         resource_language_ids = self._resource_language_service.get_resource_language_ids(lang_attrs)
 
-        yield WikitonguesItem(
+        yield ExternalResource(
             title=response.css('title::text').get(),
             link_text=link_text,
             url=response.url,

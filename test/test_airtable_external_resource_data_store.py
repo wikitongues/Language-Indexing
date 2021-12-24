@@ -1,12 +1,18 @@
-from wikitongues.wikitongues.data_store.airtable.airtable_item_data_store import AirtableItemDataStore
+from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_data_store import (
+    AirtableExternalResourceDataStore
+)
 from wikitongues.wikitongues.data_store.airtable.airtable_http_client import IAirtableHttpClient
-from wikitongues.wikitongues.data_store.airtable.airtable_item_formatter import IAirtableItemFormatter
-from wikitongues.wikitongues.data_store.airtable.airtable_item_extractor import IAirtableItemExtractor
+from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_formatter import (
+    IAirtableExternalResourceFormatter
+)
+from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_extractor import (
+    IAirtableExternalResourceExtractor
+)
 import wikitongues.wikitongues.data_store.airtable.field_name as field_name
 
 from wikitongues.wikitongues.data_store.error_response import ErrorResponse
 
-from wikitongues.wikitongues.items import WikitonguesItem
+from wikitongues.wikitongues.items import ExternalResource
 
 import unittest
 import json
@@ -17,7 +23,7 @@ EXPECTED_NULL_URL = 'newsite.com/notyetcrawled'
 EXPECTED_JSON = '{"records": [{"a": "a"}]}'
 EXPECTED_NULL_JSON = '{"records": []}'
 
-EXPECTED_ITEM = WikitonguesItem(
+EXPECTED_RESOURCE = ExternalResource(
     title='Title',
     url='aaa.com',
     language_id='aaa',
@@ -53,24 +59,24 @@ class MockAirtableHttpClient(IAirtableHttpClient):
         return MockResponse(status_code=500)
 
 
-class MockAirtableItemExtractor(IAirtableItemExtractor):
-    def extract_items_from_json(self, json_obj, *args):
+class MockAirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
+    def extract_external_resources_from_json(self, json_obj, *args):
         result = ErrorResponse()
 
         if len(json_obj['records']) == 0:
             result.data = []
         elif json.dumps(json_obj) == EXPECTED_JSON:
-            result.data = [EXPECTED_ITEM]
+            result.data = [EXPECTED_RESOURCE]
 
         return result
 
-    def extract_item_from_json(self, json_obj):
+    def extract_external_resource_from_json(self, json_obj):
         pass
 
 
-class MockAirtableItemFormatter(IAirtableItemFormatter):
-    def get_fields_dict(self, item):
-        if item == EXPECTED_ITEM:
+class MockAirtableExternalResourceFormatter(IAirtableExternalResourceFormatter):
+    def get_fields_dict(self, external_resource):
+        if external_resource == EXPECTED_RESOURCE:
             return EXPECTED_FIELDS
 
         return {}
@@ -82,25 +88,26 @@ class MockResponse:
         self.status_code = status_code
 
 
-class TestAirtableItemDataStore(unittest.TestCase):
+class TestAirtableExternalResourceDataStore(unittest.TestCase):
     def setUp(self):
         http_client = MockAirtableHttpClient()
-        item_extractor = MockAirtableItemExtractor()
-        item_formatter = MockAirtableItemFormatter()
-        self.data_store = AirtableItemDataStore(http_client, item_extractor, item_formatter)
+        external_resource_extractor = MockAirtableExternalResourceExtractor()
+        external_resource_formatter = MockAirtableExternalResourceFormatter()
+        self.data_store = AirtableExternalResourceDataStore(
+            http_client, external_resource_extractor, external_resource_formatter)
 
-    def test_get_item(self):
-        result = self.data_store.get_item(EXPECTED_URL, EXPECTED_ISO)
+    def test_get_external_resource(self):
+        result = self.data_store.get_external_resource(EXPECTED_URL, EXPECTED_ISO)
 
-        self.assertEqual(EXPECTED_ITEM, result.data)
+        self.assertEqual(EXPECTED_RESOURCE, result.data)
 
-    def test_get_item__null_id(self):
-        result = self.data_store.get_item(EXPECTED_NULL_URL, EXPECTED_ISO)
+    def test_get_external_resource__null_id(self):
+        result = self.data_store.get_external_resource(EXPECTED_NULL_URL, EXPECTED_ISO)
 
         self.assertIsNone(result.data)
         self.assertFalse(result.has_error())
 
-    def test_create_item(self):
-        result = self.data_store.create_item(EXPECTED_ITEM)
+    def test_create_external_resource(self):
+        result = self.data_store.create_external_resource(EXPECTED_RESOURCE)
 
         self.assertFalse(result.has_error())

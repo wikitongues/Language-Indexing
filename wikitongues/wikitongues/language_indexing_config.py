@@ -66,8 +66,8 @@ def readline(config, default_config):
 
 def setDefault(config):
     for key in config['DEFAULT'].__dict__:
-        if key not in config['airtable_items_table'].__dict__:
-            setattr(config['airtable_items_table'],
+        if key not in config['airtable_external_resources_table'].__dict__:
+            setattr(config['airtable_external_resources_table'],
                     key,
                     config['DEFAULT'][key])
         if key not in config['airtable_languages_table'].__dict__:

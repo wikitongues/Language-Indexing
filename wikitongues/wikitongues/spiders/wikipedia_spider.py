@@ -1,7 +1,7 @@
 import scrapy
 from scrapy.http import HtmlResponse
 
-from items import WikitonguesItem
+from items import ExternalResource
 from lang_attribute_parser import LangAttributeParser
 from url_sanitizer import UrlSanitizer
 
@@ -104,7 +104,7 @@ class WikipediaSpider(scrapy.Spider):
         return 'wikipedia.org' not in url
 
     # Callback for HTTP response for external links. If the response is good,
-    # the link is indexed as a WikitonguesItem.
+    # the link is indexed as an ExternalResource.
     def parse_external_link(self, response, language, link_text):
         if response.status != 200:
             pass
@@ -114,7 +114,7 @@ class WikipediaSpider(scrapy.Spider):
 
             resource_language_ids = self._resource_language_service.get_resource_language_ids(lang_attrs)
 
-            yield WikitonguesItem(
+            yield ExternalResource(
                 title=response.css('title::text').get(),
                 link_text=link_text,
                 url=response.url,
@@ -126,7 +126,7 @@ class WikipediaSpider(scrapy.Spider):
             )
 
         else:
-            yield WikitonguesItem(
+            yield ExternalResource(
                 title=link_text,
                 link_text=link_text,
                 url=response.url,

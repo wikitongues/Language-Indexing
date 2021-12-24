@@ -6,10 +6,10 @@
 import scrapy
 
 
-class WikitonguesItem(scrapy.Item):
+class ExternalResource(scrapy.Item):
     """
-    WikitonguesItem is the output of the program.
-    A WikitonguesItem is a web page to be indexed and stored.
+    ExternalResource is the output of the program.
+    An ExternalResource is a web page to be indexed and stored.
     """
 
     # The title of the page, from the <title> tag

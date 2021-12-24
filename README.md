@@ -81,7 +81,7 @@ Configure the program by editing your user config file:
 
 Language data is fetched from a Languages table, and web resources are
 uploaded to an External Resources table. Access to these tables is configured in the
-`[airtable_languages_table]` and `[airtable_items_table]` sections
+`[airtable_languages_table]` and `[airtable_external_resources_table]` sections
 respectively. Common configuration properties can be set in the `[DEFAULT]`
 section. Values in the table-specific sections will override values in
 `[DEFAULT]`.

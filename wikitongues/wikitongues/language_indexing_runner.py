@@ -27,7 +27,7 @@ class LanguageIndexingRunner:
                         "format": "jl"
                     }
                 },
-                'ITEM_DATA_STORE': configs.item_datastore,
+                'EXTERNAL_RESOURCE_DATA_STORE': configs.external_resource_datastore,
                 'ITEM_PIPELINES': {
                     'pipelines.WikitonguesPipeline': 300
                 },
