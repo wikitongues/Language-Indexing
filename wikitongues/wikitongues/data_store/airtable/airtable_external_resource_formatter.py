@@ -43,7 +43,8 @@ class AirtableExternalResourceFormatter(IAirtableExternalResourceFormatter):
         fields = {
             field_name.TITLE_FIELD: external_resource['title'],
             field_name.URL_FIELD: external_resource['url'],
-            field_name.LINK_TEXT_FIELD: external_resource['link_text']
+            field_name.LINK_TEXT_FIELD: external_resource['link_text'],
+            field_name.SPIDER_FIELD: external_resource['spider_name'],
         }
 
         if 'resource_languages_raw' in external_resource:
@@ -52,7 +53,7 @@ class AirtableExternalResourceFormatter(IAirtableExternalResourceFormatter):
         if 'resource_languages' in external_resource:
             fields[field_name.RESOURCE_LANGUAGES_LOOKUP_FIELD] = list(external_resource['resource_languages'])
 
-        if 'language_id' in external_resource:
+        if 'language_id' in external_resource and external_resource['language_id'] is not None:
             fields[field_name.LANGUAGE_FIELD] = [external_resource['language_id']]
 
         return fields

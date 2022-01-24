@@ -98,6 +98,34 @@ class TestAirtableHttpClient(unittest.TestCase):
         self.assertEqual(result.text, text)
 
     @responses.activate
+    def test_get_records_by_fields__null_value(self):
+        text = 'expected text'
+        resource_url = 'http://www.baayaga.narod.ru'
+        fields = {
+            field_name.ISO_FIELD: None,
+            field_name.URL_FIELD: resource_url
+        }
+        url = (
+            f'https://api.airtable.com/v0/{BASE_ID}/{TABLE}?filterByFormula='
+            'AND%28%7BCoverage+%5BWeb%3A+Link%5D%7D%3D%27http%3A%2F%2Fwww.baayaga.narod.ru%27%29'
+        )
+
+        def callback(request):
+            if request.url != url:
+                return (404, {}, None)
+
+            if request.headers['Authorization'] != f'Bearer {API_KEY}':
+                return (401, {}, None)
+
+            return (200, {}, text)
+
+        responses.add_callback(responses.GET, url, callback=callback)
+
+        result = self.client.get_records_by_fields(fields)
+
+        self.assertEqual(result.text, text)
+
+    @responses.activate
     def test_create_record(self):
         text = 'expected text'
         url = f'https://api.airtable.com/v0/{BASE_ID}/{TABLE}'

@@ -57,9 +57,9 @@ def configure(configs):
     # Read user config
     load_config(configs.main_config, 'user_config')
 
-    configs.external_resource_datastore = load_external_resource_airtable_config(configs.main_config)
+    configs.external_resource_data_store = load_external_resource_airtable_config(configs.main_config)
 
-    configs.languages_datastore = load_languages_airtable_config(
+    configs.language_data_store = load_languages_airtable_config(
         configs.main_config)
 
     configs.config_languages_table = \

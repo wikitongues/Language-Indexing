@@ -4,6 +4,9 @@ class ErrorResponse:
 information, if any
     """
 
+    messages = []
+    data = None
+
     def __init__(self):
         """
         Construct ErrorResponse

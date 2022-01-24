@@ -1,9 +1,8 @@
 import scrapy
-from scrapy.http import HtmlResponse
 
-from items import ExternalResource
-from lang_attribute_parser import LangAttributeParser
-from url_sanitizer import UrlSanitizer
+
+from .util.targeted_spider_util import TargetedSpiderUtil
+from .util.wikipedia_util import WikipediaUtil
 
 
 class WikipediaSpiderInput:
@@ -42,95 +41,20 @@ class WikipediaSpider(scrapy.Spider):
         self._language_data_store = language_data_store
         self._resource_language_service = resource_language_service
 
-    # Load Language objects to target in this crawl
-    def load_languages(self):
-        if self._spider_input.iso_codes is not None:
-            result = self._language_data_store.get_languages(
-                self._spider_input.iso_codes)
-
-            if result.has_error():
-                return []
-
-            return result.data
-
-        elif self._spider_input.exclude_iso_codes is not None:
-            result = filter(lambda language: language.id not in
-                            self._spider_input.exclude_iso_codes,
-                            self._language_data_store.list_languages(
-                                self._spider_input.page_size,
-                                self._spider_input.max_records,
-                                offset=self._spider_input.offset).data)
-            return list(result)
-
-        else:
-            result = self._language_data_store.list_languages(
-                self._spider_input.page_size,
-                self._spider_input.max_records,
-                offset=self._spider_input.offset)
-
-            return result.data
-
     # Called once; starts initial HTTP requests to each requested Wikipedia
     # page
     def start_requests(self):
-        languages = self.load_languages()
+        languages = TargetedSpiderUtil.load_languages(self._spider_input, self._language_data_store)
 
         def callback(language):
-            return lambda response: self.parse_wikipedia_page(
-                response, language)
+            return lambda response: WikipediaUtil.parse_wikipedia_page(
+                response,
+                language,
+                self._resource_language_service,
+                self.name
+            )
 
         for language in languages:
             yield scrapy.Request(
                 url=language.wikipedia_url,
                 callback=callback(language))
-
-    # Callback for HTTP response for Wikipedia pages. Locates external links
-    # and makes HTTP requests
-    def parse_wikipedia_page(self, response, language):
-        links = response.css('a.external.text')
-
-        def callback(link_text):
-            return lambda response: self.parse_external_link(
-                response, language, link_text)
-
-        for link in links:
-            url = link.attrib['href']
-            if self.should_follow_external_link(url):
-                yield scrapy.Request(
-                    url=UrlSanitizer.sanitize_url(url),
-                    callback=callback(link.css('::text').get()))
-
-    def should_follow_external_link(self, url):
-        return 'wikipedia.org' not in url
-
-    # Callback for HTTP response for external links. If the response is good,
-    # the link is indexed as an ExternalResource.
-    def parse_external_link(self, response, language, link_text):
-        if response.status != 200:
-            pass
-
-        if isinstance(response, HtmlResponse):
-            lang_attrs = LangAttributeParser.get_lang_values(response)
-
-            resource_language_ids = self._resource_language_service.get_resource_language_ids(lang_attrs)
-
-            yield ExternalResource(
-                title=response.css('title::text').get(),
-                link_text=link_text,
-                url=response.url,
-                iso_code=language.id,
-                language_id=language.airtable_id,
-                spider_name=self.name,
-                resource_languages=resource_language_ids,
-                resource_languages_raw=lang_attrs
-            )
-
-        else:
-            yield ExternalResource(
-                title=link_text,
-                link_text=link_text,
-                url=response.url,
-                iso_code=language.id,
-                language_id=language.airtable_id,
-                spider_name=self.name
-            )
