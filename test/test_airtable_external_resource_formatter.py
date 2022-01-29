@@ -39,6 +39,7 @@ class TestAirtableExternalResourceFormatter(unittest.TestCase):
         self.assertEqual(1, len(result[field_name.LANGUAGE_FIELD]))
         self.assertEqual(EXPECTED_RESOURCE['language_id'],
                          result[field_name.LANGUAGE_FIELD][0])
+        self.assertEqual(EXPECTED_RESOURCE['spider_name'], result[field_name.SPIDER_FIELD])
 
         self.assertIsInstance(result[field_name.RESOURCE_LANGUAGES_LOOKUP_FIELD], list)
         for lang in EXPECTED_RESOURCE['resource_languages']:
@@ -58,6 +59,7 @@ class TestAirtableExternalResourceFormatter(unittest.TestCase):
         self.assertEqual(
             EXPECTED_RESOURCE_WITHOUT_LANGUAGE['link_text'],
             result[field_name.LINK_TEXT_FIELD])
+        self.assertEqual(EXPECTED_RESOURCE_WITHOUT_LANGUAGE['spider_name'], result[field_name.SPIDER_FIELD])
 
         self.assertIsInstance(result[field_name.RESOURCE_LANGUAGES_LOOKUP_FIELD], list)
         for lang in EXPECTED_RESOURCE_WITHOUT_LANGUAGE['resource_languages']:
@@ -66,3 +68,5 @@ class TestAirtableExternalResourceFormatter(unittest.TestCase):
         self.assertIsInstance(result[field_name.RESOURCE_LANGUAGES_RAW_FIELD], str)
         for lang in EXPECTED_RESOURCE_WITHOUT_LANGUAGE['resource_languages_raw']:
             self.assertIn(lang, result[field_name.RESOURCE_LANGUAGES_RAW_FIELD])
+
+        self.assertNotIn(field_name.LANGUAGE_FIELD, result)

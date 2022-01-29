@@ -140,7 +140,7 @@ class AirtableHttpClient(IAirtableHttpClient):
             Response: Response from Airtable API
         """
         formula = 'AND('
-        formula += ','.join(['{' + key + '}=\'' + fields[key] + '\'' for key in sorted(fields)])
+        formula += ','.join(['{' + key + '}=\'' + fields[key] + '\'' for key in sorted(fields) if fields[key]])
         formula += ')'
         formula = urllib.parse.quote_plus(formula)
         url = f'{self._route}?filterByFormula={formula}'
