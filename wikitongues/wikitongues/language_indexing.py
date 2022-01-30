@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # Entry point for the program, invoked from the console
-import sys
+# This change should cause CI to fail
 import types
+import sys
 
 import config.config_keys as keys
 from config.load_configs import (
@@ -11,6 +12,8 @@ from config.load_configs import (
 from language_indexing_config import LanguageIndexingConfiguration, load_config
 from language_indexing_runner import LanguageIndexingRunner
 from write_user_config import ask_user_for_user_file_creation
+
+print('REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
 
 
 def main():
