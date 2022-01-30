@@ -1,8 +1,8 @@
-from ..error_response import ErrorResponse
+from abc import ABC, abstractmethod
 
 from language import Language
 
-from abc import ABC, abstractmethod
+from ..error_response import ErrorResponse
 
 
 class IAirtableLanguageExtractor(ABC):
@@ -42,12 +42,12 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
         IAirtableLanguageExtractor
     """
 
-    ID_PROPERTY = 'id'
-    RECORDS = 'records'
-    FIELDS = 'fields'
-    IDENTIFIER = 'Identifier'
-    STANDARD_NAME = 'Standardized Name'
-    WIKIPEDIA_URL = 'wikipedia_url'
+    ID_PROPERTY = "id"
+    RECORDS = "records"
+    FIELDS = "fields"
+    IDENTIFIER = "Identifier"
+    STANDARD_NAME = "Standardized Name"
+    WIKIPEDIA_URL = "wikipedia_url"
 
     def extract_languages_from_json(self, json_obj):
         """
@@ -65,8 +65,7 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
         records = json_obj.get(self.RECORDS)
 
         if type(records) != list:
-            result.add_message(
-                'Airtable API response missing list property \'records\'')
+            result.add_message("Airtable API response missing list property 'records'")
             return result
 
         languages = []
@@ -97,22 +96,20 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
         fields = json_obj.get(self.FIELDS)
 
         if type(fields) != dict:
-            result.add_message(
-                'Airtable language record object missing object property '
-                '\'fields\'')
+            result.add_message("Airtable language record object missing object property " "'fields'")
             return result
 
         language_id = json_obj.get(self.ID_PROPERTY)
 
         if type(language_id) != str:
-            result.add_message(
-                'Airtable language record missing property \'id\'')
+            result.add_message("Airtable language record missing property 'id'")
             return result
 
         result.data = Language(
             fields.get(self.IDENTIFIER),
             fields.get(self.STANDARD_NAME),
             fields.get(self.WIKIPEDIA_URL),
-            language_id)
+            language_id,
+        )
 
         return result

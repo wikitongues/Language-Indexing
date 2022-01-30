@@ -1,6 +1,7 @@
-from abc import ABC, abstractmethod
-import requests
 import urllib.parse
+from abc import ABC, abstractmethod
+
+import requests
 
 
 class IAirtableHttpClient(ABC):
@@ -62,7 +63,7 @@ class AirtableHttpClient(IAirtableHttpClient):
         IAirtableHttpClient
     """
 
-    _base_url = 'https://api.airtable.com/v0'
+    _base_url = "https://api.airtable.com/v0"
 
     def __init__(self, connection_info, table_info):
         """
@@ -73,15 +74,9 @@ class AirtableHttpClient(IAirtableHttpClient):
             table_info (AirtableTableInfo)
         """
 
-        self._route = '/'.join([
-            self._base_url,
-            connection_info.base_id,
-            table_info.name
-        ])
+        self._route = "/".join([self._base_url, connection_info.base_id, table_info.name])
 
-        self._headers = {
-            'Authorization': f'Bearer {connection_info.api_key}'
-        }
+        self._headers = {"Authorization": f"Bearer {connection_info.api_key}"}
 
         self._id_column = table_info.id_column
 
@@ -98,15 +93,13 @@ class AirtableHttpClient(IAirtableHttpClient):
             Response: Response from Airtable API
         """
 
-        params = [
-            f'maxRecords={max_records}'
-        ]
+        params = [f"maxRecords={max_records}"]
 
         if page_size is not None:
-            params.append(f'pageSize={page_size}')
+            params.append(f"pageSize={page_size}")
 
         if offset is not None:
-            params.append(f'offset={offset}')
+            params.append(f"offset={offset}")
 
         url = f'{self._route}?{"&".join(params)}'
 
@@ -123,9 +116,8 @@ class AirtableHttpClient(IAirtableHttpClient):
             Response: Response from Airtable API
         """
 
-        formula = urllib.parse.quote_plus(
-            f'FIND(\'{id}\', {{{self._id_column}}}) != 0')
-        url = f'{self._route}?filterByFormula={formula}'
+        formula = urllib.parse.quote_plus(f"FIND('{id}', {{{self._id_column}}}) != 0")
+        url = f"{self._route}?filterByFormula={formula}"
 
         return requests.get(url, headers=self._headers)
 
@@ -139,11 +131,11 @@ class AirtableHttpClient(IAirtableHttpClient):
         Returns:
             Response: Response from Airtable API
         """
-        formula = 'AND('
-        formula += ','.join(['{' + key + '}=\'' + fields[key] + '\'' for key in sorted(fields) if fields[key]])
-        formula += ')'
+        formula = "AND("
+        formula += ",".join(["{" + key + "}='" + fields[key] + "'" for key in sorted(fields) if fields[key]])
+        formula += ")"
         formula = urllib.parse.quote_plus(formula)
-        url = f'{self._route}?filterByFormula={formula}'
+        url = f"{self._route}?filterByFormula={formula}"
 
         return requests.get(url, headers=self._headers)
 
@@ -157,17 +149,8 @@ class AirtableHttpClient(IAirtableHttpClient):
             Response: Response from Airtable API
         """
 
-        json_obj = {
-            'records': [
-                {
-                    'fields': fields
-                }
-            ]
-        }
+        json_obj = {"records": [{"fields": fields}]}
 
-        headers = {
-            **self._headers,
-            'Content-Type': 'application/json'
-        }
+        headers = {**self._headers, "Content-Type": "application/json"}
 
         return requests.post(self._route, json=json_obj, headers=headers)

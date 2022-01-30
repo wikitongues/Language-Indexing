@@ -1,5 +1,5 @@
-from .airtable_language_data_store import AirtableLanguageDataStore
 from .airtable_http_client import AirtableHttpClient
+from .airtable_language_data_store import AirtableLanguageDataStore
 from .airtable_language_extractor import AirtableLanguageExtractor
 from .fake_language_data_store import FakeLanguageDataStore
 

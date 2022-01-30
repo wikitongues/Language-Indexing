@@ -157,13 +157,20 @@ BBC : #english_version .units-list>li>a
 # Develop
 This project utilizes [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html), a web crawling framework.
 
-## Run style guide check
-Install [flake8](https://flake8.pycqa.org/en/latest/) if it is not already on your system.
-Run from the root directory:
+This repository uses [pre-commit](https://pre-commit.com/) hooks to keep the code consistently formatted and readable, making for a good development experience for everyone who contributes to the code. Install pre-commit in your local environment before making your first commit:
 ```
-flake8
+pre-commit install
 ```
-If you use Visual Studio Code, you can install these extensions to assist with following the style guide:
+When you run `git commit`, the following hooks will be run:
+* [check-yaml](https://github.com/pre-commit/pre-commit-hooks#check-yaml)
+* [end-of-file-fixer](https://github.com/pre-commit/pre-commit-hooks#end-of-file-fixer)
+* [trailing-whitespace](https://github.com/pre-commit/pre-commit-hooks#trailing-whitespace)
+* [black](https://github.com/psf/black) (code formatter)
+* [isort](https://github.com/pycqa/isort) (sorts `import` statements)
+
+If any of the hooks "fails", it will make formatting changes to the offending files and prevent the commit. Simply stage the additional changes and re-run your `git commit` command if this occurs.
+
+If you use Visual Studio Code, you can install these helpful extensions to fix formatting as you code:
 * cornflakes-linter: highlight flake8 style guide problems
 * EditorConfig: Automatically fix whitespace problems
 * Python Docstring Generator: Type `"""` to generate the docstring template for a class or function
@@ -172,6 +179,7 @@ If you use Visual Studio Code, you can install these extensions to assist with f
 ```
 python -m unittest
 ```
+Visual Studio Code provides a UI for running the tests.
 
 # Contribute
 We're looking for help developing this tool.

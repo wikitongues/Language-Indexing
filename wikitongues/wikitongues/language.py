@@ -5,8 +5,7 @@ class Language:
     More fields will be added as we go.
     """
 
-    def __init__(
-            self, iso_code, standard_name, wikipedia_url, airtable_id=None):
+    def __init__(self, iso_code, standard_name, wikipedia_url, airtable_id=None):
         """
         Construct a Language object
 

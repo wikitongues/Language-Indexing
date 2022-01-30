@@ -1,18 +1,18 @@
-from types import ModuleType, SimpleNamespace
 import unittest
+from types import ModuleType, SimpleNamespace
 from unittest import mock
-
-from scrapy.crawler import CrawlerProcess
 
 import config.config_keys as keys
 from language_indexing_config import LanguageIndexingConfiguration, Title
 from language_indexing_runner import LanguageIndexingRunner
+from scrapy.crawler import CrawlerProcess
+
 from wikitongues.wikitongues.spiders.wikipedia_spider import WikipediaSpider
 
-MODULE_UNDER_TEST = 'language_indexing_runner'
+MODULE_UNDER_TEST = "language_indexing_runner"
 
-WIKIPEDIA_KEY = 'wikipedia'
-WIKIPEDIA_SPIDER_CLASS = 'WikipediaSpider'
+WIKIPEDIA_KEY = "wikipedia"
+WIKIPEDIA_SPIDER_CLASS = "WikipediaSpider"
 
 
 class TestLanguageIndexingRunner(unittest.TestCase):
@@ -20,12 +20,16 @@ class TestLanguageIndexingRunner(unittest.TestCase):
         self.configs = SimpleNamespace()
         self.configs.main_config = LanguageIndexingConfiguration()
         setattr(self.configs.main_config, keys.SPIDERS_SECTION, Title())
-        setattr(self.configs.main_config[keys.SPIDERS_SECTION], WIKIPEDIA_KEY, WIKIPEDIA_SPIDER_CLASS)
+        setattr(
+            self.configs.main_config[keys.SPIDERS_SECTION],
+            WIKIPEDIA_KEY,
+            WIKIPEDIA_SPIDER_CLASS,
+        )
 
         self.mock_language_data_store = mock.Mock()
         self.configs.language_data_store = self.mock_language_data_store
 
-        self.import_module_patcher = mock.patch(f'{MODULE_UNDER_TEST}.importlib.import_module')
+        self.import_module_patcher = mock.patch(f"{MODULE_UNDER_TEST}.importlib.import_module")
         self.mock_import_module = self.import_module_patcher.start()
         self.mock_spider_module = mock.MagicMock(ModuleType)
         self.mock_import_module.return_value = self.mock_spider_module
@@ -45,7 +49,7 @@ class TestLanguageIndexingRunner(unittest.TestCase):
 
             raise Exception
 
-        self.spider_input_factory_patcher = mock.patch(f'{MODULE_UNDER_TEST}.SpiderInputFactory.get_spider_input')
+        self.spider_input_factory_patcher = mock.patch(f"{MODULE_UNDER_TEST}.SpiderInputFactory.get_spider_input")
         self.mock_get_spider_input = self.spider_input_factory_patcher.start()
         self.mock_get_spider_input.side_effect = mock_get_spider_input
 
@@ -58,7 +62,7 @@ class TestLanguageIndexingRunner(unittest.TestCase):
             return self.mock_process
 
         self.crawler_process_factory_patcher = mock.patch(
-            f'{MODULE_UNDER_TEST}.CrawlerProcessFactory.get_crawler_process'
+            f"{MODULE_UNDER_TEST}.CrawlerProcessFactory.get_crawler_process"
         )
         self.mock_get_crawler_process = self.crawler_process_factory_patcher.start()
         self.mock_get_crawler_process.side_effect = mock_get_crawler_process
@@ -72,7 +76,7 @@ class TestLanguageIndexingRunner(unittest.TestCase):
             return self.mock_resource_language_service
 
         self.resource_language_service_factory_patcher = mock.patch(
-            f'{MODULE_UNDER_TEST}.ResourceLanguageServiceFactory.get_resource_language_service'
+            f"{MODULE_UNDER_TEST}.ResourceLanguageServiceFactory.get_resource_language_service"
         )
         self.mock_get_resource_language_service = self.resource_language_service_factory_patcher.start()
         self.mock_get_resource_language_service.side_effect = mock_get_resource_language_service
@@ -90,7 +94,7 @@ class TestLanguageIndexingRunner(unittest.TestCase):
             WikipediaSpider,
             spider_input=self.mock_wikipedia_spider_input,
             language_data_store=self.mock_language_data_store,
-            resource_language_service=self.mock_resource_language_service
+            resource_language_service=self.mock_resource_language_service,
         )
 
         self.mock_process.start.assert_called_once()

@@ -1,7 +1,8 @@
-from ..language_data_store import LanguageDataStore
-from ..error_response import ErrorResponse
-from .offset_utility import OffsetUtility
 import json
+
+from ..error_response import ErrorResponse
+from ..language_data_store import LanguageDataStore
+from .offset_utility import OffsetUtility
 
 
 class AirtableLanguageDataStore(LanguageDataStore):
@@ -41,8 +42,8 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
         if response.status_code != 200:
             result.add_message(
-                f'Airtable API request to get language \'{iso_code}\''
-                f'returned status code {response.status_code}')
+                f"Airtable API request to get language '{iso_code}'" f"returned status code {response.status_code}"
+            )
             return result
 
         json_obj = json.loads(response.text)
@@ -94,17 +95,14 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
         result = ErrorResponse()
 
-        response = self._client.list_records(
-            page_size, kwargs.get('offset'), max_records)
+        response = self._client.list_records(page_size, kwargs.get("offset"), max_records)
 
         if response.status_code != 200:
-            result.add_message(
-                'Airtable API request to list languages returned status '
-                f'code {response.status_code}')
+            result.add_message("Airtable API request to list languages returned status " f"code {response.status_code}")
             return result
 
         json_obj = json.loads(response.text)
         extract_result = self._extractor.extract_languages_from_json(json_obj)
-        OffsetUtility.write_offset(json_obj.get('offset'))
+        OffsetUtility.write_offset(json_obj.get("offset"))
 
         return extract_result

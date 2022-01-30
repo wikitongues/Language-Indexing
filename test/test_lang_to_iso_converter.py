@@ -1,6 +1,6 @@
-from wikitongues.wikitongues.lang_to_iso_converter import LangToIsoConverter
-
 import unittest
+
+from wikitongues.wikitongues.lang_to_iso_converter import LangToIsoConverter
 
 
 class TestLangToIsoConverter(unittest.TestCase):
@@ -9,13 +9,13 @@ class TestLangToIsoConverter(unittest.TestCase):
 
     def test_get_iso_code(self):
         tests = [
-            ('en-US', 'eng'),
-            ('fr', 'fra'),
-            ('xyzzy-Zorp!', None),
-            ('fr-Brai', 'fra'),
-            ('ru-Cyrl-BY', 'rus'),
-            ('auto', None),
-            ('', None)
+            ("en-US", "eng"),
+            ("fr", "fra"),
+            ("xyzzy-Zorp!", None),
+            ("fr-Brai", "fra"),
+            ("ru-Cyrl-BY", "rus"),
+            ("auto", None),
+            ("", None),
         ]
 
         for test in tests:

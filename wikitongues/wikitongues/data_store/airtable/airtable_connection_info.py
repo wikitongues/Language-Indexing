@@ -1,6 +1,6 @@
 class AirtableConnectionInfo:
-    """Info required to connect to an Airtable base
-    """
+    """Info required to connect to an Airtable base"""
+
     def __init__(self, base_id, api_key):
         """Constructor
 

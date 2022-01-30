@@ -8,19 +8,19 @@ from wikitongues.wikitongues.data_store.language_data_store import LanguageDataS
 from wikitongues.wikitongues.spiders.util.targeted_spider_util import TargetedSpiderUtil
 from wikitongues.wikitongues.spiders.wikipedia_spider import WikipediaSpiderInput
 
-LANG1 = mock.Mock(Language, id='eng')
-LANG2 = mock.Mock(Language, id='spa')
-LANG3 = mock.Mock(Language, id='sah')
-LANG4 = mock.Mock(Language, id='xho')
+LANG1 = mock.Mock(Language, id="eng")
+LANG2 = mock.Mock(Language, id="spa")
+LANG3 = mock.Mock(Language, id="sah")
+LANG4 = mock.Mock(Language, id="xho")
 
-EXPECTED_ISO_CODES = ['eng', 'spa']
+EXPECTED_ISO_CODES = ["eng", "spa"]
 EXPECTED_INCLUDED_LANGUAGES = [LANG1, LANG2]
 EXPECTED_LANGUAGES = [LANG1, LANG2, LANG3, LANG4]
 EXPECTED_PAGE_SIZE = 4
 EXPECTED_MAX_RECORDS = 100
-EXPECTED_OFFSET = 'offset'
+EXPECTED_OFFSET = "offset"
 
-MODULE_UNDER_TEST = 'wikitongues.wikitongues.spiders.util.targeted_spider_util'
+MODULE_UNDER_TEST = "wikitongues.wikitongues.spiders.util.targeted_spider_util"
 
 
 class TestTargetedSpiderUtil(unittest.TestCase):
@@ -55,7 +55,11 @@ class TestTargetedSpiderUtil(unittest.TestCase):
 
     def test_load_all_languages_but_excluded(self):
         input = WikipediaSpiderInput(
-            None, EXPECTED_ISO_CODES, EXPECTED_PAGE_SIZE, EXPECTED_OFFSET, EXPECTED_MAX_RECORDS
+            None,
+            EXPECTED_ISO_CODES,
+            EXPECTED_PAGE_SIZE,
+            EXPECTED_OFFSET,
+            EXPECTED_MAX_RECORDS,
         )
         expected_languages_minus_excluded = [LANG3, LANG4]
 

@@ -1,7 +1,8 @@
-from ..external_resource_data_store import ExternalResourceDataStore
-from ..error_response import ErrorResponse
-from . import field_name
 import json
+
+from ..error_response import ErrorResponse
+from ..external_resource_data_store import ExternalResourceDataStore
+from . import field_name
 
 
 class AirtableExternalResourceDataStore(ExternalResourceDataStore):
@@ -9,8 +10,7 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
     Performs actions on an Airtable base for external resources
     """
 
-    def __init__(
-            self, http_client, external_resource_extractor, external_resource_formatter):
+    def __init__(self, http_client, external_resource_extractor, external_resource_formatter):
         """
         Construct AirtableExternalResourceDataStore
 
@@ -37,10 +37,7 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
 
         result = ErrorResponse()
 
-        response = self._client.get_records_by_fields({
-            field_name.URL_FIELD: url,
-            field_name.ISO_FIELD: iso_code
-        })
+        response = self._client.get_records_by_fields({field_name.URL_FIELD: url, field_name.ISO_FIELD: iso_code})
 
         json_obj = json.loads(response.text)
         extract_result = self._extractor.extract_external_resources_from_json(json_obj)
@@ -75,8 +72,8 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
 
         if response.status_code != 200:
             result.add_message(
-                'Airtable API request to create external resource returned status code '
-                f'{response.status_code}')
+                "Airtable API request to create external resource returned status code " f"{response.status_code}"
+            )
             result.add_message(response.text)
             return result
 

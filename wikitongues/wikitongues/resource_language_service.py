@@ -8,6 +8,7 @@ class IResourceLanguageService(ABC):
     Args:
         ABC
     """
+
     @abstractmethod
     def get_resource_language_ids(self, lang_attrs):
         pass
