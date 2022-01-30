@@ -16,10 +16,9 @@ class Title:
 # Read in default properties
 def load_config(config, default_config_file_name=None):
 
-    #Default case: when nothing is passed, program reads the default config
+    # Default case: when nothing is passed, program reads the default config
     if default_config_file_name is None:
-        config_file = open(os.path.join(os.path.dirname(__file__),
-                                        "config/indexing.cfg"), "r")
+        config_file = open(os.path.join(os.path.dirname(__file__), "config/indexing.cfg"), "r")
     else:
         config_file = open(user_config_file())
     readline(config, config_file)
@@ -31,9 +30,8 @@ def user_config_file():
     elif platform == "linux" or platform == "linux2" or platform == "darwin":
         env = os.getenv("HOME")
     else:
-        raise Exception("This program is intended only for Mac,"
-                        + "Linux, or Windows machines.")
-    return os.sep.join([env, 'wikitongues-language-indexing.cfg'])
+        raise Exception("This program is intended only for Mac," + "Linux, or Windows machines.")
+    return os.sep.join([env, "wikitongues-language-indexing.cfg"])
 
 
 def readline(config, default_config):
@@ -41,14 +39,14 @@ def readline(config, default_config):
     name = None
     for line in default_config:
         # Do nothing if it is a comment or empty line
-        if line.startswith("#") or line.startswith('\n'):
+        if line.startswith("#") or line.startswith("\n"):
             continue
         # Save the name for the section
         elif line.startswith("["):
             # When reach a new section, save everything before it into config
             if name is not None:
                 setattr(config, name, title)
-            name = line[1: -2]
+            name = line[1:-2]
             title = Title()
         # Save each individual data under the section
         else:
@@ -65,12 +63,8 @@ def readline(config, default_config):
 
 
 def setDefault(config):
-    for key in config['DEFAULT'].__dict__:
-        if key not in config['airtable_external_resources_table'].__dict__:
-            setattr(config['airtable_external_resources_table'],
-                    key,
-                    config['DEFAULT'][key])
-        if key not in config['airtable_languages_table'].__dict__:
-            setattr(config['airtable_languages_table'],
-                    key,
-                    config['DEFAULT'][key])
+    for key in config["DEFAULT"].__dict__:
+        if key not in config["airtable_external_resources_table"].__dict__:
+            setattr(config["airtable_external_resources_table"], key, config["DEFAULT"][key])
+        if key not in config["airtable_languages_table"].__dict__:
+            setattr(config["airtable_languages_table"], key, config["DEFAULT"][key])

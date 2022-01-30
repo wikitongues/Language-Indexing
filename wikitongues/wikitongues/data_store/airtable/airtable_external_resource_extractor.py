@@ -1,11 +1,18 @@
-from ..error_response import ErrorResponse
+from abc import ABC, abstractmethod
 
 from items import ExternalResource
 
-from abc import ABC, abstractmethod
-
-from .field_name import LINK_TEXT_FIELD, RECORDS, FIELDS, TITLE_FIELD, \
-    URL_FIELD, ISO_FIELD, LANGUAGE_FIELD, SPIDER_FIELD
+from ..error_response import ErrorResponse
+from .field_name import (
+    FIELDS,
+    ISO_FIELD,
+    LANGUAGE_FIELD,
+    LINK_TEXT_FIELD,
+    RECORDS,
+    SPIDER_FIELD,
+    TITLE_FIELD,
+    URL_FIELD,
+)
 
 
 class IAirtableExternalResourceExtractor(ABC):
@@ -61,8 +68,7 @@ class AirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
         records = json_obj.get(RECORDS)
 
         if type(records) != list:
-            result.add_message(
-                'Airtable API response missing list property \'records\'')
+            result.add_message("Airtable API response missing list property 'records'")
             return result
 
         external_resources = []
@@ -93,22 +99,15 @@ class AirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
         fields = json_obj.get(FIELDS)
 
         if type(fields) != dict:
-            result.add_message(
-                'Airtable external resource record object missing object property '
-                '\'fields\'')
+            result.add_message("Airtable external resource record object missing object property " "'fields'")
             return result
 
         result.data = ExternalResource(
             title=fields.get(TITLE_FIELD),
             url=fields.get(URL_FIELD),
             link_text=fields.get(LINK_TEXT_FIELD),
-
-            iso_code=None if ISO_FIELD not in fields
-            else fields.get(ISO_FIELD)[0],
-
-            language_id=None if LANGUAGE_FIELD not in fields
-            else fields.get(LANGUAGE_FIELD)[0],
-
-            spider_name=fields.get(SPIDER_FIELD)
+            iso_code=None if ISO_FIELD not in fields else fields.get(ISO_FIELD)[0],
+            language_id=None if LANGUAGE_FIELD not in fields else fields.get(LANGUAGE_FIELD)[0],
+            spider_name=fields.get(SPIDER_FIELD),
         )
         return result

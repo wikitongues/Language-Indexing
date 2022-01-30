@@ -18,27 +18,19 @@ class TranslatedSiteSpider(scrapy.Spider):
         self._resource_language_service = resource_language_service
 
     def start_requests(self):
-        yield scrapy.Request(
-            url=self._spider_input.url,
-            callback=self.parse_links)
+        yield scrapy.Request(url=self._spider_input.url, callback=self.parse_links)
 
     def parse_links(self, response):
-        self.logger.debug(
-            f'Finding links by selector {self._spider_input.selector}')
+        self.logger.debug(f"Finding links by selector {self._spider_input.selector}")
 
         links = response.css(self._spider_input.selector)
 
-        self.logger.debug(f'Found {len(links)} links')
+        self.logger.debug(f"Found {len(links)} links")
 
         def callback(link_text):
             return lambda response: ExternalResourceParser.parse_external_link(
-                response,
-                link_text,
-                self._resource_language_service,
-                self.name
+                response, link_text, self._resource_language_service, self.name
             )
 
         for link in links:
-            yield scrapy.Request(
-                url=link.attrib['href'],
-                callback=callback(link.css('::text').get()))
+            yield scrapy.Request(url=link.attrib["href"], callback=callback(link.css("::text").get()))

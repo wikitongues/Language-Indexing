@@ -1,4 +1,4 @@
-LANG_XPATH = '//@lang'
+LANG_XPATH = "//@lang"
 
 
 class LangAttributeParser:
@@ -21,7 +21,7 @@ class LangAttributeParser:
         """
         lang_values = set(response.xpath(LANG_XPATH).getall())
 
-        if '' in lang_values:
-            lang_values.remove('')
+        if "" in lang_values:
+            lang_values.remove("")
 
         return lang_values

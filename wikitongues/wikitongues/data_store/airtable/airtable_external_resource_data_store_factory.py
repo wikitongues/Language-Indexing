@@ -1,7 +1,7 @@
 from .airtable_external_resource_data_store import AirtableExternalResourceDataStore
-from .airtable_http_client import AirtableHttpClient
 from .airtable_external_resource_extractor import AirtableExternalResourceExtractor
 from .airtable_external_resource_formatter import AirtableExternalResourceFormatter
+from .airtable_http_client import AirtableHttpClient
 from .fake_external_resource_data_store import FakeExternalResourceDataStore
 
 

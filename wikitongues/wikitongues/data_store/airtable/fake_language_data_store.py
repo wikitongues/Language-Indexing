@@ -1,16 +1,16 @@
-from ..language_data_store import LanguageDataStore
-from ..error_response import ErrorResponse
 from language import Language
 
+from ..error_response import ErrorResponse
+from ..language_data_store import LanguageDataStore
 
 LANGUAGES = [
-    Language('sah', 'Sakha', 'https://en.wikipedia.org/wiki/Yakut_language'),
-    Language('nrf', 'Jèrriais', 'https://en.wikipedia.org/wiki/J%C3%A8rriais'),
-    Language('qwe', 'Quechua', 'https://en.wikipedia.org/wiki/Quechuan_languages'),
-    Language('nys', 'Nyungar', 'https://en.wikipedia.org/wiki/Nyungar_language'),
-    Language('xho', 'Xhosa', 'https://en.wikipedia.org/wiki/Xhosa_language'),
-    Language('dak', 'Sioux', 'https://en.wikipedia.org/wiki/Sioux_language'),
-    Language('mwl', 'Mirandese', 'https://en.wikipedia.org/wiki/Mirandese_language')
+    Language("sah", "Sakha", "https://en.wikipedia.org/wiki/Yakut_language"),
+    Language("nrf", "Jèrriais", "https://en.wikipedia.org/wiki/J%C3%A8rriais"),
+    Language("qwe", "Quechua", "https://en.wikipedia.org/wiki/Quechuan_languages"),
+    Language("nys", "Nyungar", "https://en.wikipedia.org/wiki/Nyungar_language"),
+    Language("xho", "Xhosa", "https://en.wikipedia.org/wiki/Xhosa_language"),
+    Language("dak", "Sioux", "https://en.wikipedia.org/wiki/Sioux_language"),
+    Language("mwl", "Mirandese", "https://en.wikipedia.org/wiki/Mirandese_language"),
 ]
 
 
@@ -28,9 +28,7 @@ class FakeLanguageDataStore(LanguageDataStore):
     def get_languages(self, iso_codes):
         result = ErrorResponse()
 
-        result.data = filter(
-            lambda language: language.id in iso_codes,
-            LANGUAGES)
+        result.data = filter(lambda language: language.id in iso_codes, LANGUAGES)
 
         return result
 

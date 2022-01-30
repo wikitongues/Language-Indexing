@@ -1,9 +1,8 @@
-from scrapy.http import HtmlResponse
-
 from items import ExternalResource
 from lang_attribute_parser import LangAttributeParser
+from scrapy.http import HtmlResponse
 
-TITLE_SELECTOR = 'title::text'
+TITLE_SELECTOR = "title::text"
 
 
 class ExternalResourceParser:
@@ -28,7 +27,7 @@ class ExternalResourceParser:
                 language_id=language_id,
                 spider_name=spider_name,
                 resource_languages=resource_language_ids,
-                resource_languages_raw=lang_attrs
+                resource_languages_raw=lang_attrs,
             )
 
         else:
@@ -38,5 +37,5 @@ class ExternalResourceParser:
                 url=response.url,
                 iso_code=iso_code,
                 language_id=language_id,
-                spider_name=spider_name
+                spider_name=spider_name,
             )

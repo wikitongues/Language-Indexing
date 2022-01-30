@@ -1,42 +1,31 @@
+import json
+import unittest
+
+import wikitongues.wikitongues.data_store.airtable.field_name as field_name
 from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_data_store import (
-    AirtableExternalResourceDataStore
-)
-from wikitongues.wikitongues.data_store.airtable.airtable_http_client import IAirtableHttpClient
-from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_formatter import (
-    IAirtableExternalResourceFormatter
+    AirtableExternalResourceDataStore,
 )
 from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_extractor import (
-    IAirtableExternalResourceExtractor
+    IAirtableExternalResourceExtractor,
 )
-import wikitongues.wikitongues.data_store.airtable.field_name as field_name
-
+from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_formatter import (
+    IAirtableExternalResourceFormatter,
+)
+from wikitongues.wikitongues.data_store.airtable.airtable_http_client import (
+    IAirtableHttpClient,
+)
 from wikitongues.wikitongues.data_store.error_response import ErrorResponse
-
 from wikitongues.wikitongues.items import ExternalResource
 
-import unittest
-import json
-
-EXPECTED_URL = 'aaa.com'
-EXPECTED_ISO = 'aaa'
-EXPECTED_NULL_URL = 'newsite.com/notyetcrawled'
+EXPECTED_URL = "aaa.com"
+EXPECTED_ISO = "aaa"
+EXPECTED_NULL_URL = "newsite.com/notyetcrawled"
 EXPECTED_JSON = '{"records": [{"a": "a"}]}'
 EXPECTED_NULL_JSON = '{"records": []}'
 
-EXPECTED_RESOURCE = ExternalResource(
-    title='Title',
-    url='aaa.com',
-    language_id='aaa',
-    spider_name='test'
-)
+EXPECTED_RESOURCE = ExternalResource(title="Title", url="aaa.com", language_id="aaa", spider_name="test")
 
-EXPECTED_FIELDS = {
-    'Title': 'Title',
-    'Url': 'aaa.com',
-    'Language': [
-        'rec12345'
-    ]
-}
+EXPECTED_FIELDS = {"Title": "Title", "Url": "aaa.com", "Language": ["rec12345"]}
 
 
 class MockAirtableHttpClient(IAirtableHttpClient):
@@ -63,7 +52,7 @@ class MockAirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
     def extract_external_resources_from_json(self, json_obj, *args):
         result = ErrorResponse()
 
-        if len(json_obj['records']) == 0:
+        if len(json_obj["records"]) == 0:
             result.data = []
         elif json.dumps(json_obj) == EXPECTED_JSON:
             result.data = [EXPECTED_RESOURCE]
@@ -94,7 +83,8 @@ class TestAirtableExternalResourceDataStore(unittest.TestCase):
         external_resource_extractor = MockAirtableExternalResourceExtractor()
         external_resource_formatter = MockAirtableExternalResourceFormatter()
         self.data_store = AirtableExternalResourceDataStore(
-            http_client, external_resource_extractor, external_resource_formatter)
+            http_client, external_resource_extractor, external_resource_formatter
+        )
 
     def test_get_external_resource(self):
         result = self.data_store.get_external_resource(EXPECTED_URL, EXPECTED_ISO)

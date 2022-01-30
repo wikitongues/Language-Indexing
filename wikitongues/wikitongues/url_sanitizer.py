@@ -15,7 +15,7 @@ class UrlSanitizer:
             str: Sanitized url
         """
 
-        if url[:2] == '//':
-            return 'http:' + url
+        if url[:2] == "//":
+            return "http:" + url
 
         return url

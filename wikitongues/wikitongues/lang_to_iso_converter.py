@@ -10,6 +10,7 @@ class ILangToIsoConverter(ABC):
     Args:
         ABC
     """
+
     @abstractmethod
     def get_iso_code(self, lang_attribute):
         """
@@ -28,6 +29,7 @@ class LangToIsoConverter(ILangToIsoConverter):
     Args:
         ILangToIsoConverter
     """
+
     def get_iso_code(self, lang_attribute):
         """[summary]
         Converts html lang attribute to ISO 639-3 code
@@ -39,5 +41,5 @@ class LangToIsoConverter(ILangToIsoConverter):
             str: ISO 639-3 code
         """
         # https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang
-        language_subtag = lang_attribute.split('-')[0]
+        language_subtag = lang_attribute.split("-")[0]
         return languagecodes.iso_639_alpha3(language_subtag)
