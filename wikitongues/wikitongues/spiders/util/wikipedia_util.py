@@ -1,5 +1,12 @@
+from typing import Callable, Iterator
+
 import scrapy
+from items import ExternalResource
+from language import Language
+from scrapy.http import HtmlResponse
 from url_sanitizer import UrlSanitizer
+
+from wikitongues.wikitongues.resource_language_service import IResourceLanguageService
 
 from .external_resource_parser import ExternalResourceParser
 
@@ -9,10 +16,15 @@ LINK_TEXT_SELECTOR = "::text"
 
 class WikipediaUtil:
     @staticmethod
-    def parse_wikipedia_page(response, language, resource_language_service, spider_name):
+    def parse_wikipedia_page(
+        response: HtmlResponse,
+        language: Language,
+        resource_language_service: IResourceLanguageService,
+        spider_name: str,
+    ) -> Iterator[scrapy.Request]:
         links = response.css(EXTERNAL_LINK_SELECTOR)
 
-        def callback(link_text):
+        def callback(link_text: str) -> Callable[[HtmlResponse], ExternalResource]:
             return lambda response: ExternalResourceParser.parse_external_link(
                 response,
                 link_text,
@@ -30,5 +42,5 @@ class WikipediaUtil:
                 )
 
     @staticmethod
-    def _should_follow_external_link(url):
+    def _should_follow_external_link(url: str) -> bool:
         return "wikipedia.org" not in url

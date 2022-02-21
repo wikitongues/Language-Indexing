@@ -1,7 +1,12 @@
 import urllib.parse
 from abc import ABC, abstractmethod
+from typing import Optional
 
 import requests
+from requests import Response
+
+from .airtable_connection_info import AirtableConnectionInfo
+from .airtable_table_info import AirtableTableInfo
 
 
 class IAirtableHttpClient(ABC):
@@ -13,7 +18,9 @@ class IAirtableHttpClient(ABC):
     """
 
     @abstractmethod
-    def list_records(self, page_size=100, offset=None, max_records=None):
+    def list_records(
+        self, page_size: Optional[int] = 100, offset: Optional[str] = None, max_records: Optional[int] = None
+    ) -> Response:
         """
         List records
 
@@ -25,7 +32,7 @@ class IAirtableHttpClient(ABC):
         pass
 
     @abstractmethod
-    def get_record(self, id):
+    def get_record(self, id: str) -> Response:
         """
         Get record
 
@@ -35,7 +42,7 @@ class IAirtableHttpClient(ABC):
         pass
 
     @abstractmethod
-    def get_records_by_fields(self, fields):
+    def get_records_by_fields(self, fields: dict) -> Response:
         """
         Get any records matching the given fields
 
@@ -45,7 +52,7 @@ class IAirtableHttpClient(ABC):
         pass
 
     @abstractmethod
-    def create_record(self, fields):
+    def create_record(self, fields: dict) -> Response:
         """
         Create record
 
@@ -65,7 +72,7 @@ class AirtableHttpClient(IAirtableHttpClient):
 
     _base_url = "https://api.airtable.com/v0"
 
-    def __init__(self, connection_info, table_info):
+    def __init__(self, connection_info: AirtableConnectionInfo, table_info: AirtableTableInfo) -> None:
         """
         Construct AirtableHttpClient
 
@@ -80,7 +87,9 @@ class AirtableHttpClient(IAirtableHttpClient):
 
         self._id_column = table_info.id_column
 
-    def list_records(self, page_size=100, offset=None, max_records=None):
+    def list_records(
+        self, page_size: Optional[int] = 100, offset: Optional[str] = None, max_records: Optional[int] = None
+    ) -> Response:
         """
         List records
 
@@ -105,7 +114,7 @@ class AirtableHttpClient(IAirtableHttpClient):
 
         return requests.get(url, headers=self._headers)
 
-    def get_record(self, id):
+    def get_record(self, id: str) -> Response:
         """
         Get record
 
@@ -121,7 +130,7 @@ class AirtableHttpClient(IAirtableHttpClient):
 
         return requests.get(url, headers=self._headers)
 
-    def get_records_by_fields(self, fields):
+    def get_records_by_fields(self, fields: dict) -> Response:
         """
         Get any records matching the given fields
 
@@ -139,7 +148,7 @@ class AirtableHttpClient(IAirtableHttpClient):
 
         return requests.get(url, headers=self._headers)
 
-    def create_record(self, fields):
+    def create_record(self, fields: dict) -> Response:
         """Create record
 
         Args:

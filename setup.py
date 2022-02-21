@@ -9,6 +9,7 @@ setup(
         "",
         "config",
         "spiders",
+        "spiders.input",
         "spiders.util",
         "data_store",
         "data_store.airtable",

@@ -1,15 +1,17 @@
 import importlib
+from types import SimpleNamespace
 
-import config.config_keys as keys
-from crawler_process_factory import CrawlerProcessFactory
 from inflection import underscore
-from resource_language_service_factory import ResourceLanguageServiceFactory
-from spider_input_factory import SpiderInputFactory
+
+from .config import config_keys as keys
+from .crawler_process_factory import CrawlerProcessFactory
+from .resource_language_service_factory import ResourceLanguageServiceFactory
+from .spider_input_factory import SpiderInputFactory
 
 
 class LanguageIndexingRunner:
     @staticmethod
-    def process_site(site, configs):
+    def process_site(site: str, configs: SimpleNamespace) -> None:
         process = CrawlerProcessFactory.get_crawler_process(configs)
 
         spider_class_name = configs.main_config[keys.SPIDERS_SECTION][site]

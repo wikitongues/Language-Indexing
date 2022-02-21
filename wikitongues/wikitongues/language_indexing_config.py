@@ -1,5 +1,7 @@
 import os
+from io import TextIOWrapper
 from sys import platform
+from typing import Optional
 
 
 class LanguageIndexingConfiguration:
@@ -14,7 +16,7 @@ class Title:
 
 
 # Read in default properties
-def load_config(config, default_config_file_name=None):
+def load_config(config: LanguageIndexingConfiguration, default_config_file_name: Optional[str] = None) -> None:
 
     # Default case: when nothing is passed, program reads the default config
     if default_config_file_name is None:
@@ -24,7 +26,7 @@ def load_config(config, default_config_file_name=None):
     readline(config, config_file)
 
 
-def user_config_file():
+def user_config_file() -> str:
     if platform == "windows" or platform == "win32":
         env = os.getenv("APPDATA")
     elif platform == "linux" or platform == "linux2" or platform == "darwin":
@@ -34,7 +36,7 @@ def user_config_file():
     return os.sep.join([env, "wikitongues-language-indexing.cfg"])
 
 
-def readline(config, default_config):
+def readline(config: LanguageIndexingConfiguration, default_config: TextIOWrapper) -> None:
     title = Title()
     name = None
     for line in default_config:
@@ -62,7 +64,7 @@ def readline(config, default_config):
     setDefault(config)
 
 
-def setDefault(config):
+def setDefault(config: LanguageIndexingConfiguration) -> None:
     for key in config["DEFAULT"].__dict__:
         if key not in config["airtable_external_resources_table"].__dict__:
             setattr(config["airtable_external_resources_table"], key, config["DEFAULT"][key])

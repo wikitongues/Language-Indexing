@@ -1,13 +1,24 @@
+from typing import Optional
+
 from items import ExternalResource
 from lang_attribute_parser import LangAttributeParser
-from scrapy.http import HtmlResponse
+from language import Language
+from scrapy.http import HtmlResponse, Response
+
+from wikitongues.wikitongues.resource_language_service import IResourceLanguageService
 
 TITLE_SELECTOR = "title::text"
 
 
 class ExternalResourceParser:
     @staticmethod
-    def parse_external_link(response, link_text, resource_language_service, spider_name, language=None):
+    def parse_external_link(
+        response: Response,
+        link_text: str,
+        resource_language_service: IResourceLanguageService,
+        spider_name: str,
+        language: Optional[Language] = None,
+    ) -> ExternalResource:
         if response.status != 200:
             return
 

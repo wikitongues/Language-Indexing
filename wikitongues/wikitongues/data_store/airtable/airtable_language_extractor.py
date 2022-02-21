@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
+from typing import List
 
-from language import Language
-
-from ..error_response import ErrorResponse
+from ...language import Language
+from ..response_object import ResponseObject
 
 
 class IAirtableLanguageExtractor(ABC):
@@ -14,7 +14,7 @@ class IAirtableLanguageExtractor(ABC):
     """
 
     @abstractmethod
-    def extract_languages_from_json(self, json_obj):
+    def extract_languages_from_json(self, json_obj: dict) -> ResponseObject[List[Language]]:
         """
         Extract list of Language objects from Airtable API response JSON
 
@@ -24,7 +24,7 @@ class IAirtableLanguageExtractor(ABC):
         pass
 
     @abstractmethod
-    def extract_language_from_json(self, json_obj):
+    def extract_language_from_json(self, json_obj: dict) -> ResponseObject[Language]:
         """
         Extract Language object from Airtable API response JSON
 
@@ -49,7 +49,7 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
     STANDARD_NAME = "Standardized Name"
     WIKIPEDIA_URL = "wikipedia_url"
 
-    def extract_languages_from_json(self, json_obj):
+    def extract_languages_from_json(self, json_obj: dict) -> ResponseObject[List[Language]]:
         """
         Extract list of Language objects from Airtable API response JSON
 
@@ -57,10 +57,10 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
             json_obj (dict): Response from Airtable API
 
         Returns:
-            ErrorResponse: Response object containing list of Language objects
+            ResponseObject: Response object containing list of Language objects
         """
 
-        result = ErrorResponse()
+        result = ResponseObject[List[Language]]()
 
         records = json_obj.get(self.RECORDS)
 
@@ -80,7 +80,7 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
         result.data = languages
         return result
 
-    def extract_language_from_json(self, json_obj):
+    def extract_language_from_json(self, json_obj: dict) -> ResponseObject[Language]:
         """
         Extract Language object from Airtable API response JSON
 
@@ -88,10 +88,10 @@ class AirtableLanguageExtractor(IAirtableLanguageExtractor):
             json_obj (dict): Response from Airtable API
 
         Returns:
-            ErrorResponse: Response object containing Language object
+            ResponseObject: Response object containing Language object
         """
 
-        result = ErrorResponse()
+        result = ResponseObject[Language]()
 
         fields = json_obj.get(self.FIELDS)
 

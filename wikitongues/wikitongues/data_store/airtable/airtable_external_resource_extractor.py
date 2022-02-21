@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
+from typing import List
 
-from items import ExternalResource
-
-from ..error_response import ErrorResponse
+from ...items import ExternalResource
+from ..response_object import ResponseObject
 from .field_name import (
     FIELDS,
     ISO_FIELD,
@@ -24,7 +24,7 @@ class IAirtableExternalResourceExtractor(ABC):
     """
 
     @abstractmethod
-    def extract_external_resources_from_json(self, json_obj):
+    def extract_external_resources_from_json(self, json_obj: dict) -> ResponseObject[List[ExternalResource]]:
         """
         Extracts a list of ExternalResource objects from Airtable API response JSON
 
@@ -34,7 +34,7 @@ class IAirtableExternalResourceExtractor(ABC):
         pass
 
     @abstractmethod
-    def extract_external_resource_from_json(self, json_obj):
+    def extract_external_resource_from_json(self, json_obj: dict) -> ResponseObject[ExternalResource]:
         """
         Extracts a single ExternalResource object from Airtable API response JSON
 
@@ -52,7 +52,7 @@ class AirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
         IAirtableExternalResourceExtractor
     """
 
-    def extract_external_resources_from_json(self, json_obj):
+    def extract_external_resources_from_json(self, json_obj: dict) -> ResponseObject[List[ExternalResource]]:
         """
         Extracts a list of ExternalResource objects from Airtable API response JSON
 
@@ -60,10 +60,10 @@ class AirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
             json_obj (dict): Airtable API response object
 
         Returns:
-            ErrorResponse: Response object containing list of ExternalResource objects
+            ResponseObject: Response object containing list of ExternalResource objects
         """
 
-        result = ErrorResponse()
+        result = ResponseObject[List[ExternalResource]]()
 
         records = json_obj.get(RECORDS)
 
@@ -83,7 +83,7 @@ class AirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
         result.data = external_resources
         return result
 
-    def extract_external_resource_from_json(self, json_obj):
+    def extract_external_resource_from_json(self, json_obj: dict) -> ResponseObject[ExternalResource]:
         """
         Extracts a single ExternalResource object from Airtable API response JSON
 
@@ -91,10 +91,10 @@ class AirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
             json_obj (dict): Airtable API response object
 
         Returns:
-            ErrorResponse: Response object containing ExternalResource object
+            ResponseObject: Response object containing ExternalResource object
         """
 
-        result = ErrorResponse()
+        result = ResponseObject[ExternalResource]()
 
         fields = json_obj.get(FIELDS)
 

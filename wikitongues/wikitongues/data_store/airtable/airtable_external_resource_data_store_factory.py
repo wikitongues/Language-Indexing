@@ -1,7 +1,10 @@
+from ..external_resource_data_store import ExternalResourceDataStore
+from .airtable_connection_info import AirtableConnectionInfo
 from .airtable_external_resource_data_store import AirtableExternalResourceDataStore
 from .airtable_external_resource_extractor import AirtableExternalResourceExtractor
 from .airtable_external_resource_formatter import AirtableExternalResourceFormatter
 from .airtable_http_client import AirtableHttpClient
+from .airtable_table_info import AirtableTableInfo
 from .fake_external_resource_data_store import FakeExternalResourceDataStore
 
 
@@ -11,7 +14,9 @@ class AirtableExternalResourceDataStoreFactory:
     """
 
     @staticmethod
-    def get_data_store(connection_info, table_info, fake=False):
+    def get_data_store(
+        connection_info: AirtableConnectionInfo, table_info: AirtableTableInfo, fake: bool = False
+    ) -> ExternalResourceDataStore:
         """
         Returns an external resource data store instance
 

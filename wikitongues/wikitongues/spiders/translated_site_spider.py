@@ -1,18 +1,20 @@
 import scrapy
 
+from ..resource_language_service import IResourceLanguageService
+from .input.translated_site_spider_input import TranslatedSiteSpiderInput
 from .util.external_resource_parser import ExternalResourceParser
-
-
-class TranslatedSiteSpiderInput:
-    def __init__(self, url, selector):
-        self.url = url
-        self.selector = selector
 
 
 class TranslatedSiteSpider(scrapy.Spider):
     name = "translated_site"
 
-    def __init__(self, spider_input, resource_language_service, *args, **kwargs):
+    def __init__(
+        self,
+        spider_input: TranslatedSiteSpiderInput,
+        resource_language_service: IResourceLanguageService,
+        *args,
+        **kwargs,
+    ) -> None:
         super(TranslatedSiteSpider, self).__init__(*args, **kwargs)
         self._spider_input = spider_input
         self._resource_language_service = resource_language_service

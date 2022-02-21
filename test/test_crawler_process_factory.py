@@ -2,7 +2,7 @@ import unittest
 from types import SimpleNamespace
 from unittest import mock
 
-from crawler_process_factory import CrawlerProcessFactory
+from wikitongues.wikitongues.crawler_process_factory import CrawlerProcessFactory
 
 
 class TestCrawlerProcessFactory(unittest.TestCase):

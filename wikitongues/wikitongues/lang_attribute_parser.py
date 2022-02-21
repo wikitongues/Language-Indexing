@@ -1,3 +1,7 @@
+from typing import Set
+
+from scrapy.http import HtmlResponse
+
 LANG_XPATH = "//@lang"
 
 
@@ -8,7 +12,7 @@ class LangAttributeParser:
     """
 
     @staticmethod
-    def get_lang_values(response):
+    def get_lang_values(response: HtmlResponse) -> Set[str]:
         """
         Return a set of the unique lang attribute values
 

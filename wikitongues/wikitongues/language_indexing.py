@@ -3,17 +3,17 @@
 import sys
 import types
 
-import config.config_keys as keys
-from config.load_configs import (
+from .config import config_keys as keys
+from .config.load_configs import (
     load_external_resource_airtable_config,
     load_languages_airtable_config,
 )
-from language_indexing_config import LanguageIndexingConfiguration, load_config
-from language_indexing_runner import LanguageIndexingRunner
-from write_user_config import ask_user_for_user_file_creation
+from .language_indexing_config import LanguageIndexingConfiguration, load_config
+from .language_indexing_runner import LanguageIndexingRunner
+from .write_user_config import ask_user_for_user_file_creation
 
 
-def main():
+def main() -> None:
     configs = types.SimpleNamespace()
 
     ask_user_for_user_file_creation()
@@ -46,7 +46,7 @@ def main():
         sys.exit(1)
 
 
-def configure(configs):
+def configure(configs: types.SimpleNamespace) -> None:
     # Instantiate configuration object
     configs.main_config = LanguageIndexingConfiguration()
 

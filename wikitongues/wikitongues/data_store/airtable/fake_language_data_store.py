@@ -1,7 +1,8 @@
-from language import Language
+from typing import List
 
-from ..error_response import ErrorResponse
+from ...language import Language
 from ..language_data_store import LanguageDataStore
+from ..response_object import ResponseObject
 
 LANGUAGES = [
     Language("sah", "Sakha", "https://en.wikipedia.org/wiki/Yakut_language"),
@@ -15,8 +16,8 @@ LANGUAGES = [
 
 
 class FakeLanguageDataStore(LanguageDataStore):
-    def get_language(self, iso_code):
-        result = ErrorResponse()
+    def get_language(self, iso_code: str) -> ResponseObject[Language]:
+        result = ResponseObject()
 
         for language in LANGUAGES:
             if language.id == iso_code:
@@ -25,12 +26,12 @@ class FakeLanguageDataStore(LanguageDataStore):
 
         return result
 
-    def get_languages(self, iso_codes):
-        result = ErrorResponse()
+    def get_languages(self, iso_codes: List[str]) -> ResponseObject[List[Language]]:
+        result = ResponseObject()
 
         result.data = filter(lambda language: language.id in iso_codes, LANGUAGES)
 
         return result
 
-    def list_languages(self, page_size=100, max_records=None, **kwargs):
+    def list_languages(self) -> ResponseObject[List[Language]]:
         return self.get_languages(None)

@@ -1,10 +1,9 @@
 import unittest
 from unittest import mock
 
-from language import Language
-
-from wikitongues.wikitongues.data_store.error_response import ErrorResponse
 from wikitongues.wikitongues.data_store.language_data_store import LanguageDataStore
+from wikitongues.wikitongues.data_store.response_object import ResponseObject
+from wikitongues.wikitongues.language import Language
 from wikitongues.wikitongues.spiders.util.targeted_spider_util import TargetedSpiderUtil
 from wikitongues.wikitongues.spiders.wikipedia_spider import WikipediaSpiderInput
 
@@ -28,7 +27,7 @@ class TestTargetedSpiderUtil(unittest.TestCase):
         self.mock_language_data_store = mock.Mock(LanguageDataStore)
 
         def mock_get_languages(iso_codes):
-            response = ErrorResponse()
+            response = ResponseObject()
 
             if iso_codes == EXPECTED_ISO_CODES:
                 response.data = EXPECTED_INCLUDED_LANGUAGES
@@ -36,7 +35,7 @@ class TestTargetedSpiderUtil(unittest.TestCase):
             return response
 
         def mock_list_languages(page_size, max_records, offset):
-            response = ErrorResponse()
+            response = ResponseObject()
 
             if page_size == EXPECTED_PAGE_SIZE and max_records == EXPECTED_MAX_RECORDS and offset == EXPECTED_OFFSET:
                 response.data = EXPECTED_LANGUAGES

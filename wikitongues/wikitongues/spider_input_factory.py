@@ -1,8 +1,11 @@
-import config.config_keys as keys
-from config.load_configs import read_exclude_languages, read_include_languages
-from data_store.airtable.offset_utility import OffsetUtility
-from spiders.translated_site_spider import TranslatedSiteSpiderInput
-from spiders.wikipedia_spider import WikipediaSpiderInput
+from types import SimpleNamespace
+from typing import Any
+
+from .config import config_keys as keys
+from .config.load_configs import read_exclude_languages, read_include_languages
+from .data_store.airtable.offset_utility import OffsetUtility
+from .spiders.input.translated_site_spider_input import TranslatedSiteSpiderInput
+from .spiders.input.wikipedia_spider_input import WikipediaSpiderInput
 
 WIKIPEDIA_SPIDER = "WikipediaSpider"
 TRANSLATED_SITE_SPIDER = "TranslatedSiteSpider"
@@ -10,7 +13,7 @@ TRANSLATED_SITE_SPIDER = "TranslatedSiteSpider"
 
 class SpiderInputFactory:
     @staticmethod
-    def get_spider_input(site, configs):
+    def get_spider_input(site: str, configs: SimpleNamespace) -> Any:
         spider_for_site = configs.main_config[keys.SPIDERS_SECTION][site]
 
         if spider_for_site == WIKIPEDIA_SPIDER:

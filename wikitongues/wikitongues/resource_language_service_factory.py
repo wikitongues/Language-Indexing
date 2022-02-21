@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 
-from lang_to_iso_converter import LangToIsoConverter
-from resource_language_service import ResourceLanguageService
+from .lang_to_iso_converter import LangToIsoConverter
+from .resource_language_service import ResourceLanguageService
 
 
 class ResourceLanguageServiceFactory:

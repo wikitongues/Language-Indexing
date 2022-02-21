@@ -1,4 +1,9 @@
-class ErrorResponse:
+from typing import Generic, List, Optional, TypeVar
+
+T = TypeVar("T")
+
+
+class ResponseObject(Generic[T]):
     """
     Response object containing the result of an operation and error \
 information, if any
@@ -9,13 +14,13 @@ information, if any
 
     def __init__(self):
         """
-        Construct ErrorResponse
+        Construct ResponseObject
         """
 
-        self.messages = []
-        self.data = None
+        self.messages: List[str] = []
+        self.data: Optional[T] = None
 
-    def add_message(self, message):
+    def add_message(self, message: str) -> None:
         """
         Add an error message to the response
 
@@ -25,7 +30,7 @@ information, if any
 
         self.messages.append(message)
 
-    def has_error(self):
+    def has_error(self) -> bool:
         """
         Returns true if the response contains an error
 

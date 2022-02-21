@@ -1,4 +1,8 @@
 from abc import ABC, abstractmethod
+from typing import List, Optional
+
+from ..language import Language
+from .response_object import ResponseObject
 
 
 class LanguageDataStore(ABC):
@@ -10,7 +14,7 @@ class LanguageDataStore(ABC):
     """
 
     @abstractmethod
-    def get_language(self, iso_code):
+    def get_language(self, iso_code: str) -> ResponseObject[Language]:
         """
         Retrieve a language from the data store by the given ISO code
 
@@ -20,7 +24,7 @@ class LanguageDataStore(ABC):
         pass
 
     @abstractmethod
-    def get_languages(self, iso_codes):
+    def get_languages(self, iso_codes: List[str]) -> ResponseObject[List[Language]]:
         """
         Retrieve multiple languages from the data store by ISO code
 
@@ -30,7 +34,9 @@ class LanguageDataStore(ABC):
         pass
 
     @abstractmethod
-    def list_languages(self, page_size, offset, max_records):
+    def list_languages(
+        self, page_size: Optional[int], offset: Optional[str], max_records: Optional[int]
+    ) -> ResponseObject[List[Language]]:
         """
         List languages from the data store
 

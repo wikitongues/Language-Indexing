@@ -1,8 +1,12 @@
 import json
 
-from ..error_response import ErrorResponse
+from ...items import ExternalResource
 from ..external_resource_data_store import ExternalResourceDataStore
+from ..response_object import ResponseObject
 from . import field_name
+from .airtable_external_resource_extractor import IAirtableExternalResourceExtractor
+from .airtable_external_resource_formatter import IAirtableExternalResourceFormatter
+from .airtable_http_client import IAirtableHttpClient
 
 
 class AirtableExternalResourceDataStore(ExternalResourceDataStore):
@@ -10,7 +14,12 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
     Performs actions on an Airtable base for external resources
     """
 
-    def __init__(self, http_client, external_resource_extractor, external_resource_formatter):
+    def __init__(
+        self,
+        http_client: IAirtableHttpClient,
+        external_resource_extractor: IAirtableExternalResourceExtractor,
+        external_resource_formatter: IAirtableExternalResourceFormatter,
+    ) -> None:
         """
         Construct AirtableExternalResourceDataStore
 
@@ -23,7 +32,7 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
         self._extractor = external_resource_extractor
         self._formatter = external_resource_formatter
 
-    def get_external_resource(self, url, iso_code):
+    def get_external_resource(self, url: str, iso_code: str) -> ResponseObject[ExternalResource]:
         """
         Get external resource
 
@@ -32,10 +41,10 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
             iso_code (str): ISO code of associated language
 
         Returns:
-            ErrorResponse: Response object with external resource
+            ResponseObject: Response object with external resource
         """
 
-        result = ErrorResponse()
+        result = ResponseObject[ExternalResource]()
 
         response = self._client.get_records_by_fields({field_name.URL_FIELD: url, field_name.ISO_FIELD: iso_code})
 
@@ -53,7 +62,7 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
         result.data = external_resources[0]
         return result
 
-    def create_external_resource(self, external_resource):
+    def create_external_resource(self, external_resource: ExternalResource) -> ResponseObject[None]:
         """
         Create external resource in data store
 
@@ -64,7 +73,7 @@ class AirtableExternalResourceDataStore(ExternalResourceDataStore):
             ErrorRespone: Response object
         """
 
-        result = ErrorResponse()
+        result = ResponseObject()
 
         fields = self._formatter.get_fields_dict(external_resource)
 

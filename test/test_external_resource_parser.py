@@ -1,10 +1,10 @@
 import unittest
 from unittest import mock
 
-from language import Language
 from responses import Response
 from scrapy.http.response.html import HtmlResponse
 
+from wikitongues.wikitongues.language import Language
 from wikitongues.wikitongues.spiders.util.external_resource_parser import (
     ExternalResourceParser,
 )

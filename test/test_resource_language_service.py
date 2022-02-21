@@ -1,7 +1,7 @@
 import unittest
 
-from wikitongues.wikitongues.data_store.error_response import ErrorResponse
 from wikitongues.wikitongues.data_store.language_data_store import LanguageDataStore
+from wikitongues.wikitongues.data_store.response_object import ResponseObject
 from wikitongues.wikitongues.lang_to_iso_converter import ILangToIsoConverter
 from wikitongues.wikitongues.language import Language
 from wikitongues.wikitongues.resource_language_service import ResourceLanguageService
@@ -32,7 +32,7 @@ class MockLangToIsoConverter(ILangToIsoConverter):
 class MockLanguageDataStore(LanguageDataStore):
     def get_language(self, iso_code):
         mapping = {EXPECTED_ISO_1: EXPECTED_ID_1, EXPECTED_ISO_2: EXPECTED_ID_2}
-        result = ErrorResponse()
+        result = ResponseObject()
         if iso_code not in mapping:
             language = None
         else:

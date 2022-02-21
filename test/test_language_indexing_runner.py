@@ -2,14 +2,17 @@ import unittest
 from types import ModuleType, SimpleNamespace
 from unittest import mock
 
-import config.config_keys as keys
-from language_indexing_config import LanguageIndexingConfiguration, Title
-from language_indexing_runner import LanguageIndexingRunner
 from scrapy.crawler import CrawlerProcess
 
+import wikitongues.wikitongues.config.config_keys as keys
+from wikitongues.wikitongues.language_indexing_config import (
+    LanguageIndexingConfiguration,
+    Title,
+)
+from wikitongues.wikitongues.language_indexing_runner import LanguageIndexingRunner
 from wikitongues.wikitongues.spiders.wikipedia_spider import WikipediaSpider
 
-MODULE_UNDER_TEST = "language_indexing_runner"
+MODULE_UNDER_TEST = "wikitongues.wikitongues.language_indexing_runner"
 
 WIKIPEDIA_KEY = "wikipedia"
 WIKIPEDIA_SPIDER_CLASS = "WikipediaSpider"

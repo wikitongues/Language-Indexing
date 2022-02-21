@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 
+from ..items import ExternalResource
+from .response_object import ResponseObject
+
 
 class ExternalResourceDataStore(ABC):
     """
@@ -10,7 +13,7 @@ class ExternalResourceDataStore(ABC):
     """
 
     @abstractmethod
-    def get_external_resource(self, url, iso_code):
+    def get_external_resource(self, url: str, iso_code: str) -> ResponseObject[ExternalResource]:
         """
         Retrieve an external resource from the data store
 
@@ -21,7 +24,7 @@ class ExternalResourceDataStore(ABC):
         pass
 
     @abstractmethod
-    def create_external_resource(self, external_resource):
+    def create_external_resource(self, external_resource: ExternalResource) -> ResponseObject[None]:
         """
         Create an external resource in the data store
 

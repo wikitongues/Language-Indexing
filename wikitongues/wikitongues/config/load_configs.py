@@ -1,15 +1,20 @@
-from data_store.airtable.airtable_connection_info import AirtableConnectionInfo
-from data_store.airtable.airtable_external_resource_data_store_factory import (
+from typing import List, Optional
+
+from ..data_store.airtable.airtable_connection_info import AirtableConnectionInfo
+from ..data_store.airtable.airtable_external_resource_data_store_factory import (
     AirtableExternalResourceDataStoreFactory,
 )
-from data_store.airtable.airtable_language_data_store_factory import (
+from ..data_store.airtable.airtable_language_data_store_factory import (
     AirtableLanguageDataStoreFactory,
 )
-from data_store.airtable.airtable_table_info import AirtableTableInfo
-from data_store.airtable.offset_utility import OffsetUtility
+from ..data_store.airtable.airtable_table_info import AirtableTableInfo
+from ..data_store.airtable.offset_utility import OffsetUtility
+from ..data_store.external_resource_data_store import ExternalResourceDataStore
+from ..data_store.language_data_store import LanguageDataStore
+from ..language_indexing_config import LanguageIndexingConfiguration
 
 
-def load_external_resource_airtable_config(config):
+def load_external_resource_airtable_config(config: LanguageIndexingConfiguration) -> ExternalResourceDataStore:
 
     config_external_resource_table = config["airtable_external_resources_table"]
 
@@ -35,7 +40,7 @@ def load_external_resource_airtable_config(config):
     return external_resource_data_store
 
 
-def load_languages_airtable_config(config):
+def load_languages_airtable_config(config: LanguageIndexingConfiguration) -> LanguageDataStore:
 
     config_languages_table = config["airtable_languages_table"]
     # Get a LanguageDataStore instance
@@ -55,13 +60,13 @@ def load_languages_airtable_config(config):
     return language_data_store
 
 
-def read_include_languages(config):
+def read_include_languages(config: LanguageIndexingConfiguration) -> Optional[List[str]]:
     if hasattr(config, "include_languages") and len(config["include_languages"].__dict__) > 0:
         return config["include_languages"]["include_languages"].split(",")
     return None
 
 
-def read_exclude_languages(config):
+def read_exclude_languages(config: LanguageIndexingConfiguration) -> Optional[List[str]]:
     if hasattr(config, "exclude_languages") and len(config["exclude_languages"].__dict__) > 0:
         return config["exclude_languages"]["exclude_languages"].split(",")
     return None

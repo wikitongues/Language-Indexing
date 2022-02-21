@@ -4,7 +4,7 @@ class UrlSanitizer:
     """
 
     @staticmethod
-    def sanitize_url(url):
+    def sanitize_url(url: str) -> str:
         """
         Sanitizes url for Scrapy request
 

@@ -1,11 +1,11 @@
 import unittest
 from unittest import mock
 
-from language import Language
-from resource_language_service import IResourceLanguageService
 from scrapy.http.response.html import HtmlResponse
 from scrapy.selector import SelectorList
 
+from wikitongues.wikitongues.language import Language
+from wikitongues.wikitongues.resource_language_service import IResourceLanguageService
 from wikitongues.wikitongues.spiders.util.wikipedia_util import WikipediaUtil
 
 MODULE_UNDER_TEST = "wikitongues.wikitongues.spiders.util.wikipedia_util"

@@ -12,7 +12,7 @@ class ILangToIsoConverter(ABC):
     """
 
     @abstractmethod
-    def get_iso_code(self, lang_attribute):
+    def get_iso_code(self, lang_attribute: str) -> str:
         """
         Converts html lang attribute to ISO 639-3 code
 
@@ -30,7 +30,7 @@ class LangToIsoConverter(ILangToIsoConverter):
         ILangToIsoConverter
     """
 
-    def get_iso_code(self, lang_attribute):
+    def get_iso_code(self, lang_attribute: str) -> str:
         """[summary]
         Converts html lang attribute to ISO 639-3 code
 

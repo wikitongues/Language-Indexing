@@ -1,4 +1,8 @@
 from abc import ABC, abstractmethod
+from typing import Iterable, Set
+
+from .data_store.language_data_store import LanguageDataStore
+from .lang_to_iso_converter import ILangToIsoConverter
 
 
 class IResourceLanguageService(ABC):
@@ -22,7 +26,7 @@ class ResourceLanguageService(IResourceLanguageService):
         IResourceLanguageService
     """
 
-    def __init__(self, language_data_store, lang_to_iso_converter):
+    def __init__(self, language_data_store: LanguageDataStore, lang_to_iso_converter: ILangToIsoConverter) -> None:
         """
         Construct ResourceLanguageService
 
@@ -35,7 +39,7 @@ class ResourceLanguageService(IResourceLanguageService):
         self._lang_to_iso_converter = lang_to_iso_converter
         self._cache = {}
 
-    def get_resource_language_ids(self, lang_attrs):
+    def get_resource_language_ids(self, lang_attrs: Iterable[str]) -> Set[str]:
         """
         Gets Airtable ID's for languages corresponding to lang attribute values
 

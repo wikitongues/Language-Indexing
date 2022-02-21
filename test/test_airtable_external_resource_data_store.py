@@ -14,7 +14,7 @@ from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_form
 from wikitongues.wikitongues.data_store.airtable.airtable_http_client import (
     IAirtableHttpClient,
 )
-from wikitongues.wikitongues.data_store.error_response import ErrorResponse
+from wikitongues.wikitongues.data_store.response_object import ResponseObject
 from wikitongues.wikitongues.items import ExternalResource
 
 EXPECTED_URL = "aaa.com"
@@ -50,7 +50,7 @@ class MockAirtableHttpClient(IAirtableHttpClient):
 
 class MockAirtableExternalResourceExtractor(IAirtableExternalResourceExtractor):
     def extract_external_resources_from_json(self, json_obj, *args):
-        result = ErrorResponse()
+        result = ResponseObject()
 
         if len(json_obj["records"]) == 0:
             result.data = []

@@ -1,8 +1,14 @@
 import json
+from typing import List, Optional
 
-from ..error_response import ErrorResponse
+from ...language import Language
+from ..airtable.airtable_http_client import IAirtableHttpClient
+from ..airtable.airtable_language_extractor import IAirtableLanguageExtractor
 from ..language_data_store import LanguageDataStore
+from ..response_object import ResponseObject
 from .offset_utility import OffsetUtility
+
+# from wikitongues.wikitongues.language import Language
 
 
 class AirtableLanguageDataStore(LanguageDataStore):
@@ -13,7 +19,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
         LanguageDataStore
     """
 
-    def __init__(self, http_client, language_extractor):
+    def __init__(self, http_client: IAirtableHttpClient, language_extractor: IAirtableLanguageExtractor) -> None:
         """
         Construct AirtableLanguageDataStore
 
@@ -25,7 +31,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
         self._client = http_client
         self._extractor = language_extractor
 
-    def get_language(self, iso_code):
+    def get_language(self, iso_code: str) -> ResponseObject[Language]:
         """
         Retrieves language object for the given ISO code
 
@@ -33,10 +39,10 @@ class AirtableLanguageDataStore(LanguageDataStore):
             iso_code (str): ISO code
 
         Returns:
-            ErrorResponse: Response object containing Language object
+            ResponseObject: Response object containing Language object
         """
 
-        result = ErrorResponse()
+        result = ResponseObject[Language]()
 
         response = self._client.get_record(iso_code)
 
@@ -60,7 +66,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
         result.data = languages[0]
         return result
 
-    def get_languages(self, iso_codes):
+    def get_languages(self, iso_codes: List[str]) -> ResponseObject[List[Language]]:
         """
         Retrieves language objects for the given ISO codes
 
@@ -68,7 +74,7 @@ class AirtableLanguageDataStore(LanguageDataStore):
             iso_codes (list): List of ISO codes
 
         Returns:
-            ErrorResponse: Response object containing list of Language objects
+            ResponseObject: Response object containing list of Language objects
         """
 
         languages = []
@@ -81,19 +87,21 @@ class AirtableLanguageDataStore(LanguageDataStore):
 
             languages.append(result.data)
 
-        result = ErrorResponse()
+        result = ResponseObject[List[Language]]()
         result.data = languages
         return result
 
-    def list_languages(self, page_size=100, max_records=None, **kwargs):
+    def list_languages(
+        self, page_size: Optional[int] = 100, max_records: Optional[int] = None, **kwargs
+    ) -> ResponseObject[List[Language]]:
         """
         Retrieves list of language objects
 
         Returns:
-            ErrorResponse: Response object containing list of Language objects
+            ResponseObject: Response object containing list of Language objects
         """
 
-        result = ErrorResponse()
+        result = ResponseObject[List[Language]]()
 
         response = self._client.list_records(page_size, kwargs.get("offset"), max_records)
 

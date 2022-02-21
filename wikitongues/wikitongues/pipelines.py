@@ -11,13 +11,15 @@ import logging
 
 from scrapy.exceptions import DropItem
 
+from .data_store.external_resource_data_store import ExternalResourceDataStore
+
 
 class WikitonguesPipeline:
     """
     Pipeline for checking for duplicates and adding new resources
     """
 
-    def __init__(self, external_resource_data_store):
+    def __init__(self, external_resource_data_store: ExternalResourceDataStore):
         """
         Construct WikitonguesPipeline
 

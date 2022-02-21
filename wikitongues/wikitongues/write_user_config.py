@@ -1,9 +1,9 @@
 import os
 
-from language_indexing_config import user_config_file
+from .language_indexing_config import user_config_file
 
 
-def ask_user_for_user_file_creation():
+def ask_user_for_user_file_creation() -> None:
     user_file = user_config_file()
     if os.path.isfile(user_file) is True:
         overwrite = input("The user file already exist, do you want to " + "overwrite the current config file? (Y/N) ")
@@ -13,7 +13,7 @@ def ask_user_for_user_file_creation():
         create_user_file(user_file)
 
 
-def create_user_file(file_location):
+def create_user_file(file_location: str) -> None:
     ask_fake = input("Do you want to connect to Airtable? (Y/N) ")
     if ask_fake.lower() == "n":
         fake = True

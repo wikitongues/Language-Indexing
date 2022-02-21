@@ -1,3 +1,6 @@
+from ..airtable.airtable_connection_info import AirtableConnectionInfo
+from ..airtable.airtable_table_info import AirtableTableInfo
+from ..language_data_store import LanguageDataStore
 from .airtable_http_client import AirtableHttpClient
 from .airtable_language_data_store import AirtableLanguageDataStore
 from .airtable_language_extractor import AirtableLanguageExtractor
@@ -10,7 +13,9 @@ class AirtableLanguageDataStoreFactory:
     """
 
     @staticmethod
-    def get_data_store(connection_info, table_info, fake=False):
+    def get_data_store(
+        connection_info: AirtableConnectionInfo, table_info: AirtableTableInfo, fake: bool = False
+    ) -> LanguageDataStore:
         """
         Returns a language data store instance
 

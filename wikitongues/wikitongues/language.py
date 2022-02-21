@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class Language:
     """
     The Language class is (part of) the input to the program.
@@ -5,7 +8,9 @@ class Language:
     More fields will be added as we go.
     """
 
-    def __init__(self, iso_code, standard_name, wikipedia_url, airtable_id=None):
+    def __init__(
+        self, iso_code: str, standard_name: str, wikipedia_url: str, airtable_id: Optional[str] = None
+    ) -> None:
         """
         Construct a Language object
 

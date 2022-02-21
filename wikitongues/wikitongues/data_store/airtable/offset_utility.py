@@ -9,7 +9,7 @@ class OffsetUtility:
     """
 
     @staticmethod
-    def read_offset():
+    def read_offset() -> str:
         """
         Reads offset value from file
 
@@ -24,7 +24,7 @@ class OffsetUtility:
         return offset
 
     @staticmethod
-    def write_offset(offset):
+    def write_offset(offset: str) -> None:
         """
         Writes offset value to file.
         """

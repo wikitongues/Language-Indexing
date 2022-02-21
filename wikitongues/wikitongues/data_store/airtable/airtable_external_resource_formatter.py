@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from ...items import ExternalResource
 from . import field_name
 
 
@@ -12,7 +13,7 @@ class IAirtableExternalResourceFormatter(ABC):
     """
 
     @abstractmethod
-    def get_fields_dict(self, external_resource):
+    def get_fields_dict(self, external_resource: ExternalResource) -> dict:
         """
         Returns dictionary of Airtable fields for the given ExternalResource
 
@@ -30,7 +31,7 @@ class AirtableExternalResourceFormatter(IAirtableExternalResourceFormatter):
         IAirtableExternalResourceFormatter
     """
 
-    def get_fields_dict(self, external_resource):
+    def get_fields_dict(self, external_resource: ExternalResource) -> dict:
         """
         Returns dictionary of Airtable fields for the given ExternalResource
 

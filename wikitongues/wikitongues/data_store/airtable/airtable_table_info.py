@@ -1,9 +1,19 @@
+from typing import Optional
+
+
 class AirtableTableInfo:
     """
     Information for retrieving data from a Table on Airtable
     """
 
-    def __init__(self, name, id_column, offset=None, page_size=100, max_records=100):
+    def __init__(
+        self,
+        name: str,
+        id_column: str,
+        offset: Optional[str] = None,
+        page_size: Optional[int] = 100,
+        max_records: Optional[int] = 100,
+    ) -> None:
         """
         Construct AirtableTableInfo
 
