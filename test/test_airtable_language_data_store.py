@@ -1,17 +1,11 @@
 import json
 import unittest
 
-from wikitongues.wikitongues.data_store.airtable.airtable_http_client import (
-    IAirtableHttpClient,
-)
-from wikitongues.wikitongues.data_store.airtable.airtable_language_data_store import (
-    AirtableLanguageDataStore,
-)
-from wikitongues.wikitongues.data_store.airtable.airtable_language_extractor import (
-    IAirtableLanguageExtractor,
-)
-from wikitongues.wikitongues.data_store.response_object import ResponseObject
-from wikitongues.wikitongues.language import Language
+from language_indexing.data_store.airtable.airtable_http_client import IAirtableHttpClient
+from language_indexing.data_store.airtable.airtable_language_data_store import AirtableLanguageDataStore
+from language_indexing.data_store.airtable.airtable_language_extractor import IAirtableLanguageExtractor
+from language_indexing.data_store.response_object import ResponseObject
+from language_indexing.language import Language
 
 EXPECTED_JSON = '{"records": [{"a": "a"}]}'
 EXPECTED_JSON_1 = '{"records": [{"b": "b"}]}'

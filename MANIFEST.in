@@ -1,1 +1,1 @@
-include wikitongues/wikitongues/config/indexing.cfg
+include language_indexing/config/indexing.cfg

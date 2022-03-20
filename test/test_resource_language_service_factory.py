@@ -2,10 +2,8 @@ import unittest
 from types import SimpleNamespace
 from unittest import mock
 
-from wikitongues.wikitongues.resource_language_service import ResourceLanguageService
-from wikitongues.wikitongues.resource_language_service_factory import (
-    ResourceLanguageServiceFactory,
-)
+from language_indexing.resource_language_service import ResourceLanguageService
+from language_indexing.resource_language_service_factory import ResourceLanguageServiceFactory
 
 
 class TestResourceLanguageServiceFactory(unittest.TestCase):

@@ -8,8 +8,6 @@ from ..language_data_store import LanguageDataStore
 from ..response_object import ResponseObject
 from .offset_utility import OffsetUtility
 
-# from wikitongues.wikitongues.language import Language
-
 
 class AirtableLanguageDataStore(LanguageDataStore):
     """

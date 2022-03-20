@@ -1,11 +1,11 @@
 from typing import Optional
 
-from items import ExternalResource
-from lang_attribute_parser import LangAttributeParser
-from language import Language
 from scrapy.http import HtmlResponse, Response
 
-from wikitongues.wikitongues.resource_language_service import IResourceLanguageService
+from ...items import ExternalResource
+from ...lang_attribute_parser import LangAttributeParser
+from ...language import Language
+from ...resource_language_service import IResourceLanguageService
 
 TITLE_SELECTOR = "title::text"
 

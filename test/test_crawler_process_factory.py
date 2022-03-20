@@ -2,7 +2,7 @@ import unittest
 from types import SimpleNamespace
 from unittest import mock
 
-from wikitongues.wikitongues.crawler_process_factory import CrawlerProcessFactory
+from language_indexing.crawler_process_factory import CrawlerProcessFactory
 
 
 class TestCrawlerProcessFactory(unittest.TestCase):
@@ -18,6 +18,6 @@ class TestCrawlerProcessFactory(unittest.TestCase):
             configs.external_resource_data_store,
             settings["EXTERNAL_RESOURCE_DATA_STORE"],
         )
-        self.assertIn("pipelines.WikitonguesPipeline", settings["ITEM_PIPELINES"])
+        self.assertIn("language_indexing.pipelines.WikitonguesPipeline", settings["ITEM_PIPELINES"])
         self.assertIn("script", settings["METAREFRESH_IGNORE_TAGS"])
         self.assertIn("noscript", settings["METAREFRESH_IGNORE_TAGS"])

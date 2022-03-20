@@ -4,11 +4,11 @@ from unittest import mock
 from scrapy.http.response.html import HtmlResponse
 from scrapy.selector import SelectorList
 
-from wikitongues.wikitongues.language import Language
-from wikitongues.wikitongues.resource_language_service import IResourceLanguageService
-from wikitongues.wikitongues.spiders.util.wikipedia_util import WikipediaUtil
+from language_indexing.language import Language
+from language_indexing.resource_language_service import IResourceLanguageService
+from language_indexing.spiders.util.wikipedia_util import WikipediaUtil
 
-MODULE_UNDER_TEST = "wikitongues.wikitongues.spiders.util.wikipedia_util"
+MODULE_UNDER_TEST = "language_indexing.spiders.util.wikipedia_util"
 
 EXPECTED_EXTERNAL_LINK_SELECTOR = "a.external.text"
 EXPECTED_LINK_TEXT_SELECTOR = "::text"

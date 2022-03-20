@@ -1,12 +1,8 @@
 from typing import List, Optional
 
 from ..data_store.airtable.airtable_connection_info import AirtableConnectionInfo
-from ..data_store.airtable.airtable_external_resource_data_store_factory import (
-    AirtableExternalResourceDataStoreFactory,
-)
-from ..data_store.airtable.airtable_language_data_store_factory import (
-    AirtableLanguageDataStoreFactory,
-)
+from ..data_store.airtable.airtable_external_resource_data_store_factory import AirtableExternalResourceDataStoreFactory
+from ..data_store.airtable.airtable_language_data_store_factory import AirtableLanguageDataStoreFactory
 from ..data_store.airtable.airtable_table_info import AirtableTableInfo
 from ..data_store.airtable.offset_utility import OffsetUtility
 from ..data_store.external_resource_data_store import ExternalResourceDataStore

@@ -1,21 +1,19 @@
 import json
 import unittest
 
-import wikitongues.wikitongues.data_store.airtable.field_name as field_name
-from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_data_store import (
+import language_indexing.data_store.airtable.field_name as field_name
+from language_indexing.data_store.airtable.airtable_external_resource_data_store import (
     AirtableExternalResourceDataStore,
 )
-from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_extractor import (
+from language_indexing.data_store.airtable.airtable_external_resource_extractor import (
     IAirtableExternalResourceExtractor,
 )
-from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_formatter import (
+from language_indexing.data_store.airtable.airtable_external_resource_formatter import (
     IAirtableExternalResourceFormatter,
 )
-from wikitongues.wikitongues.data_store.airtable.airtable_http_client import (
-    IAirtableHttpClient,
-)
-from wikitongues.wikitongues.data_store.response_object import ResponseObject
-from wikitongues.wikitongues.items import ExternalResource
+from language_indexing.data_store.airtable.airtable_http_client import IAirtableHttpClient
+from language_indexing.data_store.response_object import ResponseObject
+from language_indexing.items import ExternalResource
 
 EXPECTED_URL = "aaa.com"
 EXPECTED_ISO = "aaa"

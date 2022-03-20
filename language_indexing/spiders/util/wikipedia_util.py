@@ -1,13 +1,12 @@
 from typing import Callable, Iterator
 
 import scrapy
-from items import ExternalResource
-from language import Language
 from scrapy.http import HtmlResponse
-from url_sanitizer import UrlSanitizer
 
-from wikitongues.wikitongues.resource_language_service import IResourceLanguageService
-
+from ...items import ExternalResource
+from ...language import Language
+from ...resource_language_service import IResourceLanguageService
+from ...url_sanitizer import UrlSanitizer
 from .external_resource_parser import ExternalResourceParser
 
 EXTERNAL_LINK_SELECTOR = "a.external.text"

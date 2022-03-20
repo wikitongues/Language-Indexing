@@ -4,14 +4,12 @@ from unittest import mock
 
 from scrapy.exceptions import DropItem
 
-from wikitongues.wikitongues.data_store.external_resource_data_store import (
-    ExternalResourceDataStore,
-)
-from wikitongues.wikitongues.data_store.response_object import ResponseObject
-from wikitongues.wikitongues.items import ExternalResource
-from wikitongues.wikitongues.pipelines import WikitonguesPipeline
+from language_indexing.data_store.external_resource_data_store import ExternalResourceDataStore
+from language_indexing.data_store.response_object import ResponseObject
+from language_indexing.items import ExternalResource
+from language_indexing.pipelines import WikitonguesPipeline
 
-MODULE_UNDER_TEST = "wikitongues.wikitongues.pipelines"
+MODULE_UNDER_TEST = "language_indexing.pipelines"
 
 EXPECTED_URL = "https://termcoord.eu/2015/05/discovering-mirandese/"
 EXPECTED_ISO = "mwl"

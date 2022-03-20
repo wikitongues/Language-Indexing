@@ -1,11 +1,8 @@
 from typing import List
 
-from language import Language
-
-from wikitongues.wikitongues.data_store.language_data_store import LanguageDataStore
-from wikitongues.wikitongues.spiders.input.wikipedia_spider_input import (
-    WikipediaSpiderInput,
-)
+from ...data_store.language_data_store import LanguageDataStore
+from ...language import Language
+from ...spiders.input.wikipedia_spider_input import WikipediaSpiderInput
 
 
 class TargetedSpiderUtil:
