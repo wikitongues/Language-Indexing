@@ -1,6 +1,6 @@
 import unittest
 
-from wikitongues.wikitongues.url_sanitizer import UrlSanitizer
+from language_indexing.url_sanitizer import UrlSanitizer
 
 
 class TestUrlSanitizer(unittest.TestCase):

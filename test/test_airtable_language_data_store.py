@@ -1,17 +1,11 @@
 import json
 import unittest
 
-from wikitongues.wikitongues.data_store.airtable.airtable_http_client import (
-    IAirtableHttpClient,
-)
-from wikitongues.wikitongues.data_store.airtable.airtable_language_data_store import (
-    AirtableLanguageDataStore,
-)
-from wikitongues.wikitongues.data_store.airtable.airtable_language_extractor import (
-    IAirtableLanguageExtractor,
-)
-from wikitongues.wikitongues.data_store.error_response import ErrorResponse
-from wikitongues.wikitongues.language import Language
+from language_indexing.data_store.airtable.airtable_http_client import IAirtableHttpClient
+from language_indexing.data_store.airtable.airtable_language_data_store import AirtableLanguageDataStore
+from language_indexing.data_store.airtable.airtable_language_extractor import IAirtableLanguageExtractor
+from language_indexing.data_store.response_object import ResponseObject
+from language_indexing.language import Language
 
 EXPECTED_JSON = '{"records": [{"a": "a"}]}'
 EXPECTED_JSON_1 = '{"records": [{"b": "b"}]}'
@@ -47,7 +41,7 @@ class MockAirtableHttpClient(IAirtableHttpClient):
 
 class MockAirtableLanguageExtractor(IAirtableLanguageExtractor):
     def extract_languages_from_json(self, json_obj, *args):
-        result = ErrorResponse()
+        result = ResponseObject()
 
         if len(json_obj["records"]) == 0:
             result.data = []

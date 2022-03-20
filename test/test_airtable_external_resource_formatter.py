@@ -1,10 +1,8 @@
 import unittest
 
-import wikitongues.wikitongues.data_store.airtable.field_name as field_name
-from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_formatter import (
-    AirtableExternalResourceFormatter,
-)
-from wikitongues.wikitongues.items import ExternalResource
+import language_indexing.data_store.airtable.field_name as field_name
+from language_indexing.data_store.airtable.airtable_external_resource_formatter import AirtableExternalResourceFormatter
+from language_indexing.items import ExternalResource
 
 EXPECTED_RESOURCE = ExternalResource(
     title="Title",

@@ -4,14 +4,12 @@ from unittest import mock
 
 from scrapy.exceptions import DropItem
 
-from wikitongues.wikitongues.data_store.error_response import ErrorResponse
-from wikitongues.wikitongues.data_store.external_resource_data_store import (
-    ExternalResourceDataStore,
-)
-from wikitongues.wikitongues.items import ExternalResource
-from wikitongues.wikitongues.pipelines import WikitonguesPipeline
+from language_indexing.data_store.external_resource_data_store import ExternalResourceDataStore
+from language_indexing.data_store.response_object import ResponseObject
+from language_indexing.items import ExternalResource
+from language_indexing.pipelines import WikitonguesPipeline
 
-MODULE_UNDER_TEST = "wikitongues.wikitongues.pipelines"
+MODULE_UNDER_TEST = "language_indexing.pipelines"
 
 EXPECTED_URL = "https://termcoord.eu/2015/05/discovering-mirandese/"
 EXPECTED_ISO = "mwl"
@@ -45,7 +43,7 @@ class TestPipelines(unittest.TestCase):
 
     def test_duplicate_no_iso__drop_item(self):
         def mock_get_external_resource(url, iso_code):
-            result = mock.Mock(ErrorResponse)
+            result = mock.Mock(ResponseObject)
             result.data = None
             if url == EXPECTED_URL and iso_code == "":
                 result.data = mock.ANY
@@ -74,7 +72,7 @@ class TestPipelines(unittest.TestCase):
 
     def test_duplicate_with_iso__drop_item(self):
         def mock_get_external_resource(url, iso_code):
-            result = mock.Mock(ErrorResponse)
+            result = mock.Mock(ResponseObject)
             result.data = None
             if url == EXPECTED_URL and iso_code == EXPECTED_ISO:
                 result.data = mock.ANY
@@ -94,14 +92,14 @@ class TestPipelines(unittest.TestCase):
 
     def test_create_item_success(self):
         def mock_get_external_resource(*_):
-            result = mock.Mock(ErrorResponse)
+            result = mock.Mock(ResponseObject)
             result.data = None
             return result
 
         self.mock_external_resource_data_store.get_external_resource.side_effect = mock_get_external_resource
 
         def mock_create_external_resource(*_):
-            result = mock.Mock(ErrorResponse)
+            result = mock.Mock(ResponseObject)
             result.has_error.return_value = False
             return result
 
@@ -119,7 +117,7 @@ class TestPipelines(unittest.TestCase):
 
     def test_create_item_error__logs(self):
         def mock_get_external_resource(*_):
-            result = mock.Mock(ErrorResponse)
+            result = mock.Mock(ResponseObject)
             result.data = None
             return result
 
@@ -128,7 +126,7 @@ class TestPipelines(unittest.TestCase):
         expected_errors = ["line1", "line2"]
 
         def mock_create_external_resource(*_):
-            result = mock.Mock(ErrorResponse)
+            result = mock.Mock(ResponseObject)
             result.has_error.return_value = True
             result.messages = expected_errors
             return result

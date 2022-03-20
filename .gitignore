@@ -3,4 +3,3 @@ __pycache__
 *.jl
 venv/
 build/
-wikitongues/wikitongues/language_indexing.egg-info/

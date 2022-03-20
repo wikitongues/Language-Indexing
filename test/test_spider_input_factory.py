@@ -2,13 +2,13 @@ import unittest
 from types import SimpleNamespace
 from unittest import mock
 
-import config.config_keys as keys
-from language_indexing_config import LanguageIndexingConfiguration, Title
-from spider_input_factory import SpiderInputFactory
-from spiders.translated_site_spider import TranslatedSiteSpiderInput
-from spiders.wikipedia_spider import WikipediaSpiderInput
+import language_indexing.config.config_keys as keys
+from language_indexing.language_indexing_config import LanguageIndexingConfiguration, Title
+from language_indexing.spider_input_factory import SpiderInputFactory
+from language_indexing.spiders.translated_site_spider import TranslatedSiteSpiderInput
+from language_indexing.spiders.wikipedia_spider import WikipediaSpiderInput
 
-MODULE_UNDER_TEST = "spider_input_factory"
+MODULE_UNDER_TEST = "language_indexing.spider_input_factory"
 
 WIKIPEDIA_KEY = "Wikipedia"
 WIKIPEDIA_SPIDER_CLASS = "WikipediaSpider"

@@ -1,9 +1,7 @@
 import json
 import unittest
 
-from wikitongues.wikitongues.data_store.airtable.airtable_external_resource_extractor import (
-    AirtableExternalResourceExtractor,
-)
+from language_indexing.data_store.airtable.airtable_external_resource_extractor import AirtableExternalResourceExtractor
 
 
 class TestAirtableExternalResourceExtractor(unittest.TestCase):

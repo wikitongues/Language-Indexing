@@ -1,15 +1,13 @@
 import unittest
 from unittest import mock
 
-from language import Language
 from responses import Response
 from scrapy.http.response.html import HtmlResponse
 
-from wikitongues.wikitongues.spiders.util.external_resource_parser import (
-    ExternalResourceParser,
-)
+from language_indexing.language import Language
+from language_indexing.spiders.util.external_resource_parser import ExternalResourceParser
 
-MODULE_UNDER_TEST = "wikitongues.wikitongues.spiders.util.external_resource_parser"
+MODULE_UNDER_TEST = "language_indexing.spiders.util.external_resource_parser"
 
 EXPECTED_LINK_TEXT = "The text of the link"
 EXPECTED_SPIDER_NAME = "test"

@@ -1,9 +1,7 @@
 import json
 import unittest
 
-from wikitongues.wikitongues.data_store.airtable.airtable_language_extractor import (
-    AirtableLanguageExtractor,
-)
+from language_indexing.data_store.airtable.airtable_language_extractor import AirtableLanguageExtractor
 
 
 class TestAirtableLanguageExtractor(unittest.TestCase):

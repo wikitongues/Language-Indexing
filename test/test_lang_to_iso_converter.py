@@ -1,6 +1,6 @@
 import unittest
 
-from wikitongues.wikitongues.lang_to_iso_converter import LangToIsoConverter
+from language_indexing.lang_to_iso_converter import LangToIsoConverter
 
 
 class TestLangToIsoConverter(unittest.TestCase):

@@ -2,8 +2,8 @@ import unittest
 from types import SimpleNamespace
 from unittest import mock
 
-from resource_language_service import ResourceLanguageService
-from resource_language_service_factory import ResourceLanguageServiceFactory
+from language_indexing.resource_language_service import ResourceLanguageService
+from language_indexing.resource_language_service_factory import ResourceLanguageServiceFactory
 
 
 class TestResourceLanguageServiceFactory(unittest.TestCase):

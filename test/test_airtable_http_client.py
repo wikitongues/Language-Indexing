@@ -3,16 +3,10 @@ import unittest
 
 import responses
 
-import wikitongues.wikitongues.data_store.airtable.field_name as field_name
-from wikitongues.wikitongues.data_store.airtable.airtable_connection_info import (
-    AirtableConnectionInfo,
-)
-from wikitongues.wikitongues.data_store.airtable.airtable_http_client import (
-    AirtableHttpClient,
-)
-from wikitongues.wikitongues.data_store.airtable.airtable_table_info import (
-    AirtableTableInfo,
-)
+import language_indexing.data_store.airtable.field_name as field_name
+from language_indexing.data_store.airtable.airtable_connection_info import AirtableConnectionInfo
+from language_indexing.data_store.airtable.airtable_http_client import AirtableHttpClient
+from language_indexing.data_store.airtable.airtable_table_info import AirtableTableInfo
 
 BASE_ID = "base_id"
 API_KEY = "api_key"
