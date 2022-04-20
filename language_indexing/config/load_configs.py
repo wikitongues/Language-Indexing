@@ -8,6 +8,8 @@ from ..data_store.airtable.offset_utility import OffsetUtility
 from ..data_store.external_resource_data_store import ExternalResourceDataStore
 from ..data_store.language_data_store import LanguageDataStore
 from ..language_indexing_config import LanguageIndexingConfiguration
+from . import config_keys as keys
+from .logging_settings import LoggingSettings
 
 
 def load_external_resource_airtable_config(config: LanguageIndexingConfiguration) -> ExternalResourceDataStore:
@@ -66,3 +68,12 @@ def read_exclude_languages(config: LanguageIndexingConfiguration) -> Optional[Li
     if hasattr(config, "exclude_languages") and len(config["exclude_languages"].__dict__) > 0:
         return config["exclude_languages"]["exclude_languages"].split(",")
     return None
+
+
+def read_logging_settings(config: LanguageIndexingConfiguration) -> LoggingSettings:
+    log_file_append = config[keys.LOGGING_SECTION][keys.LOG_FILE_APPEND_KEY]
+    return LoggingSettings(
+        config[keys.LOGGING_SECTION][keys.LOG_FILE_KEY],
+        type(log_file_append) == str and log_file_append.lower() == "true",
+        config[keys.LOGGING_SECTION][keys.LOG_LEVEL_KEY],
+    )
