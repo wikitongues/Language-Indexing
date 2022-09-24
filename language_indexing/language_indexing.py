@@ -19,7 +19,8 @@ def main() -> None:
 
     arg = None
     try:
-        arg = parser.parse_args()
+        args = parser.parse_args()
+        arg = args.filename
         if arg.filename[-4:] != ".cfg":
             print('Input Error: The filename must include the file extension, ".cfg".')
             raise Exception()
@@ -28,7 +29,7 @@ def main() -> None:
 
     configs = types.SimpleNamespace()
 
-    ask_user_for_user_file_creation(arg.filename)
+    ask_user_for_user_file_creation(arg)
 
     start = input("Begin the web crawling process? (Y/N) ")
     if start.lower() == "n":
