@@ -1,0 +1,2 @@
+[console_scripts]
+language-indexing = language_indexing.language_indexing:main
