@@ -1,10 +1,11 @@
 import os
+from typing import Optional
 
 from .language_indexing_config import user_config_file
 
 
-def ask_user_for_user_file_creation() -> None:
-    user_file = user_config_file()
+def ask_user_for_user_file_creation(alt_config_file_name: Optional[str] = None) -> None:
+    user_file = user_config_file(alt_config_file_name)
     if os.path.isfile(user_file) is True:
         overwrite = input("The user file already exist, do you want to " + "overwrite the current config file? (Y/N) ")
         if overwrite.lower() == "y":

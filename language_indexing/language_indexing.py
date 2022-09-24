@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # Entry point for the program, invoked from the console
+import argparse
 import sys
 import types
+from typing import Optional
 
 from .config import config_keys as keys
 from .config.load_configs import load_external_resource_airtable_config, load_languages_airtable_config
@@ -11,15 +13,29 @@ from .write_user_config import ask_user_for_user_file_creation
 
 
 def main() -> None:
+
+    parser = argparse.ArgumentParser(description="Configuration file name")
+    parser.add_argument("-f", "--filename", help='an alternative config file name, such as "example_file_name.cfg".')
+
+    arg = None
+    try:
+        args = parser.parse_args()
+        arg = args.filename
+        if arg.filename[-4:] != ".cfg":
+            print('Input Error: The filename must include the file extension, ".cfg".')
+            raise Exception()
+    except (Exception):
+        print("Using default config filename.")
+
     configs = types.SimpleNamespace()
 
-    ask_user_for_user_file_creation()
+    ask_user_for_user_file_creation(arg)
 
     start = input("Begin the web crawling process? (Y/N) ")
     if start.lower() == "n":
         sys.exit(0)
 
-    configure(configs)
+    configure(configs, arg)
 
     sites = configs.main_config[keys.SITES_SECTION].__dict__.keys()
 
@@ -43,7 +59,7 @@ def main() -> None:
         sys.exit(1)
 
 
-def configure(configs: types.SimpleNamespace) -> None:
+def configure(configs: types.SimpleNamespace, alt_config_filename: Optional[str] = None) -> None:
     # Instantiate configuration object
     configs.main_config = LanguageIndexingConfiguration()
 
@@ -51,7 +67,10 @@ def configure(configs: types.SimpleNamespace) -> None:
     load_config(configs.main_config)
 
     # Read user config
-    load_config(configs.main_config, "user_config")
+    if alt_config_filename is None:
+        load_config(configs.main_config, "user_config")
+    else:
+        load_config(configs.main_config, alt_config_filename)
 
     configs.external_resource_data_store = load_external_resource_airtable_config(configs.main_config)
 

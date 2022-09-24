@@ -1,0 +1,6 @@
+inflection
+languagecodes
+pre-commit
+requests
+responses
+Scrapy

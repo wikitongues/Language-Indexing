@@ -21,19 +21,26 @@ def load_config(config: LanguageIndexingConfiguration, default_config_file_name:
     # Default case: when nothing is passed, program reads the default config
     if default_config_file_name is None:
         config_file = open(os.path.join(os.path.dirname(__file__), "config/indexing.cfg"), "r")
-    else:
+    elif default_config_file_name == "user_config":
         config_file = open(user_config_file())
+    else:
+        config_file = open(user_config_file(default_config_file_name))
+
     readline(config, config_file)
 
 
-def user_config_file() -> str:
+def user_config_file(alt_config_file_name: Optional[str] = None) -> str:
     if platform == "windows" or platform == "win32":
         env = os.getenv("APPDATA")
     elif platform == "linux" or platform == "linux2" or platform == "darwin":
         env = os.getenv("HOME")
     else:
         raise Exception("This program is intended only for Mac," + "Linux, or Windows machines.")
-    return os.sep.join([env, "wikitongues-language-indexing.cfg"])
+
+    if alt_config_file_name is None:
+        return os.sep.join([env, "wikitongues-language-indexing.cfg"])
+    else:
+        return os.sep.join([env, alt_config_file_name])
 
 
 def readline(config: LanguageIndexingConfiguration, default_config: TextIOWrapper) -> None:
